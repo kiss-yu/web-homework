@@ -3,7 +3,11 @@
 <mapper namespace="com.nix.cinema.dao.UserMapper">
     <resultMap id="BaseResultMap" type="com.nix.cinema.model.user.UserModel">
         <id column="id" property="id" jdbcType="INTEGER"/>
-        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="username" property="username" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="age" property="age" jdbcType="INTEGER"/>
+        <result column="sex" property="sex" jdbcType="BIT"/>
+        <result column="balance" property="balance" jdbcType="INTEGER"/>
     </resultMap>
     <insert id="insert" parameterType="com.nix.cinema.model.user.UserModel">
         insert into `user`
@@ -11,16 +15,40 @@
             <if test="id != null">
                 `id`,
             </if>
-            <if test="name != null">
-                `name`,
+            <if test="username != null">
+                `username`,
+            </if>
+            <if test="password != null">
+                `password`,
+            </if>
+            <if test="age != null">
+                `age`,
+            </if>
+            <if test="sex != null">
+                `sex`,
+            </if>
+            <if test="balance != null">
+                `balance`,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
              <if test="id != null">
                 #{id,jdbcType=java.lang.Integer},
              </if>
-             <if test="name != null">
-                #{name,jdbcType=VARCHAR},
+             <if test="username != null">
+                #{username,jdbcType=VARCHAR},
+             </if>
+             <if test="password != null">
+                #{password,jdbcType=VARCHAR},
+             </if>
+             <if test="age != null">
+                #{age,jdbcType=INTEGER},
+             </if>
+             <if test="sex != null">
+                #{sex,jdbcType=BIT},
+             </if>
+             <if test="balance != null">
+                #{balance,jdbcType=INTEGER},
              </if>
         </trim>
     </insert>
@@ -35,7 +63,19 @@
                 `id` = #{id,jdbcType=java.lang.Integer},
             </if>
             <if test="true">
-                `name` = #{name,jdbcType=VARCHAR},
+                `username` = #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="true">
+                `password` = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="true">
+                `age` = #{age,jdbcType=INTEGER},
+            </if>
+            <if test="true">
+                `sex` = #{sex,jdbcType=BIT},
+            </if>
+            <if test="true">
+                `balance` = #{balance,jdbcType=INTEGER},
             </if>
         </trim>
         where id = #{id,jdbcType=INTEGER}

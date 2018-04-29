@@ -3,6 +3,7 @@ package com.nix.cinema.model.user;
 import com.nix.cinema.model.TicketModel;
 import com.nix.cinema.model.base.BaseModel;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -28,7 +29,7 @@ public class OrderModel extends BaseModel<OrderModel> {
     //应付金额
     private Integer payableAmount;
     //已付金额
-    private Integer paidAmount;
+    private BigDecimal paidAmount;
     //购票列表
     private List<TicketModel> tickets;
     //订单状态
@@ -58,11 +59,11 @@ public class OrderModel extends BaseModel<OrderModel> {
         this.payableAmount = payableAmount;
     }
 
-    public Integer getPaidAmount() {
+    public BigDecimal getPaidAmount() {
         return paidAmount;
     }
 
-    public void setPaidAmount(Integer paidAmount) {
+    public void setPaidAmount(BigDecimal paidAmount) {
         this.paidAmount = paidAmount;
     }
 

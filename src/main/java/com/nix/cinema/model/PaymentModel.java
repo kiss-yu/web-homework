@@ -1,6 +1,9 @@
 package com.nix.cinema.model;
 
 import com.nix.cinema.model.base.BaseModel;
+import com.nix.cinema.model.user.UserModel;
+
+import java.math.BigDecimal;
 
 /**
  * @author Kiss
@@ -8,4 +11,33 @@ import com.nix.cinema.model.base.BaseModel;
  * 付款单
  */
 public class PaymentModel extends BaseModel<PaymentModel> {
+    private String sn;
+
+    private UserModel user;
+    //金额
+    private BigDecimal amount;
+
+    public String getSn() {
+        return sn;
+    }
+
+    public void setSn(String sn) {
+        this.sn = sn;
+    }
+
+    public UserModel getUser() {
+        return user;
+    }
+
+    public void setUser(UserModel user) {
+        this.user = user;
+    }
+
+    public BigDecimal getAmount() {
+        return amount;
+    }
+
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
+    }
 }

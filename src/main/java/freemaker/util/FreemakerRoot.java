@@ -77,6 +77,7 @@ public class FreemakerRoot {
         Writer writer = new OutputStreamWriter(new FileOutputStream(file),"UTF-8");
         template.process(paramMap, writer);
         changProjectXml();
+        writer.close();
         file.delete();
 
     }

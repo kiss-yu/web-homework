@@ -85,4 +85,8 @@ public class BaseModel<M extends BaseModel<M>> {
         }
         return dto;
     }
+
+    public String generateSn() {
+        return this.getClass().getSimpleName().toLowerCase() + "-" + System.currentTimeMillis();
+    }
 }

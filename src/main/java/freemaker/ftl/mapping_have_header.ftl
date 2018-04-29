@@ -11,28 +11,12 @@
     </#list>
     <#if others?has_content>
     <#list others as other>
-    <#if other.columnType == 1>
-        <association property="${other.name}" javaType="${other.type}">
-        <#list other.params as other_param>
-        <#if other_param.name == "id" >
-            <id column="id" property="id" jdbcType="INTEGER"/>
-        <#else >
-            <result column="${other_param.name}" property="${other_param.name}" jdbcType="${other_param.type}"/>
-        </#if>
-        </#list>
-        </association>
-    </#if>
-    <#if other.columnType == 2>
-         <collection property="${other.name}" ofType="${other.type}" column="id">
-         <#list other.params as other_param>
-         <#if other_param.name == "id" >
-             <id column="id" property="id" jdbcType="INTEGER"/>
-         <#else >
-             <result column="${other_param.name}" property="${other_param.name}" jdbcType="${other_param.type}"/>
-         </#if>
-         </#list>
-         </collection>
-    </#if>
+    <#--<#if other.columnType == 1>-->
+        <#--<association property="${other.name}" javaType="${other.type}"  column="id"/>-->
+    <#--</#if>-->
+    <#--<#if other.columnType == 2>-->
+         <#--<collection property="${other.name}" ofType="${other.type}" column="id"/>-->
+    <#--</#if>-->
     </#list>
     </#if>
     </resultMap>

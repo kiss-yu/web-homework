@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nix.cinema.dao.RoomMapper">
+    <resultMap id="BaseResultMap" type="com.nix.cinema.model.RoomModel">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="roomSn" property="roomSn" jdbcType="VARCHAR"/>
+        <result column="capacity" property="capacity" jdbcType="INTEGER"/>
+        <result column="roomId" property="roomId" jdbcType="INTEGER"/>
+    </resultMap>
+    <insert id="insert" parameterType="com.nix.cinema.model.RoomModel">
+        insert into `room`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                `id`,
+            </if>
+            <if test="roomSn != null">
+                `roomSn`,
+            </if>
+            <if test="capacity != null">
+                `capacity`,
+            </if>
+            <if test="roomId != null">
+                `roomId`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+             <if test="id != null">
+                #{id,jdbcType=java.lang.Integer},
+             </if>
+             <if test="roomSn != null">
+                #{roomSn,jdbcType=VARCHAR},
+             </if>
+             <if test="capacity != null">
+                #{capacity,jdbcType=INTEGER},
+             </if>
+             <if test="roomId != null">
+                #{roomId,jdbcType=INTEGER},
+             </if>
+        </trim>
+    </insert>
+    <delete id="delete" parameterType="java.lang.Integer">
+        delete  from `room` where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <update id="update" parameterType="com.nix.cinema.model.RoomModel">
+        updata `room`
+        set
+        <trim prefix="" suffix="" suffixOverrides=",">
+            <if test="true">
+                `id` = #{id,jdbcType=java.lang.Integer},
+            </if>
+            <if test="true">
+                `roomSn` = #{roomSn,jdbcType=VARCHAR},
+            </if>
+            <if test="true">
+                `capacity` = #{capacity,jdbcType=INTEGER},
+            </if>
+            <if test="true">
+                `roomId` = #{roomId,jdbcType=INTEGER},
+            </if>
+        </trim>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <select id="select" parameterType="int" resultMap="BaseResultMap">
+        select * from `room` where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="list" resultMap="BaseResultMap">
+        select * from `room`
+        <if test="conditions != null">
+            where ${conditions}
+        </if>
+        <if test="order != null and sort != null">
+            order by ${order} ${sort}
+        </if>
+        <if test="limit != -1 and limit != -1">
+            limit #{offset,jdbcType=INTEGER},#{limit,jdbcType=INTEGER}
+        </if>
+    </select>
+</mapper>
