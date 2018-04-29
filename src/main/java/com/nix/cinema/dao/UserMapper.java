@@ -1,7 +1,7 @@
 package com.nix.cinema.dao;
 
 import com.nix.cinema.dao.base.BaseMapper;
-import com.nix.cinema.model.UserModel;
+import com.nix.cinema.model.user.UserModel;
 import org.springframework.stereotype.Repository;
 
 /**

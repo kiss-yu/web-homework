@@ -3,13 +3,21 @@ package com.nix.cinema.model.base;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Date;
 
 /**
- * Created by 11723 on 2017/5/4.
+ *
+ * @author 11723
+ * @date 2017/5/4
  */
 public class BaseModel<M extends BaseModel<M>> {
 
     protected Integer id;
+
+    private Date createDate;
+
+    private Date updateDate;
+
 
     public Integer getId() {
         return id;
@@ -19,8 +27,23 @@ public class BaseModel<M extends BaseModel<M>> {
         this.id = id;
     }
 
+    public Date getCreateDate() {
+        return createDate;
+    }
 
-    private Object givePrivateValue(Object o,Field field) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    public Date getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(Date updateDate) {
+        this.updateDate = updateDate;
+    }
+
+    private Object givePrivateValue(Object o, Field field) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         Class clazz = o.getClass();
         Method method = clazz.getMethod((field.getType().getSimpleName().matches(".*oolean.*")?"is":"get") + chanIndexZero(field.getName()));
         return method.invoke(o);

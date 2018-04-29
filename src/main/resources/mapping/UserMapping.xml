@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nix.cinema.dao.UserMapper">
-    <resultMap id="BaseResultMap" type="com.nix.cinema.model.UserModel">
+    <resultMap id="BaseResultMap" type="com.nix.cinema.model.user.UserModel">
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="name" property="name" jdbcType="VARCHAR"/>
     </resultMap>
-    <insert id="insert" parameterType="com.nix.cinema.model.UserModel">
+    <insert id="insert" parameterType="com.nix.cinema.model.user.UserModel">
         insert into `user`
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -27,7 +27,7 @@
     <delete id="delete" parameterType="java.lang.Integer">
         delete  from `user` where id = #{id,jdbcType=INTEGER}
     </delete>
-    <update id="update" parameterType="com.nix.cinema.model.UserModel">
+    <update id="update" parameterType="com.nix.cinema.model.user.UserModel">
         updata `user`
         set
         <trim prefix="" suffix="" suffixOverrides=",">
