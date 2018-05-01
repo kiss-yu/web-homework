@@ -45,7 +45,7 @@
         set
         <trim prefix="" suffix="" suffixOverrides=",">
         <#list oneself.params as param>
-            <if test="true">
+            <if test="${param.name} != null">
                 `${param.name}` = ${r"#{"}${param.name},jdbcType=${param.type}${r"}"},
             </if>
         </#list>

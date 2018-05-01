@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nix.cinema.dao.TicketMapper">
+    <resultMap id="BaseResultMap" type="com.nix.cinema.model.TicketModel">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="createDate" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="updateDate" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="ticketSn" property="ticketSn" jdbcType="VARCHAR"/>
+        <result column="introduce" property="introduce" jdbcType="VARCHAR"/>
+        <result column="price" property="price" jdbcType="DECIMAL"/>
+        <result column="sn" property="sn" jdbcType="INTEGER"/>
+    </resultMap>
+    <insert id="insert" parameterType="com.nix.cinema.model.TicketModel">
+        insert into `ticket`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                `id`,
+            </if>
+            <if test="createDate != null">
+                `createDate`,
+            </if>
+            <if test="updateDate != null">
+                `updateDate`,
+            </if>
+            <if test="ticketSn != null">
+                `ticketSn`,
+            </if>
+            <if test="introduce != null">
+                `introduce`,
+            </if>
+            <if test="price != null">
+                `price`,
+            </if>
+            <if test="sn != null">
+                `sn`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+             <if test="id != null">
+                #{id,jdbcType=java.lang.Integer},
+             </if>
+             <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+             </if>
+             <if test="updateDate != null">
+                #{updateDate,jdbcType=TIMESTAMP},
+             </if>
+             <if test="ticketSn != null">
+                #{ticketSn,jdbcType=VARCHAR},
+             </if>
+             <if test="introduce != null">
+                #{introduce,jdbcType=VARCHAR},
+             </if>
+             <if test="price != null">
+                #{price,jdbcType=DECIMAL},
+             </if>
+             <if test="sn != null">
+                #{sn,jdbcType=INTEGER},
+             </if>
+        </trim>
+    </insert>
+    <delete id="delete" parameterType="java.lang.Integer">
+        delete  from `ticket` where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <update id="update" parameterType="com.nix.cinema.model.TicketModel">
+        updata `ticket`
+        set
+        <trim prefix="" suffix="" suffixOverrides=",">
+            <if test="id != null">
+                `id` = #{id,jdbcType=java.lang.Integer},
+            </if>
+            <if test="createDate != null">
+                `createDate` = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateDate != null">
+                `updateDate` = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="ticketSn != null">
+                `ticketSn` = #{ticketSn,jdbcType=VARCHAR},
+            </if>
+            <if test="introduce != null">
+                `introduce` = #{introduce,jdbcType=VARCHAR},
+            </if>
+            <if test="price != null">
+                `price` = #{price,jdbcType=DECIMAL},
+            </if>
+            <if test="sn != null">
+                `sn` = #{sn,jdbcType=INTEGER},
+            </if>
+        </trim>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <select id="select" parameterType="int" resultMap="BaseResultMap">
+        select * from `ticket` where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="list" resultMap="BaseResultMap">
+        select * from `ticket`
+        <if test="conditions != null">
+            where ${conditions}
+        </if>
+        <if test="order != null and sort != null">
+            order by ${order} ${sort}
+        </if>
+        <if test="limit != -1 and limit != -1">
+            limit #{offset,jdbcType=INTEGER},#{limit,jdbcType=INTEGER}
+        </if>
+    </select>
+</mapper>

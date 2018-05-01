@@ -1,6 +1,7 @@
 package com.nix.cinema.model;
 
 import com.nix.cinema.model.base.BaseModel;
+import java.math.BigDecimal;
 
 /**
  * @author 11723
@@ -10,11 +11,13 @@ public class UserModel extends BaseModel<UserModel> {
     private String username;
     private String password;
     private Integer age;
-    private boolean sex;
+    private Boolean sex;
     //账户余额
-    private Integer balance;
+    private BigDecimal balance;
     //头像
     private String img;
+    //是管理角色还是用户
+    private Boolean admin;
 
     //用户角色
     private RoleModel role;
@@ -43,19 +46,19 @@ public class UserModel extends BaseModel<UserModel> {
         this.age = age;
     }
 
-    public boolean isSex() {
+    public Boolean isSex() {
         return sex;
     }
 
-    public void setSex(boolean sex) {
+    public void setSex(Boolean sex) {
         this.sex = sex;
     }
 
-    public Integer getBalance() {
+    public BigDecimal getBalance() {
         return balance;
     }
 
-    public void setBalance(Integer balance) {
+    public void setBalance(BigDecimal balance) {
         this.balance = balance;
     }
 
@@ -75,6 +78,18 @@ public class UserModel extends BaseModel<UserModel> {
         this.role = role;
     }
 
+    public Boolean getSex() {
+        return sex;
+    }
+
+    public Boolean getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(Boolean admin) {
+        this.admin = admin;
+    }
+
     @Override
     public String toString() {
         return "UserModel{" +
@@ -84,6 +99,11 @@ public class UserModel extends BaseModel<UserModel> {
                 ", sex=" + sex +
                 ", balance=" + balance +
                 ", img='" + img + '\'' +
+                ", admin=" + admin +
+                ", role=" + role +
+                ", id=" + id +
+                ", createDate=" + createDate +
+                ", updateDate=" + updateDate +
                 '}';
     }
 }

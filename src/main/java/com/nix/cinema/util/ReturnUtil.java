@@ -18,6 +18,10 @@ public final class ReturnUtil {
     public static ReturnObject success(Object o) {
         return success(null,o);
     }
+    public static ReturnObject success() {
+        return success(null,null);
+    }
+
     /**
      * 接口调用成功，有提示消息
      * @param msg 提示消息
@@ -36,6 +40,10 @@ public final class ReturnUtil {
      * */
     public static ReturnObject fail(Object o) {
         return fail(null,null,o);
+    }
+
+    public static ReturnObject fail() {
+        return fail(null,null,null);
     }
 
     /**

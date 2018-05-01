@@ -17,4 +17,11 @@ public interface UserMapper extends BaseMapper<UserModel> {
      * @return
      * */
     UserModel login(@Param("username") String username, @Param("password") String password);
+
+    /**
+     * 根据用户名查找用户
+     * @param username
+     * @return
+     * */
+    UserModel findByUsername(@Param("username") String username);
 }

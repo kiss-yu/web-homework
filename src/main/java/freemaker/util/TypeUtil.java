@@ -2,6 +2,7 @@ package freemaker.util;
 
 import org.apache.ibatis.type.JdbcType;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -28,6 +29,7 @@ public class TypeUtil {
 
         jdbcTypes.put(Double.class,JdbcType.DOUBLE );
         jdbcTypes.put(double.class,JdbcType.DOUBLE );
+        jdbcTypes.put(BigDecimal.class,JdbcType.DECIMAL);
 
         jdbcTypes.put(Date.class,JdbcType.TIMESTAMP);
     }

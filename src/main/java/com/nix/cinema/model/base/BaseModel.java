@@ -18,7 +18,6 @@ public class BaseModel<M extends BaseModel<M>> {
 
     protected Date updateDate;
 
-
     public Integer getId() {
         return id;
     }

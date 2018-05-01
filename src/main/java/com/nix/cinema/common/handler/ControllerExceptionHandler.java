@@ -19,6 +19,12 @@ public class ControllerExceptionHandler {
         e.printStackTrace();
         return ReturnUtil.fail(e.getCode(),e.getMessage(),null);
     }
+    @ResponseBody
+    @ExceptionHandler(value = IllegalArgumentException.class)
+    public ReturnObject exceptionHandle(IllegalArgumentException e) {
+        e.printStackTrace();
+        return ReturnUtil.fail(-1,e.getMessage(),null);
+    }
 
     @ResponseBody
     @ExceptionHandler(value = Exception.class)

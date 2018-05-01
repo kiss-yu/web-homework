@@ -6,9 +6,11 @@ import javax.servlet.http.HttpServletResponse;
 import com.nix.cinema.common.PermissionHandler;
 import com.nix.cinema.common.annotation.Clear;
 import com.nix.cinema.common.cache.UserCache;
+import com.nix.cinema.controller.Controller;
 import com.nix.cinema.model.RoleInterfaceModel;
 import com.nix.cinema.model.RoleModel;
 import com.nix.cinema.model.UserModel;
+import com.nix.cinema.service.impl.UserService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.method.HandlerMethod;
@@ -40,17 +42,29 @@ public class PermissionInterceptor implements HandlerInterceptor,PermissionHandl
         if (handler instanceof HandlerMethod) {
             HandlerMethod handlerMethod = (HandlerMethod) handler;
             Method method = handlerMethod.getMethod();
-            Clear clear = method.getAnnotation(Clear.class);
-            //如果method没有标识为清除权限校验
-            if (clear == null) {
-                if (user != null) {
-                    RoleModel role = user.getRole();
-                    List<RoleInterfaceModel> roleInterfaces = role.getRoleInterfaces();
-                    for (RoleInterfaceModel roleInterface:roleInterfaces) {
-                        if (isHavePermission(roleInterface,method)) {
+            if (Controller.class.isAssignableFrom(method.getDeclaringClass())) {
+                Clear methodClear = method.getAnnotation(Clear.class);
+                Clear controllerClear = method.getDeclaringClass().getAnnotation(Clear.class);
+                //如果method没有标识为清除权限校验
+                if (methodClear == null && controllerClear == null) {
+                    if (user != null) {
+                        if (UserService.ADMIN_USERNAME.equals(user.getUsername())) {
                             return true;
                         }
+                        RoleModel role = user.getRole();
+                        List<RoleInterfaceModel> roleInterfaces = role.getRoleInterfaces();
+                        for (RoleInterfaceModel roleInterface:roleInterfaces) {
+                            if (isHavePermission(roleInterface,method)) {
+                                return true;
+                            }
+                        }
+                    } else {
+                        //如果用户未登录
+                        response.sendRedirect("/login.html");
+                        return false;
                     }
+                    //如果用户权限不足
+                    response.sendError(HttpServletResponse.SC_UNAUTHORIZED,"权限不足");
                     return false;
                 }
             }

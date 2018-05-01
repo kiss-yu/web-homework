@@ -46,7 +46,7 @@ public class BaseService <M extends BaseModel<M>>{
      * @param model 与dao绑定的model类
      * */
     private void callInvoke(String methodName,M model) throws Exception {
-        invokeMapperMethod(methodName,new Class[]{model.getClass()},model);
+        invokeMapperMethod(methodName,new Class[]{BaseModel.class},model);
     }
     public void add(M model) throws Exception {
         callInvoke("insert",model);

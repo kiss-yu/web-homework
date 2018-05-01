@@ -1,22 +1,28 @@
 package com.nix.cinema.controller;
 
-import com.nix.cinema.common.cache.UserCache;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import javax.servlet.http.HttpServletRequest;
+import com.nix.cinema.common.annotation.Clear;
+import org.springframework.web.bind.annotation.GetMapping;
 
 /**
  * @author Kiss
  * @date 2018/05/01 20:23
  */
-@Controller
-public class RouterController {
+@org.springframework.stereotype.Controller
+public class RouterController implements Controller {
 
-    @RequestMapping("/")
+    /**
+     * 用户主页
+     * */
+    @GetMapping("/")
+    @Clear
     public String userIndex() {
-        System.out.println(UserCache.currentUser());
-        return "/index.html";
+        return "/member/index.html";
+    }
+    /**
+     * 管理员主页
+     * */
+    @GetMapping("/admin")
+    public String adminIndex() {
+        return "/admin/index.html";
     }
 }

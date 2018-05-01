@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nix.cinema.dao.MovieMapper">
+    <resultMap id="BaseResultMap" type="com.nix.cinema.model.MovieModel">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="createDate" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="updateDate" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="movieSn" property="movieSn" jdbcType="VARCHAR"/>
+        <result column="releaseTime" property="releaseTime" jdbcType="TIMESTAMP"/>
+        <result column="price" property="price" jdbcType="DECIMAL"/>
+        <result column="hitCount" property="hitCount" jdbcType="INTEGER"/>
+        <result column="introduction" property="introduction" jdbcType="VARCHAR"/>
+        <result column="img" property="img" jdbcType="VARCHAR"/>
+    </resultMap>
+    <insert id="insert" parameterType="com.nix.cinema.model.MovieModel">
+        insert into `movie`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                `id`,
+            </if>
+            <if test="createDate != null">
+                `createDate`,
+            </if>
+            <if test="updateDate != null">
+                `updateDate`,
+            </if>
+            <if test="movieSn != null">
+                `movieSn`,
+            </if>
+            <if test="releaseTime != null">
+                `releaseTime`,
+            </if>
+            <if test="price != null">
+                `price`,
+            </if>
+            <if test="hitCount != null">
+                `hitCount`,
+            </if>
+            <if test="introduction != null">
+                `introduction`,
+            </if>
+            <if test="img != null">
+                `img`,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+             <if test="id != null">
+                #{id,jdbcType=java.lang.Integer},
+             </if>
+             <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+             </if>
+             <if test="updateDate != null">
+                #{updateDate,jdbcType=TIMESTAMP},
+             </if>
+             <if test="movieSn != null">
+                #{movieSn,jdbcType=VARCHAR},
+             </if>
+             <if test="releaseTime != null">
+                #{releaseTime,jdbcType=TIMESTAMP},
+             </if>
+             <if test="price != null">
+                #{price,jdbcType=DECIMAL},
+             </if>
+             <if test="hitCount != null">
+                #{hitCount,jdbcType=INTEGER},
+             </if>
+             <if test="introduction != null">
+                #{introduction,jdbcType=VARCHAR},
+             </if>
+             <if test="img != null">
+                #{img,jdbcType=VARCHAR},
+             </if>
+        </trim>
+    </insert>
+    <delete id="delete" parameterType="java.lang.Integer">
+        delete  from `movie` where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <update id="update" parameterType="com.nix.cinema.model.MovieModel">
+        updata `movie`
+        set
+        <trim prefix="" suffix="" suffixOverrides=",">
+            <if test="id != null">
+                `id` = #{id,jdbcType=java.lang.Integer},
+            </if>
+            <if test="createDate != null">
+                `createDate` = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateDate != null">
+                `updateDate` = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="movieSn != null">
+                `movieSn` = #{movieSn,jdbcType=VARCHAR},
+            </if>
+            <if test="releaseTime != null">
+                `releaseTime` = #{releaseTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="price != null">
+                `price` = #{price,jdbcType=DECIMAL},
+            </if>
+            <if test="hitCount != null">
+                `hitCount` = #{hitCount,jdbcType=INTEGER},
+            </if>
+            <if test="introduction != null">
+                `introduction` = #{introduction,jdbcType=VARCHAR},
+            </if>
+            <if test="img != null">
+                `img` = #{img,jdbcType=VARCHAR},
+            </if>
+        </trim>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <select id="select" parameterType="int" resultMap="BaseResultMap">
+        select * from `movie` where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="list" resultMap="BaseResultMap">
+        select * from `movie`
+        <if test="conditions != null">
+            where ${conditions}
+        </if>
+        <if test="order != null and sort != null">
+            order by ${order} ${sort}
+        </if>
+        <if test="limit != -1 and limit != -1">
+            limit #{offset,jdbcType=INTEGER},#{limit,jdbcType=INTEGER}
+        </if>
+    </select>
+</mapper>
