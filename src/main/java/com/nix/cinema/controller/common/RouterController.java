@@ -1,14 +1,16 @@
-package com.nix.cinema.controller;
+package com.nix.cinema.controller.common;
 
 import com.nix.cinema.common.annotation.Clear;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 /**
  * @author Kiss
  * @date 2018/05/01 20:23
+ * 路由controller
  */
-@org.springframework.stereotype.Controller
-public class RouterController implements Controller {
+@Controller
+public class RouterController implements BController {
 
     /**
      * 用户主页

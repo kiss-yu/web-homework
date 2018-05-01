@@ -33,8 +33,6 @@ public class UserService extends BaseService<UserModel> {
     }
 
     public UserModel registered(UserModel user,HttpServletRequest request) throws Exception {
-        user.setCreateDate(new Date());
-        user.setUpdateDate(new Date());
         add(user);
         user = findByUsername(user.getUsername());
         if (user != null) {

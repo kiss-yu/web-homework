@@ -1,5 +1,6 @@
 package com.nix.cinema.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.nix.cinema.model.base.BaseModel;
 import java.math.BigDecimal;
 
@@ -29,7 +30,7 @@ public class UserModel extends BaseModel<UserModel> {
     public void setUsername(String username) {
         this.username = username;
     }
-
+    @JsonIgnore
     public String getPassword() {
         return password;
     }
@@ -44,10 +45,6 @@ public class UserModel extends BaseModel<UserModel> {
 
     public void setAge(Integer age) {
         this.age = age;
-    }
-
-    public Boolean isSex() {
-        return sex;
     }
 
     public void setSex(Boolean sex) {
@@ -70,6 +67,7 @@ public class UserModel extends BaseModel<UserModel> {
         this.img = img;
     }
 
+    @JsonIgnore
     public RoleModel getRole() {
         return role;
     }

@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.nix.cinema.common.PermissionHandler;
 import com.nix.cinema.common.annotation.Clear;
 import com.nix.cinema.common.cache.UserCache;
-import com.nix.cinema.controller.Controller;
+import com.nix.cinema.controller.common.BController;
 import com.nix.cinema.model.RoleInterfaceModel;
 import com.nix.cinema.model.RoleModel;
 import com.nix.cinema.model.UserModel;
@@ -42,7 +42,7 @@ public class PermissionInterceptor implements HandlerInterceptor,PermissionHandl
         if (handler instanceof HandlerMethod) {
             HandlerMethod handlerMethod = (HandlerMethod) handler;
             Method method = handlerMethod.getMethod();
-            if (Controller.class.isAssignableFrom(method.getDeclaringClass())) {
+            if (BController.class.isAssignableFrom(method.getDeclaringClass())) {
                 Clear methodClear = method.getAnnotation(Clear.class);
                 Clear controllerClear = method.getDeclaringClass().getAnnotation(Clear.class);
                 //如果method没有标识为清除权限校验

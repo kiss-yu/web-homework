@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -49,6 +50,8 @@ public class BaseService <M extends BaseModel<M>>{
         invokeMapperMethod(methodName,new Class[]{BaseModel.class},model);
     }
     public void add(M model) throws Exception {
+        model.setCreateDate(new Date());
+        model.setUpdateDate(new Date());
         callInvoke("insert",model);
     }
 
@@ -81,6 +84,7 @@ public class BaseService <M extends BaseModel<M>>{
      *
      * */
     public void update(M model) throws Exception {
+        model.setUpdateDate(new Date());
         callInvoke("update",model);
     }
 
