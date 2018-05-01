@@ -1,7 +1,6 @@
 package com.nix.cinema.model;
 
 import com.nix.cinema.model.base.BaseModel;
-import com.nix.cinema.model.user.UserModel;
 
 import java.math.BigDecimal;
 

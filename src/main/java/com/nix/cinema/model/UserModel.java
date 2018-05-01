@@ -1,4 +1,4 @@
-package com.nix.cinema.model.user;
+package com.nix.cinema.model;
 
 import com.nix.cinema.model.base.BaseModel;
 

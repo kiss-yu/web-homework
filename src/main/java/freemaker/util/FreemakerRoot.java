@@ -111,7 +111,11 @@ public class FreemakerRoot {
         model.setModel_name(type.getSimpleName().replace(XmlService.modelSuffix,""));
         List<Param> paramList = new ArrayList<>();
         Param param1 = new Param("id","java.lang.Integer");
+        Param param2 = new Param("createDate","TIMESTAMP");
+        Param param3 = new Param("updateDate","TIMESTAMP");
         paramList.add(param1);
+        paramList.add(param2);
+        paramList.add(param3);
         for (Field field:type.getDeclaredFields()) {
             if (BaseModel.class.isAssignableFrom(field.getType()) && isRoot){
                 Model m = getFreeParam(field.getType(),false).getModel();

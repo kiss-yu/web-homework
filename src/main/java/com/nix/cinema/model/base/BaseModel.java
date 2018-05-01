@@ -14,9 +14,9 @@ public class BaseModel<M extends BaseModel<M>> {
 
     protected Integer id;
 
-    private Date createDate;
+    protected Date createDate;
 
-    private Date updateDate;
+    protected Date updateDate;
 
 
     public Integer getId() {

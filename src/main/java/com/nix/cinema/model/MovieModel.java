@@ -14,11 +14,18 @@ import java.util.List;
 public class MovieModel extends BaseModel<MovieModel> {
     private String movieSn;
     //上映时间
-    private Date ReleaseTime;
+    private Date releaseTime;
     //上映的电影院
     private List<CinemaModel> cinemas;
     //出售价格
     private BigDecimal price;
+    //点击量
+    private Integer hitCount;
+    //简介(html文本)
+    private String introduction;
+    //缩略图路径
+    private String img;
+
 
     public String getMovieSn() {
         return movieSn;
@@ -29,11 +36,19 @@ public class MovieModel extends BaseModel<MovieModel> {
     }
 
     public Date getReleaseTime() {
-        return ReleaseTime;
+        return releaseTime;
     }
 
     public void setReleaseTime(Date releaseTime) {
-        ReleaseTime = releaseTime;
+        this.releaseTime = releaseTime;
+    }
+
+    public Integer getHitCount() {
+        return hitCount;
+    }
+
+    public void setHitCount(Integer hitCount) {
+        this.hitCount = hitCount;
     }
 
     public List<CinemaModel> getCinemas() {

@@ -13,10 +13,12 @@ public class CinemaModel extends BaseModel<CinemaModel> {
     private String cinemaSn;
     //影院所在地址（模拟）
     private String address;
-    //影院介绍
+    //影院介绍（html文本）
     private String introduce;
     //影院电影放映房间
     private List<RoomModel> rooms;
+    //热度
+    private Integer hotNumber;
 
     public String getCinemaSn() {
         return cinemaSn;
@@ -48,5 +50,13 @@ public class CinemaModel extends BaseModel<CinemaModel> {
 
     public void setRooms(List<RoomModel> rooms) {
         this.rooms = rooms;
+    }
+
+    public Integer getHotNumber() {
+        return hotNumber;
+    }
+
+    public void setHotNumber(Integer hotNumber) {
+        this.hotNumber = hotNumber;
     }
 }
