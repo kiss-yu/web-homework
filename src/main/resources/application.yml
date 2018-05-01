@@ -10,6 +10,11 @@ spring:
     multipart:
       max-file-size: 1024MB
       max-request-size: 1024MB
+  devtools:
+    restart:
+      enabled: false
+  session:
+    store-type: none
 logging:
   file: ./log.log
   level:

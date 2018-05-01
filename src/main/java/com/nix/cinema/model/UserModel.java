@@ -13,6 +13,8 @@ public class UserModel extends BaseModel<UserModel> {
     private boolean sex;
     //账户余额
     private Integer balance;
+    //头像
+    private String img;
 
     public String getUsername() {
         return username;
@@ -52,5 +54,25 @@ public class UserModel extends BaseModel<UserModel> {
 
     public void setBalance(Integer balance) {
         this.balance = balance;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
+    @Override
+    public String toString() {
+        return "UserModel{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", age=" + age +
+                ", sex=" + sex +
+                ", balance=" + balance +
+                ", img='" + img + '\'' +
+                '}';
     }
 }

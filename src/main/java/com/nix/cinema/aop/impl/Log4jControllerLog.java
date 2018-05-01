@@ -16,16 +16,20 @@ public class Log4jControllerLog implements ControllerLog {
     @Override
     public void before(JoinPoint joinPoint) {
         log.info("===============start method===================");
-        log.info(joinPoint.getSignature().getDeclaringTypeName());
-        log.info(joinPoint.getSignature().getName());
-        log.info(joinPoint.getArgs());
+        if (joinPoint != null) {
+            log.info(joinPoint.getSignature().getDeclaringTypeName());
+            log.info(joinPoint.getSignature().getName());
+            log.info(joinPoint.getArgs());
+        }
         log.info("==============================================");
     }
 
     @Override
     public void after(Object returnObject) {
         log.info("+++++++++++++++++method return+++++++++++++++++");
-        log.info("return:" + (returnObject.toString().length() > 1024 ? returnObject.hashCode() : returnObject));
+        if (returnObject != null) {
+            log.info("return:" + (returnObject.toString().length() > 1024 ? returnObject.hashCode() : returnObject));
+        }
         log.info("+++++++++++++++++++++++++++++++++++++++++++++++");
     }
 }
