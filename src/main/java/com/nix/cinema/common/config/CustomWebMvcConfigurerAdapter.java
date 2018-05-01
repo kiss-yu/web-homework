@@ -1,4 +1,4 @@
-package com.nix.cinema.common;
+package com.nix.cinema.common.config;
 
 import com.nix.cinema.common.supper.PermissionInterceptor;
 import org.springframework.context.annotation.Configuration;

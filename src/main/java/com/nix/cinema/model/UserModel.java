@@ -16,6 +16,9 @@ public class UserModel extends BaseModel<UserModel> {
     //头像
     private String img;
 
+    //用户角色
+    private RoleModel role;
+
     public String getUsername() {
         return username;
     }
@@ -62,6 +65,14 @@ public class UserModel extends BaseModel<UserModel> {
 
     public void setImg(String img) {
         this.img = img;
+    }
+
+    public RoleModel getRole() {
+        return role;
+    }
+
+    public void setRole(RoleModel role) {
+        this.role = role;
     }
 
     @Override

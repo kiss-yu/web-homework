@@ -8,24 +8,54 @@ import com.nix.cinema.model.base.BaseModel;
  * 接口
  */
 public class RoleInterfaceModel extends BaseModel<RoleInterfaceModel> {
-    //controller类
-    private String controller;
-    //controller方法名
-    private String method;
+   //描述
+    private String description;
+    //是否开启
+    private Boolean enabled;
+    //分组
+    private String group;
+    //url
+    private String url;
+    //名称
+    private String name;
 
-    public String getController() {
-        return controller;
+    public String getDescription() {
+        return description;
     }
 
-    public void setController(String controller) {
-        this.controller = controller;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public String getMethod() {
-        return method;
+    public Boolean getEnabled() {
+        return enabled;
     }
 
-    public void setMethod(String method) {
-        this.method = method;
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public String getGroup() {
+        return group;
+    }
+
+    public void setGroup(String group) {
+        this.group = group;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
