@@ -2,6 +2,7 @@ package com.nix.cinema.controller.member;
 
 import com.nix.cinema.common.ReturnObject;
 import com.nix.cinema.common.annotation.Clear;
+import com.nix.cinema.common.annotation.MemberController;
 import com.nix.cinema.common.cache.UserCache;
 import com.nix.cinema.model.UserModel;
 import com.nix.cinema.service.impl.UserService;
@@ -17,7 +18,8 @@ import javax.servlet.http.HttpServletRequest;
  */
 @RestController
 @RequestMapping("/member")
-public class IndexController implements MemberController {
+@MemberController
+public class IndexController {
     @Autowired
     private UserService userService;
 

@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.*;
  * @author Kiss
  * @date 2018/05/02 1:16
  */
-@RestController
+@RestController()
 @RequestMapping("/movie")
-public class MovieController implements PublicController {
+public class MovieController {
     @Autowired
     private MovieService movieService;
 

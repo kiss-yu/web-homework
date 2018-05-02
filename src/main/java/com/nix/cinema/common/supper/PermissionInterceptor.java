@@ -4,10 +4,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.nix.cinema.common.PermissionHandler;
+import com.nix.cinema.common.annotation.AdminController;
 import com.nix.cinema.common.annotation.Clear;
+import com.nix.cinema.common.annotation.MemberController;
 import com.nix.cinema.common.cache.UserCache;
-import com.nix.cinema.controller.admin.AdminController;
-import com.nix.cinema.controller.member.MemberController;
 import com.nix.cinema.model.RoleInterfaceModel;
 import com.nix.cinema.model.RoleModel;
 import com.nix.cinema.model.UserModel;
@@ -53,7 +53,8 @@ public class PermissionInterceptor implements HandlerInterceptor,PermissionHandl
                         ok = userPermission(user,method);
                     } else {
                         //如果用户未登录
-                        if (AdminController.class.isAssignableFrom(method.getDeclaringClass())) {
+                        AdminController adminController = method.getDeclaringClass().getAnnotation(AdminController.class);
+                        if (adminController != null) {
                             response.sendRedirect("/admin/login.html");
                         } else {
                             response.sendRedirect("/member/login.html");
@@ -75,8 +76,9 @@ public class PermissionInterceptor implements HandlerInterceptor,PermissionHandl
      * 判断该方法是否需要拦截权限
      * */
     private boolean methodIsPermission(Method method) {
-        if (AdminController.class.isAssignableFrom(method.getDeclaringClass()) ||
-                MemberController.class.isAssignableFrom(method.getDeclaringClass())) {
+        MemberController memberController = method.getDeclaringClass().getAnnotation(MemberController.class);
+        AdminController adminController = method.getDeclaringClass().getAnnotation(AdminController.class);
+        if (memberController != null || adminController != null) {
             return true;
         }
         return false;

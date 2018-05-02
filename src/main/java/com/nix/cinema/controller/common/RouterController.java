@@ -1,7 +1,6 @@
 package com.nix.cinema.controller.common;
 
 import com.nix.cinema.common.annotation.Clear;
-import com.nix.cinema.controller.BaseController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -11,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
  * 路由controller
  */
 @Controller
-public class RouterController implements PublicController {
+public class RouterController {
 
     /**
      * 用户主页
