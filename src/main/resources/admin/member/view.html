@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>personalInfo</title>
+    <link href="../../css/style.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="../../resource/bootstrap-3.3.7-dist/css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+    <!-- js -->
+    <script src="../../resource/js/jquery.min.js"></script>
+    <!-- //js -->
+    <!-- for-mobile-apps -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
+    function hideURLbar(){ window.scrollTo(0,1); }
+    </script>
+    <!-- //for-mobile-apps -->
+    <!-- start-smoth-scrolling -->
+    <script type="text/javascript" src="../../js/move-top.js"></script>
+    <script type="text/javascript" src="../../js/easing.js"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function($) {
+            $(".scroll").click(function(event){
+                event.preventDefault();
+                $('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
+            });
+        });
+    </script>
+    <script>
+        //显示用户信息
+        var storage=window.localStorage;
+        $.ajax({
+            type: "get",
+            url: "/admin/"+storage["id"],
+            data: {
+            },
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+                if(data.status == "1"){
+                    $("#nickName").html(data.username);
+                    $("#userName").html(data.userName);
+                    $("#phone").html(data.phone);
+                }
+                else{
+
+                }
+            },
+            error: function () {
+            }
+        });
+    </script>
+    <!-- start-smoth-scrolling -->
+</head>
+
+<body>
+<div class="psd">
+    <div class="container">
+        <div id="header">
+        </div>
+        <script>
+            $("#header").load("/admin/common/header.html");
+            setTimeout(function () {
+                $("#nav").children().eq(4).addClass("cap");
+            },100);
+        </script>
+        <div class="blog" style="height: 650px;">
+            <div class="blog-left">
+                <div class="blog-left-info">
+                    <h3><span>个人信息</span></h3>
+                    <ul>
+                        <li style="width: 100px;">
+                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                            <span class="glyphicon-class">用户名</span>
+                        </li>
+                        <li>
+                            <span id="username">花開</span>
+                        </li>
+                    </ul>
+                    <ul>
+                        <li style="width: 100px;">
+                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                            <span class="glyphicon-class">年龄</span>
+                        </li>
+                        <li>
+                            <span id="age">22</span>
+                        </li>
+                    </ul>
+                    <ul>
+                        <li style="width: 100px;">
+                            <span class="glyphicon glyphicon glyphicon-adjust" aria-hidden="true"></span>
+                            <span class="glyphicon-class">性别</span>
+                        </li>
+                        <li>
+                            <span id="sex">男</span>
+                        </li>
+                    </ul>
+                    <ul>
+                        <li style="width: 100px;">
+                            <span class="glyphicon glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
+                            <span class="glyphicon-class">角色</span>
+                        </li>
+                        <li>
+                            <span id="role">admin</span>
+                        </li>
+                    </ul>
+                    <ul>
+                        <li style="width: 100px;">
+                            <span class="glyphicon glyphicon glyphicon-yen" aria-hidden="true"></span>
+                            <span class="glyphicon-class">余额</span>
+                        </li>
+                        <li>
+                            <span id="balance">999.99</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+        <iframe src="/admin/common/footer.html" width='100%' height='100%' frameborder='0' name="_blank" id="_blank" />
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $().UItoTop({ easingType: 'easeOutQuart' });
+
+    });
+</script>
+
+
+</body>
+
+</html>

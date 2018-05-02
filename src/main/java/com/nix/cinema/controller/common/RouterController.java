@@ -16,10 +16,19 @@ public class RouterController {
      * 用户主页
      * */
     @GetMapping("/")
-    @Clear
     public String userIndex() {
         return "/member/index.html";
     }
+
+
+    /**
+     * 用户登录界面
+     * */
+    @GetMapping("/member/login")
+    public String userLogin() {
+        return "/member/login.html";
+    }
+
     /**
      * 管理员主页
      * */

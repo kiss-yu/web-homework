@@ -55,9 +55,9 @@ public class PermissionInterceptor implements HandlerInterceptor,PermissionHandl
                         //如果用户未登录
                         AdminController adminController = method.getDeclaringClass().getAnnotation(AdminController.class);
                         if (adminController != null) {
-                            response.sendRedirect("/admin/login.html");
+                            response.sendRedirect("/admin");
                         } else {
-                            response.sendRedirect("/member/login.html");
+                            response.sendRedirect("/member/login");
                         }
                         return false;
                     }
