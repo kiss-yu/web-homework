@@ -2,6 +2,8 @@ package com.nix.cinema.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.nix.cinema.model.base.BaseModel;
+import com.nix.cinema.service.impl.UserService;
+
 import java.math.BigDecimal;
 
 /**
@@ -86,6 +88,10 @@ public class UserModel extends BaseModel<UserModel> {
 
     public void setAdmin(Boolean admin) {
         this.admin = admin;
+    }
+
+    public boolean isSuperAdmin() {
+        return UserService.ADMIN_USERNAME.equals(username);
     }
 
     @Override

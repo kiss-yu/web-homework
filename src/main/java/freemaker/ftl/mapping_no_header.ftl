@@ -29,7 +29,7 @@
         <trim prefix="values (" suffix=")" suffixOverrides=",">
         <#list oneself.params as param>
             <if test="${param.name} != null">
-            ${r"#{"}${param.name},jdbcType=${param.type}${r"}"},
+                ${r"#{"}${param.name},jdbcType=${param.type}${r"}"},
             </if>
         </#list>
         </trim>
@@ -42,8 +42,8 @@
         set
         <trim prefix="" suffix="" suffixOverrides=",">
         <#list oneself.params as param>
-            <if test="true">
-            `${param.name}` = ${r"#{"}${param.name},jdbcType=${param.type}${r"}"},
+            <if test="${param.name} != null">
+                `${param.name}` = ${r"#{"}${param.name},jdbcType=${param.type}${r"}"},
             </if>
         </#list>
         </trim>

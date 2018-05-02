@@ -49,10 +49,11 @@ public class BaseService <M extends BaseModel<M>>{
     private void callInvoke(String methodName,M model) throws Exception {
         invokeMapperMethod(methodName,new Class[]{BaseModel.class},model);
     }
-    public void add(M model) throws Exception {
+    public M add(M model) throws Exception {
         model.setCreateDate(new Date());
         model.setUpdateDate(new Date());
         callInvoke("insert",model);
+        return model;
     }
 
     /**
@@ -83,9 +84,10 @@ public class BaseService <M extends BaseModel<M>>{
      * @throws Exception 修改失败抛出异常
      *
      * */
-    public void update(M model) throws Exception {
+    public M update(M model) throws Exception {
         model.setUpdateDate(new Date());
         callInvoke("update",model);
+        return model;
     }
 
 

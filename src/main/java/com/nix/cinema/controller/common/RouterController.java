@@ -1,6 +1,7 @@
 package com.nix.cinema.controller.common;
 
 import com.nix.cinema.common.annotation.Clear;
+import com.nix.cinema.controller.BaseController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
  * 路由controller
  */
 @Controller
-public class RouterController implements BController {
+public class RouterController implements PublicController {
 
     /**
      * 用户主页
@@ -25,6 +26,6 @@ public class RouterController implements BController {
      * */
     @GetMapping("/admin")
     public String adminIndex() {
-        return "/admin/index.html";
+        return "/admin/login.html";
     }
 }

@@ -2,7 +2,6 @@ package com.nix.cinema.controller.admin;
 
 import com.nix.cinema.common.Pageable;
 import com.nix.cinema.common.ReturnObject;
-import com.nix.cinema.controller.common.BController;
 import com.nix.cinema.model.UserModel;
 import com.nix.cinema.service.impl.UserService;
 import com.nix.cinema.util.ReturnUtil;
@@ -16,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/admin/user")
-public class UserController implements BController {
+public class UserController implements AdminController {
     @Autowired
     private UserService userService;
     /**

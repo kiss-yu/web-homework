@@ -46,10 +46,10 @@ public class UserService extends BaseService<UserModel> {
     }
 
     @Override
-    public void add(UserModel model) throws Exception {
+    public UserModel add(UserModel model) throws Exception {
         if (ADMIN_USERNAME.equals(model.getUsername())) {
             throw new WebException(401,"不能使用admin做完用户名");
         }
-        super.add(model);
+        return super.add(model);
     }
 }
