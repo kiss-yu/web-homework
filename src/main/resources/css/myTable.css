@@ -106,7 +106,9 @@ input.button:disabled:hover, input.button:disabled:active {
 input.hidden, textarea.hidden, a.hidden {
     display: none;
 }
-
+input[type=checkbox] {
+    margin-right: 2px;
+}
 span.requiredField {
     line-height: 28px;
     margin-right: 2px;

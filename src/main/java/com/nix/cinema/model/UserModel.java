@@ -15,6 +15,8 @@ public class UserModel extends BaseModel<UserModel> {
     private String password;
     private Integer age;
     private Boolean sex;
+    //电话
+    private String phone;
     //账户余额
     private BigDecimal balance;
     //头像
@@ -24,6 +26,14 @@ public class UserModel extends BaseModel<UserModel> {
 
     //用户角色
     private RoleModel role;
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
     public String getUsername() {
         return username;

@@ -14,5 +14,7 @@ public interface BaseMapper<M extends BaseModel<M>>{
     void delete(@Param("id") Integer id);
     void update(M model);
     M select(@Param("id") Integer id);
-    List list(@Param("offset") Integer offset, @Param("limit") Integer limit, @Param("order") String order, @Param("sort") String sort, @Param("conditions") String conditions);
+    Integer maxId(M m);
+    List<M> findByOneField(@Param("field") String field,@Param("value") String value);
+    List<M> list(@Param("offset") Integer offset, @Param("limit") Integer limit, @Param("order") String order, @Param("sort") String sort, @Param("conditions") String conditions);
 }

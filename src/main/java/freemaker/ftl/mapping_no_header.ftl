@@ -52,6 +52,12 @@
     <select id="select" parameterType="int" resultMap="BaseResultMap">
         select * from `${model_name}` where id = ${r"#{"}id,jdbcType=INTEGER${r"}"}
     </select>
+     <select id="maxId" resultType="Integer">
+         select max(`id`) from `${model_name}`;
+     </select>
+    <select id="findByOneField" resultMap="BaseResultMap">
+        select * from `${model_name}` where `#{field,jdbcType=VARCHAR}` = #{value,jdbcType=VARCHAR}
+    </select>
     <select id="list" resultMap="BaseResultMap">
         select * from `${model_name}`
         <if test="conditions != null">

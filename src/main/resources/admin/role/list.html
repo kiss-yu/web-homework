@@ -41,11 +41,11 @@
             oButtonInit.Init();
 
             $("#btn_edit").click(function () {
-                location.href = "/admin/member/edit.html";
+                location.href = "/admin/role/edit.html";
             });
 
             $("#btn_add").click(function () {
-                location.href = "/admin/member/add.html";
+                location.href = "/admin/role/add.html";
             });
         });
 
@@ -160,36 +160,13 @@
         <script>
             $("#header").load("/admin/common/header.html");
             setTimeout(function () {
-                $("#nav").children().eq(1).addClass("cap");
+                $("#nav").children().eq(2).addClass("cap");
             },100);
         </script>
         <!-- //header -->
         <!-- portfolio -->
         <div class="contact">
-            <h3>用户管理</h3>
-
-            <div class="panel panel-default">
-                <div class="panel-heading">查询条件</div>
-                <div class="panel-body">
-                    <form id="formSearch" class="form-horizontal">
-                        <div class="form-group" style="margin-top:15px">
-                            <label class="control-label col-sm-1" for="orderId">用户名</label>
-                            <div class="col-sm-3">
-                                <input type="text" class="form-control" id="orderId">
-                            </div>
-                            <label class="control-label col-sm-1" for="findGoodsName">用户姓名</label>
-                            <div class="col-sm-3">
-                                <input type="text" class="form-control" id="findGoodsName">
-                            </div>
-                            <div class="control-label col-sm-4" style="text-align:left;">
-                                <a style="margin-left:50px;" id="btn_query" class=" find_button" >查询</a>
-                            </div>
-
-                        </div>
-                    </form>
-                </div>
-            </div>
-
+            <h3>角色管理</h3>
             <div id="toolbar" class="btn-group">
                 <button id="btn_add" type="button" class="btn btn-default">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加

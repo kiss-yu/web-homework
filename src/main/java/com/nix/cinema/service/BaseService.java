@@ -3,7 +3,9 @@ import com.nix.cinema.model.base.BaseModel;
 import com.nix.cinema.util.SQLUtil;
 import com.nix.cinema.util.log.LogKit;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.beans.Transient;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Date;
@@ -46,14 +48,21 @@ public class BaseService <M extends BaseModel<M>>{
      * @param methodName 需要找的方法名
      * @param model 与dao绑定的model类
      * */
-    private void callInvoke(String methodName,M model) throws Exception {
-        invokeMapperMethod(methodName,new Class[]{BaseModel.class},model);
+    private Object callInvoke(String methodName,M model) throws Exception {
+        return invokeMapperMethod(methodName,new Class[]{BaseModel.class},model);
     }
     public M add(M model) throws Exception {
+        //自动生成的id设置
+        setId(model);
         model.setCreateDate(new Date());
         model.setUpdateDate(new Date());
         callInvoke("insert",model);
         return model;
+    }
+
+    private void setId(M model) throws Exception {
+        Integer id = (Integer) callInvoke("maxId",model);
+        model.setId(id  == null ? 1 : id + 1);
     }
 
     /**

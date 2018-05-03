@@ -38,6 +38,14 @@ public class UserController {
     @PostMapping("/update")
     public ReturnObject update(@ModelAttribute("/") UserModel user) throws Exception {
         Assert.notNull(user.getId(),"id不能为空");
+        //如果密码未修改
+        if (user.getPassword() != null && user.getPassword().isEmpty()) {
+            user.setPassword(null);
+        }
+        //任何情况下将余额设置为空不进行修改
+        user.setBalance(null);
+        //usernmae不进行修改
+        user.setUsername(null);
         userService.update(user);
         return ReturnUtil.success(user);
     }

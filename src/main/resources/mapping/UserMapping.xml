@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nix.cinema.dao.UserMapper">
-    <resultMap id="BaseResultMap" type="com.nix.cinema.model.UserModel">
+        <resultMap id="BaseResultMap" type="com.nix.cinema.model.UserModel">
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="createDate" property="createDate" jdbcType="TIMESTAMP"/>
         <result column="updateDate" property="updateDate" jdbcType="TIMESTAMP"/>
@@ -9,6 +9,7 @@
         <result column="password" property="password" jdbcType="VARCHAR"/>
         <result column="age" property="age" jdbcType="INTEGER"/>
         <result column="sex" property="sex" jdbcType="BIT"/>
+        <result column="phone" property="phone" jdbcType="VARCHAR"/>
         <result column="balance" property="balance" jdbcType="DECIMAL"/>
         <result column="img" property="img" jdbcType="VARCHAR"/>
         <result column="admin" property="admin" jdbcType="BIT"/>
@@ -37,6 +38,9 @@
             <if test="sex != null">
                 `sex`,
             </if>
+            <if test="phone != null">
+                `phone`,
+            </if>
             <if test="balance != null">
                 `balance`,
             </if>
@@ -48,36 +52,39 @@
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-             <if test="id != null">
-                #{id,jdbcType=java.lang.Integer},
-             </if>
-             <if test="createDate != null">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="createDate != null">
                 #{createDate,jdbcType=TIMESTAMP},
-             </if>
-             <if test="updateDate != null">
+            </if>
+            <if test="updateDate != null">
                 #{updateDate,jdbcType=TIMESTAMP},
-             </if>
-             <if test="username != null">
+            </if>
+            <if test="username != null">
                 #{username,jdbcType=VARCHAR},
-             </if>
-             <if test="password != null">
+            </if>
+            <if test="password != null">
                 #{password,jdbcType=VARCHAR},
-             </if>
-             <if test="age != null">
+            </if>
+            <if test="age != null">
                 #{age,jdbcType=INTEGER},
-             </if>
-             <if test="sex != null">
+            </if>
+            <if test="sex != null">
                 #{sex,jdbcType=BIT},
-             </if>
-             <if test="balance != null">
+            </if>
+            <if test="phone != null">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="balance != null">
                 #{balance,jdbcType=DECIMAL},
-             </if>
-             <if test="img != null">
+            </if>
+            <if test="img != null">
                 #{img,jdbcType=VARCHAR},
-             </if>
-             <if test="admin != null">
+            </if>
+            <if test="admin != null">
                 #{admin,jdbcType=BIT},
-             </if>
+            </if>
         </trim>
     </insert>
     <delete id="delete" parameterType="java.lang.Integer">
@@ -88,7 +95,7 @@
         set
         <trim prefix="" suffix="" suffixOverrides=",">
             <if test="id != null">
-                `id` = #{id,jdbcType=java.lang.Integer},
+                `id` = #{id,jdbcType=INTEGER},
             </if>
             <if test="createDate != null">
                 `createDate` = #{createDate,jdbcType=TIMESTAMP},
@@ -108,6 +115,9 @@
             <if test="sex != null">
                 `sex` = #{sex,jdbcType=BIT},
             </if>
+            <if test="phone != null">
+                `phone` = #{phone,jdbcType=VARCHAR},
+            </if>
             <if test="balance != null">
                 `balance` = #{balance,jdbcType=DECIMAL},
             </if>
@@ -120,6 +130,12 @@
         </trim>
         where id = #{id,jdbcType=INTEGER}
     </update>
+    <select id="maxId" resultType="Integer">
+        select max(`id`) from `user`;
+    </select>
+    <select id="findByOneField" resultMap="BaseResultMap">
+        select * from `user` where `#{field,jdbcType=VARCHAR}` = #{value,jdbcType=VARCHAR}
+    </select>
     <select id="select" parameterType="int" resultMap="BaseResultMap">
         select * from `user` where id = #{id,jdbcType=INTEGER}
     </select>

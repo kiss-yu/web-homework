@@ -110,7 +110,7 @@ public class FreemakerRoot {
         Model model = new Model();
         model.setModel_name(type.getSimpleName().replace(XmlService.modelSuffix,""));
         List<Param> paramList = new ArrayList<>();
-        Param param1 = new Param("id","java.lang.Integer");
+        Param param1 = new Param("id","INTEGER");
         Param param2 = new Param("createDate","TIMESTAMP");
         Param param3 = new Param("updateDate","TIMESTAMP");
         paramList.add(param1);
