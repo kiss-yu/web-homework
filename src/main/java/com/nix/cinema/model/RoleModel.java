@@ -1,5 +1,6 @@
 package com.nix.cinema.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.nix.cinema.model.base.BaseModel;
 
 import java.util.List;
@@ -32,6 +33,7 @@ public class RoleModel extends BaseModel<RoleModel> {
         this.value = value;
     }
 
+    @JsonIgnore
     public List<RoleInterfaceModel> getRoleInterfaces() {
         return roleInterfaces;
     }

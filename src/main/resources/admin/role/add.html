@@ -66,13 +66,41 @@
                         async : false,
                         success : function(data) {
                             if (data.status == 1) {
-                                location.href = "/admin/role/list.html"
+                                // location.href = "/admin/role/list.html"
                             }
                         }
                     });
                 }
             });
 
+            //设置接口列表
+            var table = $("#table");
+            $.ajax({
+                cache : true,
+                type : "GET",
+                url : "/admin/roleInterface/all",
+                success : function(data) {
+                    if (data.status == 1) {
+                        var array = data.data;
+                        var group = "";
+                        var tr = "";
+                        for (var i = 0;i < array.length; i ++) {
+                            if (group === array[i].group) {
+                                tr += "<input type='checkbox' name='roleInterfaceId' value='" + array[i].id + " '>" + array[i].name;
+                            } else {
+                                tr += "</td></tr>";
+                                table.append($(tr));
+                                tr = "<tr>" +
+                                    "<th>" + array[i].group + "</th>" +
+                                    "<td>" +
+                                    "<input type='checkbox' name='roleInterfaceId' value='" + array[i].id + " '>" + array[i].name;
+                            }
+                        }
+                        tr = tr == "" ? "" : (tr + "</td></tr>");
+                        table.append($(tr));
+                    }
+                }
+            });
         });
     </script>
 </head>
@@ -93,7 +121,7 @@
             <div class="blog" style="height: 650px;">
                 <div class="blog-left">
                     <form id="inputForm" method="post">
-                        <table class="input tab-content" style="display: table">
+                        <table class="input tab-content" style="display: table" id="table">
                             <tr>
                                 <th>
                                     <span class="glyphicon-class">角色名</span>
@@ -111,6 +139,7 @@
                                 </td>
                             </tr>
                         </table>
+
                         <table class="input">
                             <tr>
                                 <th>

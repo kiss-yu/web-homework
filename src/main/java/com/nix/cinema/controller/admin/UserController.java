@@ -50,7 +50,7 @@ public class UserController {
         return ReturnUtil.success(user);
     }
     @PostMapping("/list")
-    public ReturnObject list(Pageable<UserModel> pageable) {
+    public ReturnObject list(@ModelAttribute Pageable<UserModel> pageable) {
         return ReturnUtil.success(pageable.getList(userService));
     }
 }

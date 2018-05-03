@@ -138,4 +138,8 @@ public class BaseService <M extends BaseModel<M>>{
         }
     }
 
+    public Long count() throws Exception {
+        return (Long) invokeMapperMethod("count",null,null);
+    }
+
 }

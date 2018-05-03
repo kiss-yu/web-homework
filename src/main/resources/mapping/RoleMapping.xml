@@ -77,6 +77,11 @@
     <select id="maxId" resultType="Integer">
         select max(`id`) from `role`;
     </select>
+    
+    <select id="count" resultType="Long">
+        select count(`id`) from `role`;
+    </select>
+    
     <select id="findByOneField" resultMap="BaseResultMap">
         select * from `role` where `${field}` = #{value,jdbcType=VARCHAR}
     </select>
@@ -88,8 +93,12 @@
         <if test="order != null and sort != null">
             order by ${order} ${sort}
         </if>
-        <if test="limit != -1 and limit != -1">
+        <if test="limit != null">
             limit #{offset,jdbcType=INTEGER},#{limit,jdbcType=INTEGER}
         </if>
+    </select>
+
+    <select id="insertRoleMiddleInterface">
+        insert into role_roleinterface values (#{roleId,jdbcType=INTEGER},#{interfaceId,jdbcType=INTEGER})
     </select>
 </mapper>

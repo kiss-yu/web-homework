@@ -55,6 +55,10 @@
      <select id="maxId" resultType="Integer">
          select max(`id`) from `${model_name}`;
      </select>
+
+     <select id="count" resultType="Long">
+         select count(`id`) from `${model_name}`;
+     </select>
     <select id="findByOneField" resultMap="BaseResultMap">
         select * from `${model_name}` where `#{field,jdbcType=VARCHAR}` = #{value,jdbcType=VARCHAR}
     </select>
@@ -66,7 +70,7 @@
         <if test="order != null and sort != null">
             order by @{order} @{sort}
         </if>
-        <if test="limit != -1 and limit != -1">
+        <if test="limit != null">
             limit ${r"#{offset,jdbcType=INTEGER}"},${r"#{limit,jdbcType=INTEGER}"}
         </if>
     </select>

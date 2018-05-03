@@ -40,7 +40,7 @@ public class PermissionInterceptor implements HandlerInterceptor,PermissionHandl
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         UserModel user = (UserModel) request.getSession().getAttribute(UserCache.USER_SESSION_KEY);
         UserCache.putUser(request.getSession());
-        if (handler instanceof HandlerMethod) {
+/*        if (handler instanceof HandlerMethod) {
             HandlerMethod handlerMethod = (HandlerMethod) handler;
             Method method = handlerMethod.getMethod();
             if (methodIsPermission(method)) {
@@ -68,7 +68,7 @@ public class PermissionInterceptor implements HandlerInterceptor,PermissionHandl
                     }
                 }
             }
-        }
+        }*/
         return true;
     }
 

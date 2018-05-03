@@ -6,10 +6,7 @@ import com.nix.cinema.model.RoleInterfaceModel;
 import com.nix.cinema.service.impl.RoleInterfaceService;
 import com.nix.cinema.util.ReturnUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author Kiss
@@ -26,5 +23,10 @@ public class AdminRoleInterfaceController {
     public ReturnObject add(@ModelAttribute RoleInterfaceModel roleInterfaceModel) throws Exception {
         roleInterfaceService.add(roleInterfaceModel);
         return ReturnUtil.success(roleInterfaceModel);
+    }
+
+    @GetMapping("/all")
+    public ReturnObject all() {
+        return ReturnUtil.success(roleInterfaceService.list(null,-1,null,null,null));
     }
 }

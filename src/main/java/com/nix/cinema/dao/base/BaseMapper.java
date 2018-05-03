@@ -15,6 +15,7 @@ public interface BaseMapper<M extends BaseModel<M>>{
     void update(M model);
     M select(@Param("id") Integer id);
     Integer maxId(M m);
+    Long count();
     List<M> findByOneField(@Param("field") String field,@Param("value") String value);
     List<M> list(@Param("offset") Integer offset, @Param("limit") Integer limit, @Param("order") String order, @Param("sort") String sort, @Param("conditions") String conditions);
 }
