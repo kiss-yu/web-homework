@@ -81,7 +81,7 @@ public class AdminRoleController {
     }
 
 
-    @GetMapping("/list")
+    @PostMapping("/list")
     public ReturnObject list(@ModelAttribute Pageable<RoleModel> pageable) throws Exception {
         Map additionalData = new HashMap();
         additionalData.put("total",roleService.count());

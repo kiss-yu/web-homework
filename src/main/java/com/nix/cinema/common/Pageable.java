@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class Pageable<M extends BaseModel<M>> {
     private Integer page;
-    private Integer size;
+    private Integer limit;
     private String order;
     private String sort;
     private String conditionsSql;
@@ -25,12 +25,12 @@ public class Pageable<M extends BaseModel<M>> {
         this.page = page;
     }
 
-    public Integer getSize() {
-        return size;
+    public Integer getLimit() {
+        return limit;
     }
 
-    public void setSize(Integer size) {
-        this.size = size;
+    public void setLimit(Integer limit) {
+        this.limit = limit;
     }
 
     public String getOrder() {
@@ -58,6 +58,6 @@ public class Pageable<M extends BaseModel<M>> {
     }
 
     public List<M> getList(BaseService<M> service) {
-        return service.list(page,size,order,sort,conditionsSql);
+        return service.list(page,limit,order,sort,conditionsSql);
     }
 }
