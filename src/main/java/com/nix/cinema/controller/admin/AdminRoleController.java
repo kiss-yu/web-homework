@@ -3,9 +3,11 @@ package com.nix.cinema.controller.admin;
 import com.nix.cinema.common.Pageable;
 import com.nix.cinema.common.ReturnObject;
 import com.nix.cinema.common.annotation.AdminController;
+import com.nix.cinema.dto.RoleRoleInterfaceDto;
 import com.nix.cinema.model.RoleInterfaceModel;
 import com.nix.cinema.model.RoleModel;
 import com.nix.cinema.model.UserModel;
+import com.nix.cinema.service.impl.RoleInterfaceService;
 import com.nix.cinema.service.impl.RoleService;
 import com.nix.cinema.util.ReturnUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.management.relation.Role;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -26,6 +29,8 @@ import java.util.Map;
 public class AdminRoleController {
     @Autowired
     private RoleService roleService;
+    @Autowired
+    private RoleInterfaceService roleInterfaceService;
 
     @GetMapping("/checkName")
     public boolean checkName(@RequestParam("name") String name) {
@@ -36,22 +41,45 @@ public class AdminRoleController {
     public ReturnObject add(
             @ModelAttribute RoleModel roleModel,
             @RequestParam(value = "roleInterfaceId",required = false) Integer[] roleInterfaceId) throws Exception {
-        ArrayList<RoleInterfaceModel> roleInterfaceModels = new ArrayList<>();
-        if (roleInterfaceId != null && roleInterfaceId.length > 0) {
-            for (Integer id:roleInterfaceId) {
-                RoleInterfaceModel model = new RoleInterfaceModel();
-                model.setId(id);
-                roleInterfaceModels.add(model);
-            }
-            roleModel.setRoleInterfaces(roleInterfaceModels);
-        }
+        roleService.createRoleModelByInterfacesId(roleModel,roleInterfaceId);
         return ReturnUtil.success(roleService.add(roleModel));
+    }
+
+    @PostMapping("/delete")
+    public ReturnObject delete(@RequestParam("ids") Integer[] ids) throws Exception {
+        roleService.delete(ids);
+        return ReturnUtil.success();
+    }
+
+    /**
+     * 角色获取他所有授权的接口
+     * */
+    @GetMapping("/interfaces")
+    public ReturnObject getRoleInterfacesInAll(@RequestParam("id") Integer id) {
+        List<RoleInterfaceModel> roleInterfaceModels = roleInterfaceService.list(null,null,null,null,null);
+        RoleModel roleModel = roleService.findById(id);
+        List<RoleRoleInterfaceDto> list = new ArrayList<>();
+        for (RoleInterfaceModel roleInterfaceModel:roleInterfaceModels) {
+            RoleRoleInterfaceDto dto = new RoleRoleInterfaceDto();
+            dto.setRoleInterface(roleInterfaceModel);
+            dto.setHave(roleService.roleHaveTheInterface(roleModel,roleInterfaceModel));
+            list.add(dto);
+        }
+        return ReturnUtil.success(list);
     }
 
     @GetMapping("/view")
     public ReturnObject select(@RequestParam("id") Integer id) {
         return ReturnUtil.success(roleService.findById(id));
     }
+    @PostMapping("/update")
+    public ReturnObject update(
+            @ModelAttribute RoleModel roleModel,
+            @RequestParam(value = "roleInterfaceId",required = false) Integer[] roleInterfaceId) throws Exception {
+        roleService.createRoleModelByInterfacesId(roleModel,roleInterfaceId);
+        return ReturnUtil.success(roleService.update(roleModel));
+    }
+
 
     @GetMapping("/list")
     public ReturnObject list(@ModelAttribute Pageable<RoleModel> pageable) throws Exception {

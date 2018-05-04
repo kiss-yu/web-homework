@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -37,5 +38,46 @@ public class RoleService extends BaseService<RoleModel> {
             roleMapper.insertRoleMiddleInterface(model.getId(),roleInterfaceModel.getId());
         }
         return model;
+    }
+
+    /**
+     * 判断当前用户是否有某接口的权限
+     * */
+    public boolean roleHaveTheInterface(RoleModel roleModel,RoleInterfaceModel roleInterfaceModel) {
+        try {
+            for (RoleInterfaceModel interfaceModel:roleModel.getRoleInterfaces()) {
+                if (interfaceModel.getUrl().equals(roleInterfaceModel.getUrl())) {
+                    return true;
+                }
+            }
+        } catch ( Exception e) {
+        }
+        return false;
+    }
+
+    @Override
+    public RoleModel update(RoleModel model) throws Exception {
+        List<RoleInterfaceModel> before = findById(model.getId()).getRoleInterfaces();
+        List<RoleInterfaceModel> now = model.getRoleInterfaces();
+        for (RoleInterfaceModel deleteModel:before) {
+            roleMapper.deleteRoleMiddleInterface(model.getId(),deleteModel.getId());
+        }
+        for (RoleInterfaceModel deleteModel:now) {
+            roleMapper.insertRoleMiddleInterface(model.getId(),deleteModel.getId());
+        }
+        return super.update(model);
+    }
+
+    public RoleModel createRoleModelByInterfacesId(RoleModel roleModel,Integer[] roleInterfaceId) {
+        ArrayList<RoleInterfaceModel> roleInterfaceModels = new ArrayList<>();
+        if (roleInterfaceId != null && roleInterfaceId.length > 0) {
+            for (Integer id:roleInterfaceId) {
+                RoleInterfaceModel model = new RoleInterfaceModel();
+                model.setId(id);
+                roleInterfaceModels.add(model);
+            }
+            roleModel.setRoleInterfaces(roleInterfaceModels);
+        }
+        return roleModel;
     }
 }

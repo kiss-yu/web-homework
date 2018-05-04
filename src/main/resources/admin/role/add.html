@@ -66,7 +66,7 @@
                         async : false,
                         success : function(data) {
                             if (data.status == 1) {
-                                // location.href = "/admin/role/list.html"
+                                location.href = "/admin/role/list.html"
                             }
                         }
                     });
@@ -113,7 +113,7 @@
         <script>
             $("#header").load("/admin/common/header.html");
             setTimeout(function () {
-                $("#nav").children().eq(1).addClass("cap");
+                $("#nav").children().eq(2).addClass("cap");
             },100);
         </script>
         <div class="contact">
@@ -127,7 +127,7 @@
                                     <span class="glyphicon-class">角色名</span>
                                 </th>
                                 <td>
-                                    <input type="text" class="text" id="name" value="超级管理员" name="name"/>
+                                    <input type="text" class="text" id="name" value="" name="name"/>
                                 </td>
                             </tr>
                             <tr>
@@ -135,7 +135,7 @@
                                     <span class="glyphicon-class">角色值</span>
                                 </th>
                                 <td>
-                                    <input type="text" class="text" id="value" value="admin" name="value"/>
+                                    <input type="text" class="text" id="value" value="" name="value"/>
                                 </td>
                             </tr>
                         </table>

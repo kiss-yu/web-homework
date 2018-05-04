@@ -61,7 +61,7 @@
                         async : false,
                         success : function(data) {
                             if (data.status == 1) {
-                                location.href = "/admin/role/list.html"
+                                // location.href = "/admin/role/list.html"
                             }
                         }
                     });
@@ -94,7 +94,7 @@
                                     <span class="glyphicon-class">权限接口名称</span>
                                 </th>
                                 <td>
-                                    <input type="text" class="text" id="name" value="添加用户" name="name"/>
+                                    <input type="text" class="text" id="name" value="" name="name"/>
                                 </td>
                             </tr>
                             <tr>
@@ -102,7 +102,7 @@
                                     <span class="glyphicon-class">url</span>
                                 </th>
                                 <td>
-                                    <input type="text" class="text" id="url" value="/admin/**" name="url"/>
+                                    <input type="text" class="text" id="url" value="" name="url"/>
                                 </td>
                             </tr>
                             <tr>
@@ -110,7 +110,7 @@
                                     <span class="glyphicon-class">分组</span>
                                 </th>
                                 <td>
-                                    <input type="text" class="text" id="group" value="admin:user" name="group"/>
+                                    <input type="text" class="text" id="group" value="" name="group"/>
                                 </td>
                             </tr>
                             <tr>
@@ -129,7 +129,7 @@
                                     <span class="glyphicon-class">描述</span>
                                 </th>
                                 <td>
-                                    <input type="text" class="text" id="description" name="description" value="管理添加用户"/>
+                                    <input type="text" class="text" id="description" name="description" value=""/>
                                 </td>
                             </tr>
                         </table>

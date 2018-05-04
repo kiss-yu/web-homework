@@ -27,6 +27,6 @@ public class AdminRoleInterfaceController {
 
     @GetMapping("/all")
     public ReturnObject all() {
-        return ReturnUtil.success(roleInterfaceService.list(null,-1,null,null,null));
+        return ReturnUtil.success(roleInterfaceService.list(null,null,null,null,null));
     }
 }

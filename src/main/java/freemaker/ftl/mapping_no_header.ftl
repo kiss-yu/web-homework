@@ -70,7 +70,7 @@
         <if test="order != null and sort != null">
             order by @{order} @{sort}
         </if>
-        <if test="limit != null">
+        <if test="offset != null">
             limit ${r"#{offset,jdbcType=INTEGER}"},${r"#{limit,jdbcType=INTEGER}"}
         </if>
     </select>

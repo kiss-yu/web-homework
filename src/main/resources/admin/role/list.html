@@ -29,8 +29,9 @@
                 $('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
             });
         });
-
+        var listTable;
         $(function () {
+            listTable = $("#listTable");
 
             //1.初始化Table
             var oTable = new TableInit();
@@ -47,13 +48,37 @@
             $("#btn_add").click(function () {
                 location.href = "/admin/role/add.html";
             });
+            $("#btn_delete").click(function () {
+                var tables = listTable.bootstrapTable('getSelections');
+                console.log(tables[0])
+                var lines = new Array();
+                for (var i = 0; i < tables.length; i++) {
+                    lines.push(tables[i].id);
+                }
+                if(confirm('确认删除所有选中数据?') == true){
+                    $.ajax({
+                        method:'POST',
+                        url: '/admin/role/delete',
+                        data:{ids:lines},
+                        traditional:true,
+                        success : function(o) {
+                            if(o.status == 1){
+                                $("#btn_delete,#btn_edit").hide();
+                                listTable.bootstrapTable('remove', {field: 'id', values: lines});
+                            }else {
+                                alert(o.msg == null ? "删除失败" : o.msg);
+                            }
+                        }
+                    });
+                }
+            })
         });
 
         var TableInit = function () {
             var oTableInit = new Object();
             //初始化Table
             oTableInit.Init = function () {
-                $('#listTable').bootstrapTable({
+                listTable.bootstrapTable({
                     url: '/admin/role/list',         //请求后台的URL（*）
                     method: 'get',                      //请求方式（*）
                     toolbar: '#toolbar',                //工具按钮用哪个容器
@@ -88,12 +113,15 @@
                         };
                     },
                     onLoadSuccess:function (result) {
-                        $('#listTable').bootstrapTable('removeAll');
-                        $('#listTable').bootstrapTable('append', result.data);
+                        listTable.bootstrapTable('removeAll');
+                        listTable.bootstrapTable('append', result.data);
                     },
                     columns: [{
                         checkbox: true
                     }, {
+                        field: 'id',
+                        title: 'id'
+                    },{
                         field: 'createDate',
                         title: '创建日期'
                     }, {
@@ -102,6 +130,17 @@
                     }, {
                         field: 'value',
                         title: '角色值'
+                    }, {
+                        field : '',// 返回值名称
+                        title : '操作',// 列名
+                        formatter: function (value, row, index) {
+                            return "<input class='btn btn-info' type='button' style='margin-right: 5px' " +
+                                "onclick='{ location.href = \"./view.html?id=" + row.id + "\"}' value='详情'>" +
+                                "<input class='btn btn-info' type='button' style='margin-right: 5px' onclick='" +
+                                "{ location.href = \"./edit.html?id=" + row.id + "\"}' value='编辑'>" +
+                                "<input class='btn btn-danger' type='button' onclick='" +
+                                "deleteRole(" + row.id + ")' value='删除'>";
+                        }
                     }]
                 });
             };
@@ -118,6 +157,21 @@
             return oTableInit;
         };
 
+        function deleteRole(id) {
+            $.ajax({
+                method:'POST',
+                url: '/admin/role/delete',
+                data:{ids:[id]},
+                traditional:true,
+                success : function(o) {
+                    if(o.status == 1){
+                        listTable.bootstrapTable('remove', {field: 'id', values: [id]});
+                    }else {
+                        alert(o.msg == null ? "删除失败" : o.msg);
+                    }
+                }
+            });
+        }
 
         var ButtonInit = function () {
             var oInit = new Object();
@@ -157,12 +211,6 @@
             <div id="toolbar" class="btn-group">
                 <button id="btn_add" type="button" class="btn btn-default">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加
-                </button>
-                <button id="btn_edit" type="button" class="btn btn-default">
-                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
-                </button>
-                <button id="btn_delete" type="button" class="btn btn-default">
-                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
                 </button>
             </div>
 

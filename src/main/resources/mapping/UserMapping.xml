@@ -91,7 +91,7 @@
         delete  from `user` where id = #{id,jdbcType=INTEGER}
     </delete>
     <update id="update" parameterType="com.nix.cinema.model.UserModel">
-        updata `user`
+        update `user`
         set
         <trim prefix="" suffix="" suffixOverrides=",">
             <if test="id != null">
@@ -150,7 +150,7 @@
         <if test="order != null and sort != null">
             order by ${order} ${sort}
         </if>
-        <if test="limit != null">
+        <if test="offset != null">
             limit #{offset,jdbcType=INTEGER},#{limit,jdbcType=INTEGER}
         </if>
     </select>

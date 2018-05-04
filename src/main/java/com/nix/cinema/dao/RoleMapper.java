@@ -14,5 +14,6 @@ import java.util.List;
 @Repository
 public interface RoleMapper extends BaseMapper<RoleModel> {
     void insertRoleMiddleInterface(@Param("roleId") Integer roleId, @Param("interfaceId") Integer interfaceId);
+    void deleteRoleMiddleInterface(@Param("roleId") Integer roleId, @Param("interfaceId") Integer interfaceId);
 
 }

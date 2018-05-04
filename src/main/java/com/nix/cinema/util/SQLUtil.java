@@ -69,7 +69,7 @@ public class SQLUtil {
 	}
 	
 	public static Integer getOffset(Integer curPage, Integer limit) {
-		if (curPage == null || limit == -1 || curPage == null) {
+		if (curPage == null || limit < 1 || curPage == null || curPage < 0) {
 			return null;
 		}
 		return (curPage - 1) * limit;

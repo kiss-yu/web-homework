@@ -50,7 +50,7 @@
         delete  from `role` where id = #{id,jdbcType=INTEGER}
     </delete>
     <update id="update" parameterType="com.nix.cinema.model.RoleModel">
-        updata `role`
+        update `role`
         set
         <trim prefix="" suffix="" suffixOverrides=",">
             <if test="id != null">
@@ -93,12 +93,15 @@
         <if test="order != null and sort != null">
             order by ${order} ${sort}
         </if>
-        <if test="limit != null">
+        <if test="offset != null">
             limit #{offset,jdbcType=INTEGER},#{limit,jdbcType=INTEGER}
         </if>
     </select>
 
     <select id="insertRoleMiddleInterface">
         insert into role_roleinterface values (#{roleId,jdbcType=INTEGER},#{interfaceId,jdbcType=INTEGER})
+    </select>
+    <select id="deleteRoleMiddleInterface">
+        delete from role_roleinterface where role = #{roleId,jdbcType=INTEGER} and interface = #{interfaceId,jdbcType=INTEGER}
     </select>
 </mapper>

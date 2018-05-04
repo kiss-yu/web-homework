@@ -19,25 +19,51 @@
     <script type="text/javascript" src="/js/jquery.tools.js"></script>
     <script type="text/javascript" src="/js/jquery.lSelect.js"></script>
     <script type="text/javascript">
+        function getQueryString() {
+            var qs = location.search.substr(1), // 获取url中"?"符后的字串
+                args = {}, // 保存参数数据的对象
+                items = qs.length ? qs.split("&") : [], // 取得每一个参数项,
+                item = null,
+                len = items.length;
+
+            for(var i = 0; i < len; i++) {
+                item = items[i].split("=");
+                var name = decodeURIComponent(item[0]),
+                    value = decodeURIComponent(item[1]);
+                if(name) {
+                    args[name] = value;
+                }
+            }
+            return args;
+        }
+        var id = getQueryString()["id"];
 
         addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
         function hideURLbar(){ window.scrollTo(0,1); }
 
         jQuery(document).ready(function($) {
-            $(".scroll").click(function(event){
-                event.preventDefault();
-                $('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
+            //根据界面传参获取role详情
+            $.ajax({
+                cache : true,
+                type : "GET",
+                url : "/admin/role/view?id=" + id,
+                success : function(data) {
+                    if (data.status == 1) {
+                        var role = data.data;
+                        $("#id").val(role.id);
+                        $("#name").val(role.name);
+                        $("#value").val(role.value);
+                    } else {
+                        alert("错误");
+                    }
+                }
             });
 
             function validateForm(){
                 return $("#inputForm").validate({
                     rules: {
                         "name": {
-                            required: true,
-                            remote: {
-                                url: "checkName",
-                                cache: false
-                            }
+                            required: true
                         },
                         "value": {
                             required: true
@@ -61,19 +87,51 @@
                     $.ajax({
                         cache : true,
                         type : "POST",
-                        url : "/admin/user/add",
+                        url : "/admin/role/update",
                         data : $('#inputForm').serialize(),
                         async : false,
                         success : function(data) {
                             if (data.status == 1) {
-                                location.href = "/admin/user/list.html"
+                                location.href = "/admin/role/list.html"
                             }
                         }
                     });
                 }
             });
+            //设置接口列表
+            var table = $("#table");
+            $.ajax({
+                cache : true,
+                type : "GET",
+                url : "/admin/role/interfaces?id=" + id,
+                success : function(data) {
+                    if (data.status == 1) {
+                        var array = data.data;
+                        var group = "";
+                        var tr = "";
+                        for (var i = 0;i < array.length; i ++) {
+                            var roleModel = array[i];
+                            if (group === roleModel.roleInterface.group) {
+                                tr += "<input type='checkbox' name='roleInterfaceId' " + (roleModel.have ? "checked" : "") + " value='" + roleModel.roleInterface.id + " '>" + roleModel.roleInterface.name;
+                            } else {
+                                group = roleModel.roleInterface.group;
+                                tr += "</td></tr>";
+                                table.append($(tr));
+                                tr = "<tr>" +
+                                    "<th>" + group + "</th>" +
+                                    "<td>" +
+                                    "<input type='checkbox' name='roleInterfaceId' " + (roleModel.have ? "checked" : "") + " value='" + roleModel.roleInterface.id + " '>" + roleModel.roleInterface.name;
+                            }
+                        }
+                        tr = tr == "" ? "" : (tr + "</td></tr>");
+                        table.append($(tr));
+                    }
+                }
+            });
 
         });
+
+
     </script>
     <!-- start-smoth-scrolling -->
 </head>
@@ -94,13 +152,14 @@
             <div class="blog" style="height: 650px;">
                 <div class="blog-left">
                     <form id="inputForm" method="post">
-                        <table class="input tab-content" style="display: table">
+                        <table class="input tab-content" style="display: table" id="table">
                             <tr>
                                 <th>
                                     <span class="glyphicon-class">角色名</span>
                                 </th>
                                 <td>
-                                    <input type="text" class="text" id="name" value="超级管理员" name="name" disabled/>
+                                    <input type="text" class="text" id="name" value="" name="name" />
+                                    <input type="text" class="text" id="id" value="" name="id" hidden/>
                                 </td>
                             </tr>
                             <tr>
@@ -108,9 +167,10 @@
                                     <span class="glyphicon-class">角色值</span>
                                 </th>
                                 <td>
-                                    <input type="text" class="text" id="value" value="admin" name="value"/>
+                                    <input type="text" class="text" id="value" value="" name="value"/>
                                 </td>
                             </tr>
+
                         </table>
                         <table class="input">
                             <tr>
