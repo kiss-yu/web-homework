@@ -21,7 +21,7 @@ import java.io.File;
 @Service
 public class MemberService extends BaseService<MemberModel> {
     public final static String ADMIN_USERNAME = "admin";
-    public final static String MEMBER_IMG_PATH = MemberService.class.getResource("/").getFile() + "/images/member/";
+    public final static String MEMBER_IMG_PATH = "/images/member/";
     public final static String MEMBER_DEFAULT_IMG = "default.jpg";
 
     @Autowired
@@ -60,11 +60,11 @@ public class MemberService extends BaseService<MemberModel> {
 
     public MemberModel add(MemberModel model,MultipartFile portraitImg) throws Exception {
         if (portraitImg != null) {
-            model.setImg(portraitImg.getOriginalFilename());
+            model.setImg(MEMBER_IMG_PATH + portraitImg.getOriginalFilename());
         }
         add(model);
         if (portraitImg != null) {
-            File file = new File(MEMBER_IMG_PATH + portraitImg.getOriginalFilename());
+            File file = new File(MemberService.class.getResource("/").getFile() + MEMBER_IMG_PATH + portraitImg.getOriginalFilename());
             portraitImg.transferTo(file);
         }
         return model;

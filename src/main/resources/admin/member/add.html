@@ -104,7 +104,7 @@
                         async : false,
                         success : function(data) {
                             if (data.status == 1) {
-                                // location.href = apiRoot + "/list.html"
+                                location.href = apiRoot + "/list.html"
                             }
                         }
                     });
@@ -118,8 +118,6 @@
                 cache : true,
                 type : "POST",
                 url : "/admin/role/list",
-                data : $('#inputForm').serialize(),
-                async : false,
                 success : function(data) {
                     if (data.status == 1) {
                         for (var i = 0;i < data.data.length;i ++) {
@@ -231,8 +229,8 @@
                                     <span class="glyphicon-class">性别</span>
                                 </th>
                                 <td>
-                                    <input id="boy" type="radio" checked="checked" name="1" />男
-                                    <input id="girl" type="radio"  name="1"/>女
+                                    <input id="boy" type="radio" checked="checked" name="sex" value="1"/>男
+                                    <input id="girl" type="radio"  name="sex" value="0"/>女
                                 </td>
                             </tr>
                             <tr>

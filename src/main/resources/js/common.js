@@ -23,7 +23,12 @@ $(function () {
     listTable = $("#listTable");
 
     //1.初始化Table
-    var oTable = new TableInit();
+    var oTable;
+    try {
+        oTable = new TableInit();
+    }catch (e) {
+        return;
+    }
     oTable.Init();
 
     $("#btn_add").click(function () {

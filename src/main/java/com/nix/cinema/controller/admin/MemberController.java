@@ -44,7 +44,6 @@ public class MemberController {
         }
         user.setRole(roleModel);
         memberService.add(user,portraitImg);
-        System.out.println(portraitImg == null);
         return ReturnUtil.success(memberService.findByUsername(user.getUsername()));
     }
     @PostMapping("/delete")
@@ -71,6 +70,10 @@ public class MemberController {
         return memberService.findByUsername(username) == null;
     }
 
+    @GetMapping("/view")
+    public ReturnObject select(@RequestParam("id") Integer id) {
+        return ReturnUtil.success(memberService.findById(id));
+    }
     @PostMapping("/list")
     public ReturnObject list(@ModelAttribute Pageable<MemberModel> pageable) throws Exception {
         Map additionalData = new HashMap();

@@ -23,6 +23,41 @@
 	<script type="text/javascript">
         var apiRoot = "/admin/member";
         jQuery(document).ready(function($) {
+            //添加角色选着下拉框
+            $.ajax({
+                cache : true,
+                type : "POST",
+                url : "/admin/role/list",
+                success : function(data) {
+                    if (data.status == 1) {
+                        for (var i = 0;i < data.data.length;i ++) {
+                            var model = data.data[i];
+                            $("#roleSelect").append(getOption(model.id,model.name));
+                        }
+                        //获取用户信息设置
+                        $.ajax({
+                            cache : true,
+                            type : "GET",
+                            url : apiRoot + "/view?id=" + id,
+                            success : function(data) {
+                                if (data.status == 1) {
+                                    var model = data.data;
+                                    $("#id").val(model.id);
+                                    $("#username").val(model.username);
+                                    $("#name").val(model.name);
+                                    $("#phone").val(model.phone);
+                                    $("#age").val(model.age);
+                                    $("#portrait").attr("src",model.img)
+                                    $("#sex") ? $("#boy").prop("checked",true) : $("#girl").prop("checked",true);
+                                    $("#roleSelect").val(model.role.id);
+                                } else {
+                                    alert("错误");
+                                }
+                            }
+                        });
+                    }
+                }
+            });
             jQuery.validator.addMethod("passwordIsEq", function(value, element) {
                 return this.optional(element) || value === $("#password").val();
             }, "两次密码不一致");
@@ -114,22 +149,6 @@
             let getOption = function(value,text) {
                 return `<option value='${value}'>${text}</option>`;
             };
-            //添加角色选着下拉框
-            $.ajax({
-                cache : true,
-                type : "POST",
-                url : "/admin/role/list",
-                data : $('#inputForm').serialize(),
-                async : false,
-                success : function(data) {
-                    if (data.status == 1) {
-                        for (var i = 0;i < data.data.length;i ++) {
-                            var model = data.data[i];
-                            $("#roleSelect").append(getOption(model.id,model.name));
-                        }
-                    }
-                }
-            });
         });
 
         function clickImage(file) {
@@ -142,7 +161,6 @@
                 reader.readAsDataURL(file.files[0]);
             }
         }
-
 	</script>
 
 	<style>
@@ -164,7 +182,7 @@
             },100);
 		</script>
 		<div class="contact">
-			<h3>添加用户</h3>
+			<h3>修改用户</h3>
 			<div class="blog" style="height: 650px;">
 				<div class="blog-left">
 					<form id="inputForm" method="post" enctype="multipart/form-data">
@@ -174,7 +192,8 @@
 									<span class="glyphicon-class">用户名</span>
 								</th>
 								<td>
-									<input type="text" class="text" id="username" value="" name="username"/>
+									<input type="text" class="text" id="username" value="" name="username" disabled/>
+									<input type="text" class="text" id="id" value="" name="id" hidden/>
 								</td>
 							</tr>
 							<tr>
