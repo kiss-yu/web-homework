@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>personalInfo</title>
+
     <link href="/css/style.css" rel="stylesheet" type="text/css" media="all" />
     <link href="/css/myTable.css" rel="stylesheet" type="text/css" media="all" />
     <link href="/resource/bootstrap-3.3.7-dist/css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
@@ -19,7 +20,7 @@
     <script type="text/javascript" src="/js/jquery.tools.js"></script>
     <script type="text/javascript" src="/js/jquery.lSelect.js"></script>
     <script type="text/javascript">
-        var apiRoot = "/admin/user";
+        var apiRoot = "/admin/member";
         jQuery(document).ready(function($) {
             jQuery.validator.addMethod("passwordIsEq", function(value, element) {
                 return this.optional(element) || value === $("#password").val();
@@ -43,7 +44,11 @@
                         "username": {
                             required: true,
                             minlength : 6,
-                            maxlength : 20
+                            maxlength : 20,
+                            remote: {
+                                url: "checkUsername",
+                                cache: false
+                            }
                         },
                         "phone": {
                             required: true,
@@ -58,7 +63,8 @@
                         "username" : {
                             required: "不能为空",
                             minlength: "不能低于6位",
-                            maxlength:"不能高于20位"
+                            maxlength:"不能高于20位",
+                            remote : "用户名已存在"
                         },
                         "password" : {
                             required: "不能为空",
@@ -92,20 +98,59 @@
                         cache : true,
                         type : "POST",
                         url : apiRoot + "/add",
-                        data : $('#inputForm').serialize(),
+                        data: new FormData($('#inputForm')[0]),
+                        processData: false,
+                        contentType: false,
                         async : false,
                         success : function(data) {
                             if (data.status == 1) {
-                                location.href = apiRoot + "/list.html"
+                                // location.href = apiRoot + "/list.html"
                             }
                         }
                     });
                 }
             });
+            let getOption = function(value,text) {
+                return `<option value='${value}'>${text}</option>`;
+            };
+            //添加角色选着下拉框
+            $.ajax({
+                cache : true,
+                type : "POST",
+                url : "/admin/role/list",
+                data : $('#inputForm').serialize(),
+                async : false,
+                success : function(data) {
+                    if (data.status == 1) {
+                        for (var i = 0;i < data.data.length;i ++) {
+                            var model = data.data[i];
+                            $("#roleSelect").append(getOption(model.id,model.name));
+                        }
+                    }
+                }
+            });
         });
-    </script>
-</head>
 
+        function clickImage(file) {
+            if (file.files && file.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(evt) {
+                    console.log(evt)
+                    document.getElementById("portrait").src = evt.target.result;
+                }
+                reader.readAsDataURL(file.files[0]);
+            }
+        }
+
+    </script>
+
+    <style>
+        #portrait{
+            width: 50px;
+            height: 50px;
+        }
+    </style>
+</head>
 <body>
 <div class="psd">
     <div class="container">
@@ -121,7 +166,7 @@
             <h3>添加用户</h3>
             <div class="blog" style="height: 650px;">
                 <div class="blog-left">
-                    <form id="inputForm" method="post">
+                    <form id="inputForm" method="post" enctype="multipart/form-data">
                         <table class="input tab-content" style="display: table">
                             <tr>
                                 <th>
@@ -129,6 +174,15 @@
                                 </th>
                                 <td>
                                     <input type="text" class="text" id="username" value="" name="username"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <span class="glyphicon-class">头像</span>
+                                </th>
+                                <td>
+                                    <input class="hidden" id="file" type="file" name="portraitImg" onchange="clickImage(this)">
+                                    <img id="portrait" src="/images/member/default.jpg" onclick="{document.getElementById('file').click();}">
                                 </td>
                             </tr>
                             <tr>
@@ -186,11 +240,7 @@
                                     <span class="glyphicon-class">角色</span>
                                 </th>
                                 <td>
-                                    <select name="role">
-                                        <option value="admin:admin">超级管理</option>
-                                        <option value="admin:admin">用户</option>
-                                        <option value="admin:admin">用户</option>
-                                        <option value="admin:admin">用户</option>
+                                    <select name="roleId" id="roleSelect">
                                     </select>
                                 </td>
                             </tr>

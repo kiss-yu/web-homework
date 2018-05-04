@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nix.cinema.dao.MemberMapper">
-        <resultMap id="BaseResultMap" type="com.nix.cinema.model.MemberModel">
+    <resultMap id="BaseResultMap" type="com.nix.cinema.model.MemberModel">
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="createDate" property="createDate" jdbcType="TIMESTAMP"/>
         <result column="updateDate" property="updateDate" jdbcType="TIMESTAMP"/>
         <result column="username" property="username" jdbcType="VARCHAR"/>
         <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
         <result column="age" property="age" jdbcType="INTEGER"/>
         <result column="sex" property="sex" jdbcType="BIT"/>
         <result column="phone" property="phone" jdbcType="VARCHAR"/>
         <result column="balance" property="balance" jdbcType="DECIMAL"/>
         <result column="img" property="img" jdbcType="VARCHAR"/>
-        <result column="admin" property="admin" jdbcType="BIT"/>
+        <association property="role" column="role" select="com.nix.cinema.dao.RoleMapper.selectMemberRole"/>
     </resultMap>
     <insert id="insert" parameterType="com.nix.cinema.model.MemberModel">
         insert into `member`
@@ -32,6 +33,9 @@
             <if test="password != null">
                 `password`,
             </if>
+            <if test="name != null">
+                `name`,
+            </if>
             <if test="age != null">
                 `age`,
             </if>
@@ -47,8 +51,8 @@
             <if test="img != null">
                 `img`,
             </if>
-            <if test="admin != null">
-                `admin`,
+            <if test="role != null">
+                `role`,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -67,6 +71,9 @@
             <if test="password != null">
                 #{password,jdbcType=VARCHAR},
             </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
             <if test="age != null">
                 #{age,jdbcType=INTEGER},
             </if>
@@ -82,8 +89,8 @@
             <if test="img != null">
                 #{img,jdbcType=VARCHAR},
             </if>
-            <if test="admin != null">
-                #{admin,jdbcType=BIT},
+            <if test="role != null">
+                #{role.id,jdbcType=VARCHAR},
             </if>
         </trim>
     </insert>
@@ -109,6 +116,9 @@
             <if test="password != null">
                 `password` = #{password,jdbcType=VARCHAR},
             </if>
+            <if test="name != null">
+                `name` = #{name,jdbcType=VARCHAR},
+            </if>
             <if test="age != null">
                 `age` = #{age,jdbcType=INTEGER},
             </if>
@@ -124,8 +134,8 @@
             <if test="img != null">
                 `img` = #{img,jdbcType=VARCHAR},
             </if>
-            <if test="admin != null">
-                `admin` = #{admin,jdbcType=BIT},
+            <if test="role != null">
+                `img` = #{role.id,jdbcType=VARCHAR},
             </if>
         </trim>
         where id = #{id,jdbcType=INTEGER}

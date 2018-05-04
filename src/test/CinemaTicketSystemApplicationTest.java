@@ -13,11 +13,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = CinemaTicketSystemApplication.class)
 public class CinemaTicketSystemApplicationTest {
-    @Autowired
-    private UserMapper userMapper;
-
     @Test
     public void mapperTest() {
-        userMapper.delete(1);
     }
 }

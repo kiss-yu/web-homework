@@ -104,4 +104,8 @@
     <select id="deleteRoleMiddleInterface">
         delete from role_roleinterface where role = #{roleId,jdbcType=INTEGER} and interface = #{interfaceId,jdbcType=INTEGER}
     </select>
+
+    <select id="selectMemberRole" resultMap="BaseResultMap" parameterType="int">
+         select * from `role` where id = #{role,jdbcType=INTEGER}
+    </select>
 </mapper>

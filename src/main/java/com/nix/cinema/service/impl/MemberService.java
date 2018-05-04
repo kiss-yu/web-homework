@@ -3,12 +3,15 @@ package com.nix.cinema.service.impl;
 import com.nix.cinema.Exception.WebException;
 import com.nix.cinema.common.cache.UserCache;
 import com.nix.cinema.dao.MemberMapper;
+import com.nix.cinema.dao.RoleMapper;
 import com.nix.cinema.model.MemberModel;
 import com.nix.cinema.service.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
 
 /**
  * @author Kiss
@@ -18,14 +21,16 @@ import javax.servlet.http.HttpServletRequest;
 @Service
 public class MemberService extends BaseService<MemberModel> {
     public final static String ADMIN_USERNAME = "admin";
+    public final static String MEMBER_IMG_PATH = MemberService.class.getResource("/").getFile() + "/images/member/";
+    public final static String MEMBER_DEFAULT_IMG = "default.jpg";
 
     @Autowired
-    private MemberMapper userMapper;
+    private MemberMapper memberMapper;
 
     public MemberModel login(String username, String password, HttpServletRequest request) {
         MemberModel user = UserCache.currentUser();
         if (user == null) {
-            user = userMapper.login(username,password);
+            user = memberMapper.login(username,password);
             request.getSession(true).setAttribute(UserCache.USER_SESSION_KEY,user);
         }
         return user;
@@ -41,7 +46,7 @@ public class MemberService extends BaseService<MemberModel> {
     }
 
     public MemberModel findByUsername(String username) {
-        return userMapper.findByUsername(username);
+        return memberMapper.findByUsername(username);
     }
 
     @Override
@@ -49,6 +54,21 @@ public class MemberService extends BaseService<MemberModel> {
         if (ADMIN_USERNAME.equals(model.getUsername())) {
             throw new WebException(401,"不能使用admin做完用户名");
         }
+        model.setImg(model.getImg() == null ? MEMBER_DEFAULT_IMG : model.getImg());
         return super.add(model);
     }
+
+    public MemberModel add(MemberModel model,MultipartFile portraitImg) throws Exception {
+        if (portraitImg != null) {
+            model.setImg(portraitImg.getOriginalFilename());
+        }
+        add(model);
+        if (portraitImg != null) {
+            File file = new File(MEMBER_IMG_PATH + portraitImg.getOriginalFilename());
+            portraitImg.transferTo(file);
+        }
+        return model;
+    }
+
+
 }

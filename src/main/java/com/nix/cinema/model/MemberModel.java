@@ -15,14 +15,13 @@ public class MemberModel extends BaseModel<MemberModel> {
     private String password;
     private Integer age;
     private Boolean sex;
+    private String name;
     //电话
     private String phone;
     //账户余额
     private BigDecimal balance;
     //头像
     private String img;
-    //是管理角色还是用户
-    private Boolean admin;
 
     //用户角色
     private RoleModel role;
@@ -75,11 +74,17 @@ public class MemberModel extends BaseModel<MemberModel> {
         return img;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public void setImg(String img) {
         this.img = img;
     }
-
-    @JsonIgnore
     public RoleModel getRole() {
         return role;
     }
@@ -90,14 +95,6 @@ public class MemberModel extends BaseModel<MemberModel> {
 
     public Boolean getSex() {
         return sex;
-    }
-
-    public Boolean getAdmin() {
-        return admin;
-    }
-
-    public void setAdmin(Boolean admin) {
-        this.admin = admin;
     }
 
     public boolean isSuperAdmin() {
@@ -111,13 +108,11 @@ public class MemberModel extends BaseModel<MemberModel> {
                 ", password='" + password + '\'' +
                 ", age=" + age +
                 ", sex=" + sex +
+                ", name='" + name + '\'' +
+                ", phone='" + phone + '\'' +
                 ", balance=" + balance +
                 ", img='" + img + '\'' +
-                ", admin=" + admin +
                 ", role=" + role +
-                ", id=" + id +
-                ", createDate=" + createDate +
-                ", updateDate=" + updateDate +
                 '}';
     }
 }

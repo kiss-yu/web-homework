@@ -15,56 +15,13 @@
     <!-- for-mobile-apps -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
-    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
-    function hideURLbar(){ window.scrollTo(0,1); } </script>
     <!-- //for-mobile-apps -->
     <!-- start-smoth-scrolling -->
     <script type="text/javascript" src="/js/move-top.js"></script>
     <script type="text/javascript" src="/js/easing.js"></script>
+    <script type="text/javascript" src="/js/common.js"></script>
     <script type="text/javascript">
-        var listTable;
-        var apiRoot = "/admin/role";
-        $(function () {
-            listTable = $("#listTable");
-
-            //1.初始化Table
-            var oTable = new TableInit();
-            oTable.Init();
-
-            //2.初始化Button的点击事件
-            var oButtonInit = new ButtonInit();
-            oButtonInit.Init();
-
-            $("#btn_add").click(function () {
-                location.href = apiRoot + "/add.html";
-            });
-            $("#btn_delete").click(function () {
-                var tables = listTable.bootstrapTable('getSelections');
-                console.log(tables[0])
-                var lines = new Array();
-                for (var i = 0; i < tables.length; i++) {
-                    lines.push(tables[i].id);
-                }
-                if(confirm('确认删除所有选中数据?') == true){
-                    $.ajax({
-                        method:'POST',
-                        url: apiRoot + '/delete',
-                        data:{ids:lines},
-                        traditional:true,
-                        success : function(o) {
-                            if(o.status == 1){
-                                $("#btn_delete,#btn_edit").hide();
-                                listTable.bootstrapTable('remove', {field: 'id', values: lines});
-                            }else {
-                                alert(o.msg == null ? "删除失败" : o.msg);
-                            }
-                        }
-                    });
-                }
-            })
-        });
-
+        apiRoot = "/admin/role";
         var TableInit = function () {
             var oTableInit = new Object();
             //初始化Table
@@ -80,7 +37,7 @@
                     pagination: true,                   //是否显示分页（*）
                     sortable: false,                     //是否启用排序
                     sortOrder: "asc",                   //排序方式
-                    queryParams: oTableInit.queryParams,//传递参数（*）
+                    queryParams: queryParams,//传递参数（*）
                     sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
                     pageNumber:1,                       //初始化加载第一页，默认第一页
                     pageSize: 10,                       //每页的记录行数（*）
@@ -132,49 +89,12 @@
                                 "<input class='btn btn-info' type='button' style='margin-right: 5px' onclick='" +
                                 "{ location.href = \"./edit.html?id=" + row.id + "\"}' value='编辑'>" +
                                 "<input class='btn btn-danger' type='button' onclick='" +
-                                "deleteRole(" + row.id + ")' value='删除'>";
+                                "deleteModel(" + row.id + ")' value='删除'>";
                         }
                     }]
                 });
             };
-
-
-            //得到查询的参数
-            oTableInit.queryParams = function (params) {
-                console.log(params);
-                var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
-                    limit: params.limit,   //页面大小
-                    page: params.offset / params.limit + 1,  //页码
-                };
-                return temp;
-            };
             return oTableInit;
-        };
-
-        function deleteRole(id) {
-            $.ajax({
-                method:'POST',
-                url: apiRoot + '/delete',
-                data:{ids:[id]},
-                traditional:true,
-                success : function(o) {
-                    if(o.status == 1){
-                        listTable.bootstrapTable('remove', {field: 'id', values: [id]});
-                    }else {
-                        alert(o.msg == null ? "删除失败" : o.msg);
-                    }
-                }
-            });
-        }
-
-        var ButtonInit = function () {
-            var oInit = new Object();
-            var postdata = {};
-            oInit.Init = function () {
-                //初始化页面上面的按钮事件
-            };
-
-            return oInit;
         };
 
     </script>
