@@ -47,10 +47,10 @@
                 url : apiRoot + "/view?id=" + id,
                 success : function(data) {
                     if (data.status == 1) {
-                        var role = data.data;
-                        $("#id").val(role.id);
-                        $("#name").val(role.name);
-                        $("#value").val(role.value);
+                        var model = data.data;
+                        $("#id").val(model.id);
+                        $("#name").val(model.name);
+                        $("#value").val(model.value);
                     } else {
                         alert("错误");
                     }
@@ -101,7 +101,7 @@
             $.ajax({
                 cache : true,
                 type : "GET",
-                url : "/admin/role/interfaces?id=" + id,
+                url : apiRoot + "/interfaces?id=" + id,
                 success : function(data) {
                     if (data.status == 1) {
                         var array = data.data;
@@ -115,6 +115,7 @@
                                 group = roleModel.roleInterface.group;
                                 tr += "</td></tr>";
                                 table.append($(tr));
+
                                 tr = "<tr>" +
                                     "<th>" + group + "</th>" +
                                     "<td>" +

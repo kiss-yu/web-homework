@@ -20,16 +20,47 @@
     <script type="text/javascript" src="/js/jquery.lSelect.js"></script>
     <script type="text/javascript">
 
+        var apiRoot = "/admin/roleInterface";
+        function getQueryString() {
+            var qs = location.search.substr(1), // 获取url中"?"符后的字串
+                args = {}, // 保存参数数据的对象
+                items = qs.length ? qs.split("&") : [], // 取得每一个参数项,
+                item = null,
+                len = items.length;
 
-        addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
-        function hideURLbar(){ window.scrollTo(0,1); }
+            for(var i = 0; i < len; i++) {
+                item = items[i].split("=");
+                var name = decodeURIComponent(item[0]),
+                    value = decodeURIComponent(item[1]);
+                if(name) {
+                    args[name] = value;
+                }
+            }
+            return args;
+        }
+        var id = getQueryString()["id"];
 
         jQuery(document).ready(function($) {
-            $(".scroll").click(function(event){
-                event.preventDefault();
-                $('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
+            //根据界面传参获取role详情
+            $.ajax({
+                cache : true,
+                type : "GET",
+                url : apiRoot + "/view?id=" + id,
+                success : function(data) {
+                    if (data.status == 1) {
+                        var model = data.data;
+                        $("#id").val(model.id);
+                        $("#name").val(model.name);
+                        $("#url").val(model.url);
+                        model.enabled ? $("#enabled,#_enabled").prop("checked",true) : $("#enabled,#_enabled").prop("checked",false);
+                        model.enabled ? $("#_enabled").val(true) : $("#_enabled").val(false);
+                        $("#description").val(model.description);
+                        $("#group").val(model.group);
+                    } else {
+                        alert("错误");
+                    }
+                }
             });
-
             function validateForm(){
                 return $("#inputForm").validate({
                     rules: {
@@ -57,19 +88,28 @@
                     $.ajax({
                         cache : true,
                         type : "POST",
-                        url : "/admin/roleInterface/add",
+                        url : apiRoot + "/update",
                         data : $('#inputForm').serialize(),
                         async : false,
                         success : function(data) {
                             if (data.status == 1) {
-                                location.href = "/admin/role/list.html"
+                                // location.href = apiRoot + "/list.html";
                             }
                         }
                     });
                 }
             });
-
+            $("#enabled").click(function() {
+                console.log("xxx");
+                if (this.checked) {
+                    $("#_enabled").val(true);
+                } else {
+                    $("#_enabled").val(false);
+                }
+            });
         });
+
+
     </script>
 </head>
 
@@ -95,7 +135,8 @@
                                     <span class="glyphicon-class">权限接口名称</span>
                                 </th>
                                 <td>
-                                    <input type="text" class="text" id="name" value="添加用户" name="name"/>
+                                    <input type="text" class="text" id="name" value="" name="name"/>
+                                    <input type="text" class="text" id="id" hidden name="id"/>
                                 </td>
                             </tr>
                             <tr>
@@ -103,7 +144,7 @@
                                     <span class="glyphicon-class">url</span>
                                 </th>
                                 <td>
-                                    <input type="text" class="text" id="url" value="/admin/**" name="url"/>
+                                    <input type="text" class="text" id="url" value="" name="url"/>
                                 </td>
                             </tr>
                             <tr>
@@ -111,7 +152,7 @@
                                     <span class="glyphicon-class">分组</span>
                                 </th>
                                 <td>
-                                    <input type="text" class="text" id="group" value="admin:user" name="group"/>
+                                    <input type="text" class="text" id="group" value="" name="group"/>
                                 </td>
                             </tr>
                             <tr>
@@ -120,8 +161,8 @@
                                 </th>
                                 <td>
                                     <label>
-                                        <input type="checkbox" name="isEnabled" value="true" checked="checked" />是否启用
-                                        <input type="hidden" name="_isEnabled" value="false" />
+                                        <input type="checkbox" id="enabled"/>是否启用
+                                        <input type="checkbox" id="_enabled" name="enabled" hidden checked/>
                                     </label>
                                 </td>
                             </tr>

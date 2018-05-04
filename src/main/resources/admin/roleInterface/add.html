@@ -20,15 +20,8 @@
     <script type="text/javascript" src="/js/jquery.lSelect.js"></script>
     <script type="text/javascript">
 
-        addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
-        function hideURLbar(){ window.scrollTo(0,1); }
-
+        var apiRoot = "/admin/roleInterface";
         jQuery(document).ready(function($) {
-            $(".scroll").click(function(event){
-                event.preventDefault();
-                $('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
-            });
-
             function validateForm(){
                 return $("#inputForm").validate({
                     rules: {
@@ -56,12 +49,12 @@
                     $.ajax({
                         cache : true,
                         type : "POST",
-                        url : "/admin/roleInterface/add",
+                        url : apiRoot + "/add",
                         data : $('#inputForm').serialize(),
                         async : false,
                         success : function(data) {
                             if (data.status == 1) {
-                                // location.href = "/admin/role/list.html"
+                                location.href = apiRoot + "/list.html"
                             }
                         }
                     });
@@ -153,14 +146,6 @@
         <iframe src="/admin/common/footer.html" width='100%' height='100%' frameborder='0' name="_blank" id="_blank" />
     </div>
 </div>
-<script type="text/javascript">
-    $(document).ready(function() {
-        $().UItoTop({ easingType: 'easeOutQuart' });
-
-    });
-</script>
-
-
 </body>
 
 </html>

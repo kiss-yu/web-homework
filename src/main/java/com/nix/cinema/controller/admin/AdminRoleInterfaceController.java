@@ -34,6 +34,16 @@ public class AdminRoleInterfaceController {
     public ReturnObject all() {
         return ReturnUtil.success(roleInterfaceService.list(null,null,null,null,null));
     }
+
+    @GetMapping("/view")
+    public ReturnObject select(@RequestParam("id") Integer id) {
+        return ReturnUtil.success(roleInterfaceService.findById(id));
+    }
+    @PostMapping("/update")
+    public ReturnObject update(@ModelAttribute RoleInterfaceModel roleInterfaceModel) throws Exception {
+        return ReturnUtil.success(roleInterfaceService.update(roleInterfaceModel));
+    }
+
     @PostMapping("/list")
     public ReturnObject list(@ModelAttribute Pageable<RoleInterfaceModel> pageable) throws Exception {
         Map additionalData = new HashMap();
