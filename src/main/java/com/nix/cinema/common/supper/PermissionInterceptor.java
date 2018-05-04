@@ -8,10 +8,10 @@ import com.nix.cinema.common.annotation.AdminController;
 import com.nix.cinema.common.annotation.Clear;
 import com.nix.cinema.common.annotation.MemberController;
 import com.nix.cinema.common.cache.UserCache;
+import com.nix.cinema.model.MemberModel;
 import com.nix.cinema.model.RoleInterfaceModel;
 import com.nix.cinema.model.RoleModel;
-import com.nix.cinema.model.UserModel;
-import com.nix.cinema.service.impl.UserService;
+import com.nix.cinema.service.impl.MemberService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.method.HandlerMethod;
@@ -38,7 +38,7 @@ public class PermissionInterceptor implements HandlerInterceptor,PermissionHandl
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        UserModel user = (UserModel) request.getSession().getAttribute(UserCache.USER_SESSION_KEY);
+        MemberModel user = (MemberModel) request.getSession().getAttribute(UserCache.USER_SESSION_KEY);
         UserCache.putUser(request.getSession());
         if (handler instanceof HandlerMethod) {
             HandlerMethod handlerMethod = (HandlerMethod) handler;
@@ -84,8 +84,8 @@ public class PermissionInterceptor implements HandlerInterceptor,PermissionHandl
         return false;
     }
 
-    private boolean userPermission(UserModel user,Method method) {
-        if (UserService.ADMIN_USERNAME.equals(user.getUsername())) {
+    private boolean userPermission(MemberModel user, Method method) {
+        if (MemberService.ADMIN_USERNAME.equals(user.getUsername())) {
             return true;
         }
         RoleModel role = user.getRole();

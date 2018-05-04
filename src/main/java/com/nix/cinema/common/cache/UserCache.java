@@ -1,9 +1,8 @@
 package com.nix.cinema.common.cache;
 
-import com.nix.cinema.model.UserModel;
+import com.nix.cinema.model.MemberModel;
 
 import javax.servlet.http.HttpSession;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Kiss
@@ -14,8 +13,8 @@ public final class UserCache {
     //本地线程临时存储
     private final static ThreadLocal<HttpSession> local = new ThreadLocal<>();
 
-    public static UserModel currentUser() {
-        return (UserModel) local.get().getAttribute(USER_SESSION_KEY);
+    public static MemberModel currentUser() {
+        return (MemberModel) local.get().getAttribute(USER_SESSION_KEY);
     }
     public static void putUser(HttpSession session) {
         local.set(session);

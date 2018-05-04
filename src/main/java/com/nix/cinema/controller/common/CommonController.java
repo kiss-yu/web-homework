@@ -1,10 +1,9 @@
 package com.nix.cinema.controller.common;
 
 import com.nix.cinema.common.ReturnObject;
-import com.nix.cinema.common.annotation.Clear;
 import com.nix.cinema.common.cache.UserCache;
 import com.nix.cinema.service.impl.SystemService;
-import com.nix.cinema.service.impl.UserService;
+import com.nix.cinema.service.impl.MemberService;
 import com.nix.cinema.util.ReturnUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class CommonController {
     @Autowired
-    private UserService userService;
+    private MemberService userService;
     @Autowired
     private SystemService systemService;
 

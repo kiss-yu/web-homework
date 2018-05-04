@@ -26,7 +26,7 @@ public class MovieModel extends BaseModel<MovieModel> {
     //缩略图路径
     private String img;
     //电影版权所属用户
-    private UserModel user;
+    private MemberModel user;
 
     public String getIntroduction() {
         return introduction;
@@ -44,11 +44,11 @@ public class MovieModel extends BaseModel<MovieModel> {
         this.img = img;
     }
 
-    public UserModel getUser() {
+    public MemberModel getUser() {
         return user;
     }
 
-    public void setUser(UserModel user) {
+    public void setUser(MemberModel user) {
         this.user = user;
     }
 

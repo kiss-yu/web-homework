@@ -24,7 +24,7 @@ public class OrderModel extends BaseModel<OrderModel> {
         refundComplete
     }
     private String orderSn;
-    private UserModel user;
+    private MemberModel user;
     //应付金额
     private Integer payableAmount;
     //已付金额
@@ -42,11 +42,11 @@ public class OrderModel extends BaseModel<OrderModel> {
         this.orderSn = orderSn;
     }
 
-    public UserModel getUser() {
+    public MemberModel getUser() {
         return user;
     }
 
-    public void setUser(UserModel user) {
+    public void setUser(MemberModel user) {
         this.user = user;
     }
 

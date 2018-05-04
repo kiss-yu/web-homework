@@ -4,8 +4,8 @@ import com.nix.cinema.common.ReturnObject;
 import com.nix.cinema.common.annotation.Clear;
 import com.nix.cinema.common.annotation.MemberController;
 import com.nix.cinema.common.cache.UserCache;
-import com.nix.cinema.model.UserModel;
-import com.nix.cinema.service.impl.UserService;
+import com.nix.cinema.model.MemberModel;
+import com.nix.cinema.service.impl.MemberService;
 import com.nix.cinema.util.ReturnUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
@@ -21,12 +21,12 @@ import javax.servlet.http.HttpServletRequest;
 @MemberController
 public class IndexController {
     @Autowired
-    private UserService userService;
+    private MemberService userService;
 
     @Clear
     @PostMapping("/registered")
-    public ReturnObject registered(@ModelAttribute UserModel user,HttpServletRequest request) throws Exception {
-        UserModel insertUser = userService.registered(user,request);
+    public ReturnObject registered(@ModelAttribute MemberModel user, HttpServletRequest request) throws Exception {
+        MemberModel insertUser = userService.registered(user,request);
         if (insertUser == null) {
             return ReturnUtil.fail(user);
         }
@@ -36,7 +36,7 @@ public class IndexController {
      * 用户修改自己的资料
      * */
     @PostMapping("/update")
-    public ReturnObject updateUser(@ModelAttribute UserModel user) throws Exception {
+    public ReturnObject updateUser(@ModelAttribute MemberModel user) throws Exception {
         Assert.isTrue(UserCache.currentUser().getUsername().equals(user.getUsername()),"非法修改");
         userService.update(user);
         return ReturnUtil.success(user);

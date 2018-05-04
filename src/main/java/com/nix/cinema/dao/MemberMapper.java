@@ -1,7 +1,7 @@
 package com.nix.cinema.dao;
 
 import com.nix.cinema.dao.base.BaseMapper;
-import com.nix.cinema.model.UserModel;
+import com.nix.cinema.model.MemberModel;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -9,19 +9,19 @@ import org.springframework.stereotype.Repository;
  * @author 11723
  */
 @Repository
-public interface UserMapper extends BaseMapper<UserModel> {
+public interface MemberMapper extends BaseMapper<MemberModel> {
     /**
      * 用户登录
      * @param username
      * @param password
      * @return
      * */
-    UserModel login(@Param("username") String username, @Param("password") String password);
+    MemberModel login(@Param("username") String username, @Param("password") String password);
 
     /**
      * 根据用户名查找用户
      * @param username
      * @return
      * */
-    UserModel findByUsername(@Param("username") String username);
+    MemberModel findByUsername(@Param("username") String username);
 }

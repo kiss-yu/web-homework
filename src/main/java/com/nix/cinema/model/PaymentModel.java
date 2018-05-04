@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 public class PaymentModel extends BaseModel<PaymentModel> {
     private String sn;
 
-    private UserModel user;
+    private MemberModel user;
     //金额
     private BigDecimal amount;
 
@@ -24,11 +24,11 @@ public class PaymentModel extends BaseModel<PaymentModel> {
         this.sn = sn;
     }
 
-    public UserModel getUser() {
+    public MemberModel getUser() {
         return user;
     }
 
-    public void setUser(UserModel user) {
+    public void setUser(MemberModel user) {
         this.user = user;
     }
 

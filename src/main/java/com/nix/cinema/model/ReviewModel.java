@@ -13,7 +13,7 @@ public class ReviewModel extends BaseModel<ReviewModel> {
 
     //评论内容
     private String content;
-    private UserModel user;
+    private MemberModel user;
     //回复评论
     private List<ReviewModel> replies;
 
@@ -25,11 +25,11 @@ public class ReviewModel extends BaseModel<ReviewModel> {
         this.content = content;
     }
 
-    public UserModel getUser() {
+    public MemberModel getUser() {
         return user;
     }
 
-    public void setUser(UserModel user) {
+    public void setUser(MemberModel user) {
         this.user = user;
     }
 

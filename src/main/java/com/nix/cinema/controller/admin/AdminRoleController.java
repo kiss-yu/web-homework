@@ -6,14 +6,12 @@ import com.nix.cinema.common.annotation.AdminController;
 import com.nix.cinema.dto.RoleRoleInterfaceDto;
 import com.nix.cinema.model.RoleInterfaceModel;
 import com.nix.cinema.model.RoleModel;
-import com.nix.cinema.model.UserModel;
 import com.nix.cinema.service.impl.RoleInterfaceService;
 import com.nix.cinema.service.impl.RoleService;
 import com.nix.cinema.util.ReturnUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.management.relation.Role;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

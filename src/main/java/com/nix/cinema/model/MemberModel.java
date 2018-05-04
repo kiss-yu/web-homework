@@ -2,7 +2,7 @@ package com.nix.cinema.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.nix.cinema.model.base.BaseModel;
-import com.nix.cinema.service.impl.UserService;
+import com.nix.cinema.service.impl.MemberService;
 
 import java.math.BigDecimal;
 
@@ -10,7 +10,7 @@ import java.math.BigDecimal;
  * @author 11723
  * 用户
  */
-public class UserModel extends BaseModel<UserModel> {
+public class MemberModel extends BaseModel<MemberModel> {
     private String username;
     private String password;
     private Integer age;
@@ -101,12 +101,12 @@ public class UserModel extends BaseModel<UserModel> {
     }
 
     public boolean isSuperAdmin() {
-        return UserService.ADMIN_USERNAME.equals(username);
+        return MemberService.ADMIN_USERNAME.equals(username);
     }
 
     @Override
     public String toString() {
-        return "UserModel{" +
+        return "MemberModel{" +
                 "username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", age=" + age +

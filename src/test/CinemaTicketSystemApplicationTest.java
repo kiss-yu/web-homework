@@ -1,5 +1,5 @@
 import com.nix.cinema.CinemaTicketSystemApplication;
-import com.nix.cinema.dao.UserMapper;
+import com.nix.cinema.dao.MemberMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

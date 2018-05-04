@@ -19,12 +19,8 @@
     <script type="text/javascript" src="/js/jquery.tools.js"></script>
     <script type="text/javascript" src="/js/jquery.lSelect.js"></script>
     <script type="text/javascript">
+        var apiRoot = "/admin/user";
         jQuery(document).ready(function($) {
-            $(".scroll").click(function(event){
-                event.preventDefault();
-                $('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
-            });
-
             jQuery.validator.addMethod("passwordIsEq", function(value, element) {
                 return this.optional(element) || value === $("#password").val();
             }, "两次密码不一致");
@@ -95,23 +91,18 @@
                     $.ajax({
                         cache : true,
                         type : "POST",
-                        url : "/admin/user/add",
+                        url : apiRoot + "/add",
                         data : $('#inputForm').serialize(),
                         async : false,
                         success : function(data) {
                             if (data.status == 1) {
-                                location.href = "/admin/user/list.html"
+                                location.href = apiRoot + "/list.html"
                             }
                         }
                     });
                 }
             });
-
-            //显示用户信息  id通过html传递
-
         });
-        addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
-        function hideURLbar(){ window.scrollTo(0,1); }
     </script>
 </head>
 

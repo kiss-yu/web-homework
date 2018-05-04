@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.nix.cinema.dao.UserMapper">
-        <resultMap id="BaseResultMap" type="com.nix.cinema.model.UserModel">
+<mapper namespace="com.nix.cinema.dao.MemberMapper">
+        <resultMap id="BaseResultMap" type="com.nix.cinema.model.MemberModel">
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="createDate" property="createDate" jdbcType="TIMESTAMP"/>
         <result column="updateDate" property="updateDate" jdbcType="TIMESTAMP"/>
@@ -14,8 +14,8 @@
         <result column="img" property="img" jdbcType="VARCHAR"/>
         <result column="admin" property="admin" jdbcType="BIT"/>
     </resultMap>
-    <insert id="insert" parameterType="com.nix.cinema.model.UserModel">
-        insert into `user`
+    <insert id="insert" parameterType="com.nix.cinema.model.MemberModel">
+        insert into `member`
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
                 `id`,
@@ -88,10 +88,10 @@
         </trim>
     </insert>
     <delete id="delete" parameterType="java.lang.Integer">
-        delete  from `user` where id = #{id,jdbcType=INTEGER}
+        delete  from `member` where id = #{id,jdbcType=INTEGER}
     </delete>
-    <update id="update" parameterType="com.nix.cinema.model.UserModel">
-        update `user`
+    <update id="update" parameterType="com.nix.cinema.model.MemberModel">
+        update `member`
         set
         <trim prefix="" suffix="" suffixOverrides=",">
             <if test="id != null">
@@ -131,19 +131,19 @@
         where id = #{id,jdbcType=INTEGER}
     </update>
     <select id="maxId" resultType="Integer">
-        select max(`id`) from `user`;
+        select max(`id`) from `member`;
     </select>
     <select id="count" resultType="Long">
-        select count(`id`) from `user`;
+        select count(`id`) from `member`;
     </select>
     <select id="findByOneField" resultMap="BaseResultMap">
-        select * from `user` where `#{field,jdbcType=VARCHAR}` = #{value,jdbcType=VARCHAR}
+        select * from `member` where `#{field,jdbcType=VARCHAR}` = #{value,jdbcType=VARCHAR}
     </select>
     <select id="select" parameterType="int" resultMap="BaseResultMap">
-        select * from `user` where id = #{id,jdbcType=INTEGER}
+        select * from `member` where id = #{id,jdbcType=INTEGER}
     </select>
     <select id="list" resultMap="BaseResultMap">
-        select * from `user`
+        select * from `member`
         <if test="conditions != null">
             where ${conditions}
         </if>
@@ -157,13 +157,13 @@
 
 
     <select id="login" resultMap="BaseResultMap">
-        select * from `user` where `password` = #{password} and `username` = #{username}
+        select * from `member` where `password` = #{password} and `username` = #{username}
     </select>
 
     <select id="findByUsername" resultMap="BaseResultMap">
-        select * from `user` where `username` = #{username}
+        select * from `member` where `username` = #{username}
     </select>
     <select id="movieSelectLazy" resultMap="BaseResultMap">
-        select * from `user` where id = #{user}
+        select * from `member` where id = #{user}
     </select>
 </mapper>

@@ -3,7 +3,7 @@ package com.nix.cinema.service.impl;
 import com.nix.cinema.common.cache.UserCache;
 import com.nix.cinema.dao.MovieMapper;
 import com.nix.cinema.model.MovieModel;
-import com.nix.cinema.model.UserModel;
+import com.nix.cinema.model.MemberModel;
 import com.nix.cinema.service.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,7 @@ public class MovieService extends BaseService<MovieModel> {
 
     @Override
     public MovieModel add(MovieModel model) throws Exception {
-        UserModel currentUser = UserCache.currentUser();
+        MemberModel currentUser = UserCache.currentUser();
         if (currentUser.isSuperAdmin()) {
             return super.add(model);
         }
@@ -37,7 +37,7 @@ public class MovieService extends BaseService<MovieModel> {
      */
     @Override
     public MovieModel update(MovieModel model) throws Exception {
-        UserModel currentUser = UserCache.currentUser();
+        MemberModel currentUser = UserCache.currentUser();
         if (currentUser.isSuperAdmin()) {
             return super.update(model);
         }
