@@ -23,13 +23,8 @@
     <script type="text/javascript" src="/js/move-top.js"></script>
     <script type="text/javascript" src="/js/easing.js"></script>
     <script type="text/javascript">
-        jQuery(document).ready(function($) {
-            $(".scroll").click(function(event){
-                event.preventDefault();
-                $('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
-            });
-        });
         var listTable;
+        var apiRoot = "/admin/role";
         $(function () {
             listTable = $("#listTable");
 
@@ -41,12 +36,8 @@
             var oButtonInit = new ButtonInit();
             oButtonInit.Init();
 
-            $("#btn_edit").click(function () {
-                location.href = "/admin/role/edit.html";
-            });
-
             $("#btn_add").click(function () {
-                location.href = "/admin/role/add.html";
+                location.href = apiRoot + "/add.html";
             });
             $("#btn_delete").click(function () {
                 var tables = listTable.bootstrapTable('getSelections');
@@ -58,7 +49,7 @@
                 if(confirm('确认删除所有选中数据?') == true){
                     $.ajax({
                         method:'POST',
-                        url: '/admin/role/delete',
+                        url: apiRoot + '/delete',
                         data:{ids:lines},
                         traditional:true,
                         success : function(o) {
@@ -79,7 +70,7 @@
             //初始化Table
             oTableInit.Init = function () {
                 listTable.bootstrapTable({
-                    url: '/admin/role/list',         //请求后台的URL（*）
+                    url: apiRoot + '/list',         //请求后台的URL（*）
                     method: 'get',                      //请求方式（*）
                     toolbar: '#toolbar',                //工具按钮用哪个容器
                     striped: true,                      //是否显示行间隔色
@@ -160,7 +151,7 @@
         function deleteRole(id) {
             $.ajax({
                 method:'POST',
-                url: '/admin/role/delete',
+                url: apiRoot + '/delete',
                 data:{ids:[id]},
                 traditional:true,
                 success : function(o) {
@@ -211,6 +202,9 @@
             <div id="toolbar" class="btn-group">
                 <button id="btn_add" type="button" class="btn btn-default">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加
+                </button>
+                <button id="btn_delete" type="button" class="btn btn-default">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
                 </button>
             </div>
 

@@ -19,6 +19,8 @@
     <script type="text/javascript" src="/js/jquery.tools.js"></script>
     <script type="text/javascript" src="/js/jquery.lSelect.js"></script>
     <script type="text/javascript">
+
+        var apiRoot = "/admin/role";
         function getQueryString() {
             var qs = location.search.substr(1), // 获取url中"?"符后的字串
                 args = {}, // 保存参数数据的对象
@@ -37,16 +39,12 @@
             return args;
         }
         var id = getQueryString()["id"];
-
-        addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
-        function hideURLbar(){ window.scrollTo(0,1); }
-
         jQuery(document).ready(function($) {
             //根据界面传参获取role详情
             $.ajax({
                 cache : true,
                 type : "GET",
-                url : "/admin/role/view?id=" + id,
+                url : apiRoot + "/view?id=" + id,
                 success : function(data) {
                     if (data.status == 1) {
                         var role = data.data;
@@ -87,12 +85,12 @@
                     $.ajax({
                         cache : true,
                         type : "POST",
-                        url : "/admin/role/update",
+                        url : apiRoot + "/update",
                         data : $('#inputForm').serialize(),
                         async : false,
                         success : function(data) {
                             if (data.status == 1) {
-                                location.href = "/admin/role/list.html"
+                                location.href = apiRoot + "/list.html"
                             }
                         }
                     });
@@ -144,7 +142,7 @@
         <script>
             $("#header").load("/admin/common/header.html");
             setTimeout(function () {
-                $("#nav").children().eq(1).addClass("cap");
+                $("#nav").children().eq(2).addClass("cap");
             },100);
         </script>
         <div class="contact">
@@ -192,14 +190,6 @@
         <iframe src="/admin/common/footer.html" width='100%' height='100%' frameborder='0' name="_blank" id="_blank" />
     </div>
 </div>
-<script type="text/javascript">
-    $(document).ready(function() {
-        $().UItoTop({ easingType: 'easeOutQuart' });
-
-    });
-</script>
-
-
 </body>
 
 </html>
