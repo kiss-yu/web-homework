@@ -11,7 +11,7 @@
         <result column="hitCount" property="hitCount" jdbcType="INTEGER"/>
         <result column="introduction" property="introduction" jdbcType="VARCHAR"/>
         <result column="img" property="img" jdbcType="VARCHAR"/>
-        <association property="user" column="user" select="com.nix.cinema.dao.MemberMapper.movieSelectLazy"/>
+        <association property="member" column="member" select="com.nix.cinema.dao.MemberMapper.selectLazy"/>
     </resultMap>
     <insert id="insert" parameterType="com.nix.cinema.model.MovieModel">
         insert into `movie`

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>personalInfo</title>
+    <link href="/css/myTable.css" rel="stylesheet" type="text/css"/>
+    <link href="/css/style.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="/resource/bootstrap-3.3.7-dist/css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+    <!-- js -->
+    <!--<script src="/resource/js/jquery.min.js"></script>-->
+    <script src="/resource/ueditor/ueditor.js"></script>
+    <!-- //js -->
+    <!-- for-mobile-apps -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <!-- //for-mobile-apps -->
+    <!-- start-smoth-scrolling -->
+    <script type="text/javascript" src="/js/jquery.js"></script>
+    <script type="text/javascript" src="/js/move-top.js"></script>
+    <script type="text/javascript" src="/js/easing.js"></script>
+    <script type="text/javascript" src="/js/jquery.validate.js"></script>
+    <script type="text/javascript" src="/js/jquery.tools.js"></script>
+    <script type="text/javascript" src="/js/jquery.autocomplete.js"></script>
+    <script type="text/javascript" src="/js/common.js"></script>
+    <script type="text/javascript">
+        var apiRoot = "/admin/cinema";
+        jQuery(document).ready(function($) {
+            $("#introduction").editor();
+            function validateForm(){
+                return $("#inputForm").validate({
+                    rules: {
+                        "name" : {
+                            required : true
+                        },
+                        "username": {
+                            remote: {
+                                url: "checkUsername",
+                                cache: false
+                            }
+                        }
+                    },
+                    messages: {
+                        "name" : {
+                            required: "不能为空"
+                        },
+                        "username" : {
+                            remote: "用户不存在"
+                        }
+                    }
+                });
+            }
+            $(validateForm());
+            // 表单验证
+            $("#submit").click(function () {
+                if(validateForm().form()) {
+                    $.ajax({
+                        cache : true,
+                        type : "POST",
+                        url : apiRoot + "/add",
+                        data: new FormData($('#inputForm')[0]),
+                        processData: false,
+                        contentType: false,
+                        async : false,
+                        success : function(data) {
+                            if (data.status == 1) {
+                                location.href = apiRoot + "/list.html"
+                            }
+                        }
+                    });
+                }
+            });
+            $('#username').autocomplete("autoMember", {
+                dataType: "json",
+                max: 20,
+                width: 218,
+                scrollHeight: 300,
+                parse: function(data) {
+                    return $.map(data, function(item) {
+                        return {
+                            data: item,
+                            value: item.name
+                        }
+                    });
+                },
+                formatItem: function(item) {
+                    return '<span title="' + escapeHtml(item.name) + '">' + escapeHtml(abbreviate(item.name, 50, "...")) + '<\/span>' + (true ? ' <span class="silver">[' + escapeHtml(item.username) + ']<\/span>' : '');
+                }
+            }).result(function(event, item) {
+                $("#username").val(item.username);
+            });
+
+        });
+    </script>
+
+    <style>
+        #portrait{
+            width: 200px;
+            height: 200px;
+        }
+
+        .ac_results {
+            overflow: hidden;
+            z-index: 10;
+            -webkit-box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            -moz-box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(color=#e8e8e8, direction=135, strength=3) progid:DXImageTransform.Microsoft.Shadow(color=#e8e8e8, direction=135, strength=3)";
+            filter: progid:DXImageTransform.Microsoft.Shadow(color=#e8e8e8, direction=135, strength=3) progid:DXImageTransform.Microsoft.Shadow(color=#e8e8e8, direction=135, strength=3);
+            border: 1px solid #a3c4d7;
+            background-color: #ffffff;
+        }
+
+        .ac_results ul {
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .ac_results li {
+            line-height: 28px;
+            display: block;
+            padding: 0px 4px;
+            overflow: hidden;
+            white-space: nowrap;
+            cursor: pointer;
+        }
+
+        .ac_results .ac_odd {
+            background-color: #f1f8ff;
+        }
+
+        .ac_results .ac_over {
+            padding: 0px 4px;
+            background-color: #e4f2fa;
+        }
+    </style>
+</head>
+<body>
+<div class="psd">
+    <div class="container">
+        <div id="header">
+        </div>
+        <script>
+            $("#header").load("/admin/common/header.html");
+            setTimeout(function () {
+                $("#nav").children().eq(4).addClass("cap");
+            },100);
+        </script>
+        <div class="contact">
+            <h3>添加影院</h3>
+            <div class="blog">
+                <div class="blog-left">
+                    <form id="inputForm" method="post" enctype="multipart/form-data">
+                        <table class="input tab-content" style="display: table;width: 100%">
+                            <tr>
+                                <th>
+                                    <span class="glyphicon-class">缩略图</span>
+                                </th>
+                                <td>
+                                    <input class="hidden" id="file" type="file" name="portraitImg" onchange="clickImage(this)">
+                                    <img id="portrait" src="/images/cinema/default.jpg" onclick="{document.getElementById('file').click();}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <span class="glyphicon-class">影院编号</span>
+                                </th>
+                                <td>
+                                    <input type="text" class="text" id="cinemaSn"  name="cinemaSn"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <span class="glyphicon-class">影院名称</span>
+                                </th>
+                                <td>
+                                    <input type="text" class="text" id="name"  name="name"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <span class="glyphicon-class">地点</span>
+                                </th>
+                                <td>
+                                    <input type="text" class="text" id="address"  name="address"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <span class="glyphicon-class">介绍</span>
+                                </th>
+                                <td>
+
+                                    <textarea id="introduction" name="introduce" class="editor" style="width: 100%;"></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <span class="glyphicon-class">老板</span>
+                                </th>
+                                <td>
+                                    <input type="text" class="text ac_results" id="username" name="username" title="请输入用户名"/>
+                                </td>
+                            </tr>
+                        </table>
+                        <table class="input">
+                            <tr>
+                                <th>
+                                    &nbsp;
+                                </th>
+                                <td>
+                                    <input type="button" class="button" value="提交" id="submit"/>
+                                    <input type="button" class="button" value="返回" onclick="history.back(); return false;" />
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+
+                <div class="clearfix"> </div>
+            </div>
+        </div>
+        <iframe src="/admin/common/footer.html" width='100%' height='100%' frameborder='0' name="_blank" id="_blank" />
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $().UItoTop({ easingType: 'easeOutQuart' });
+
+    });
+</script>
+
+
+</body>
+
+</html>

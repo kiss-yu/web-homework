@@ -2,8 +2,6 @@ package com.nix.cinema.model;
 
 import com.nix.cinema.model.base.BaseModel;
 
-import java.util.List;
-
 /**
  * @author Kiss
  * @date 2018/04/29 20:44
@@ -11,14 +9,42 @@ import java.util.List;
  */
 public class CinemaModel extends BaseModel<CinemaModel> {
     private String cinemaSn;
+    //电影院名称
+    private String name;
     //影院所在地址（模拟）
     private String address;
     //影院介绍（html文本）
     private String introduce;
-    //影院电影放映房间
-    private List<RoomModel> rooms;
     //热度
     private Integer hotNumber;
+    //所属用户
+    private MemberModel member;
+    //log
+    private String log;
+
+    public MemberModel getMember() {
+        return member;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setMember(MemberModel member) {
+        this.member = member;
+    }
+
+    public String getLog() {
+        return log;
+    }
+
+    public void setLog(String log) {
+        this.log = log;
+    }
 
     public String getCinemaSn() {
         return cinemaSn;
@@ -42,14 +68,6 @@ public class CinemaModel extends BaseModel<CinemaModel> {
 
     public void setIntroduce(String introduce) {
         this.introduce = introduce;
-    }
-
-    public List<RoomModel> getRooms() {
-        return rooms;
-    }
-
-    public void setRooms(List<RoomModel> rooms) {
-        this.rooms = rooms;
     }
 
     public Integer getHotNumber() {

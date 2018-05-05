@@ -17,7 +17,14 @@ input.text {
     border: 1px solid;
     border-color: #999999 #e1e1e1 #e1e1e1 #999999;
 }
-
+textarea.editor {
+    width: 100%;
+    min-height: 388px;
+    visibility: hidden;
+}
+.silver {
+    color: silver;
+}
 input.text[type=file] {
     -webkit-box-shadow: none;
     -moz-box-shadow: none;

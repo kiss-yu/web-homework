@@ -65,7 +65,7 @@
     </select>
 
     <select id="findByOneField" resultMap="BaseResultMap">
-        select * from `${model_name}` where `#{field,jdbcType=VARCHAR}` = #{value,jdbcType=VARCHAR}
+        select * from `${model_name}` where `@{filed}` = ${r"#{"}value,jdbcType=INTEGER${r"}"}
     </select>
 
     <select id="list" resultMap="BaseResultMap">

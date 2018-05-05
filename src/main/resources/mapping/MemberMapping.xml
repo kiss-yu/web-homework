@@ -173,7 +173,7 @@
     <select id="findByUsername" resultMap="BaseResultMap">
         select * from `member` where `username` = #{username}
     </select>
-    <select id="movieSelectLazy" resultMap="BaseResultMap">
-        select * from `member` where id = #{user}
+    <select id="selectLazy" resultMap="BaseResultMap">
+        select * from `member` where id = #{member}
     </select>
 </mapper>

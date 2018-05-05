@@ -16,10 +16,11 @@ public class TicketModel extends BaseModel<TicketModel> {
     private BigDecimal price;
     //所属电影院
     private CinemaModel cinema;
-    //所属房间
-    private RoomModel room;
     //属于哪个电影
     private MovieModel movie;
+    //模拟房间
+    private String room;
+
     //编号
     private Integer sn;
 
@@ -55,14 +56,6 @@ public class TicketModel extends BaseModel<TicketModel> {
         this.cinema = cinema;
     }
 
-    public RoomModel getRoom() {
-        return room;
-    }
-
-    public void setRoom(RoomModel room) {
-        this.room = room;
-    }
-
     public MovieModel getMovie() {
         return movie;
     }
@@ -77,5 +70,13 @@ public class TicketModel extends BaseModel<TicketModel> {
 
     public void setSn(Integer sn) {
         this.sn = sn;
+    }
+
+    public String getRoom() {
+        return room;
+    }
+
+    public void setRoom(String room) {
+        this.room = room;
     }
 }

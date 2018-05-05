@@ -24,7 +24,7 @@ public class MovieService extends BaseService<MovieModel> {
         if (currentUser.isSuperAdmin()) {
             return super.add(model);
         }
-        model.setUser(UserCache.currentUser());
+        model.setMember(UserCache.currentUser());
         return super.add(model);
     }
 
@@ -41,7 +41,7 @@ public class MovieService extends BaseService<MovieModel> {
         if (currentUser.isSuperAdmin()) {
             return super.update(model);
         }
-        model.setUser(currentUser);
+        model.setMember(currentUser);
         return movieMapper.updateCurrentUser(model);
     }
 }
