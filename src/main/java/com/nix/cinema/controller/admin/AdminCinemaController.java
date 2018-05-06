@@ -32,7 +32,7 @@ public class AdminCinemaController {
 
     @PostMapping("/add")
     public ReturnObject create(@ModelAttribute CinemaModel cinema,
-                               @RequestParam(value = "log",required = false) MultipartFile log,
+                               @RequestParam(value = "logImg",required = false) MultipartFile log,
                                @RequestParam(value = "username",required = false) String username) throws Exception {
         MemberModel boss = memberService.findByUsername(username);
         cinema.setMember(boss);
@@ -45,6 +45,36 @@ public class AdminCinemaController {
         }
         return memberService.findByUsername(username) != null;
     }
+    @GetMapping("/checkCinemaSn")
+    public Boolean checkCinemaSn(String cinemaSn) {
+        if (cinemaSn == null || cinemaSn.isEmpty()) {
+            return true;
+        }
+        return cinemaService.findByOneField("cinemaSn",cinemaSn) == null;
+    }
+    @GetMapping("/view")
+    public ReturnObject select(@RequestParam("id") Integer id) {
+        return ReturnUtil.success(cinemaService.findById(id));
+    }
+
+    @PostMapping("/update")
+    public ReturnObject update(@ModelAttribute CinemaModel cinema,
+                               @RequestParam(value = "logImg",required = false) MultipartFile log,
+                               @RequestParam(value = "username",required = false) String username) throws Exception {
+        MemberModel boss = memberService.findByUsername(username);
+        cinema.setMember(boss);
+        if (log != null) {
+            return ReturnUtil.success(cinemaService.update(cinema, log));
+        } else {
+            return ReturnUtil.success(cinemaService.update(cinema));
+        }
+    }
+    @PostMapping("/delete")
+    public ReturnObject delete(@RequestParam("ids") Integer[] ids) throws Exception {
+        cinemaService.delete(ids);
+        return ReturnUtil.success();
+    }
+
     @PostMapping("/list")
     public ReturnObject list(@ModelAttribute Pageable<CinemaModel> pageable) throws Exception {
         Map additionalData = new HashMap();

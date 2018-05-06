@@ -59,7 +59,7 @@ public class MemberService extends BaseService<MemberModel> {
     }
 
     public MemberModel add(MemberModel model,MultipartFile portraitImg) throws Exception {
-        if (portraitImg != null) {
+        if (portraitImg != null && !portraitImg.isEmpty()) {
             model.setImg(MEMBER_IMG_PATH + portraitImg.getOriginalFilename());
         }
         add(model);

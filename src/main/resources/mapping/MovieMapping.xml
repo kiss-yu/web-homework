@@ -84,7 +84,7 @@
         delete  from `movie` where id = #{id,jdbcType=INTEGER}
     </delete>
     <update id="update" parameterType="com.nix.cinema.model.MovieModel">
-        updata `movie`
+        update `movie`
         set
         <trim prefix="" suffix="" suffixOverrides=",">
             <if test="id != null">
@@ -132,7 +132,7 @@
     </select>
 
     <select id="findByOneField" resultMap="BaseResultMap">
-        select * from `moive` where `#{field,jdbcType=VARCHAR}` = #{value,jdbcType=VARCHAR}
+        select * from `movie` where `${field}` = #{value,jdbcType=VARCHAR}
     </select>
     <select id="list" resultMap="BaseResultMap">
         select * from `movie`

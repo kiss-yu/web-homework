@@ -147,7 +147,7 @@
         select count(`id`) from `member`;
     </select>
     <select id="findByOneField" resultMap="BaseResultMap">
-        select * from `member` where `#{field,jdbcType=VARCHAR}` = #{value,jdbcType=VARCHAR}
+        select * from `member` where `${field}` = #{value,jdbcType=VARCHAR}
     </select>
     <select id="select" parameterType="int" resultMap="BaseResultMap">
         select * from `member` where id = #{id,jdbcType=INTEGER}
@@ -164,8 +164,6 @@
             limit #{offset,jdbcType=INTEGER},#{limit,jdbcType=INTEGER}
         </if>
     </select>
-
-
     <select id="login" resultMap="BaseResultMap">
         select * from `member` where `password` = #{password} and `username` = #{username}
     </select>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>personalInfo</title>
+    <link href="/css/myTable.css" rel="stylesheet" type="text/css"/>
+    <link href="/css/style.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="/resource/bootstrap-3.3.7-dist/css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+    <!-- js -->
+    <!--<script src="/resource/js/jquery.min.js"></script>-->
+    <script src="/resource/ueditor/ueditor.js"></script>
+    <!-- //js -->
+    <!-- for-mobile-apps -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <!-- //for-mobile-apps -->
+    <!-- start-smoth-scrolling -->
+    <script type="text/javascript" src="/js/jquery.js"></script>
+    <script type="text/javascript" src="/js/move-top.js"></script>
+    <script type="text/javascript" src="/js/easing.js"></script>
+    <script type="text/javascript" src="/js/jquery.validate.js"></script>
+    <script type="text/javascript" src="/js/jquery.tools.js"></script>
+    <script type="text/javascript" src="/js/jquery.autocomplete.js"></script>
+    <script type="text/javascript" src="/js/common.js"></script>
+    <script type="text/javascript">
+        var apiRoot = "/admin/cinema";
+        jQuery(document).ready(function($) {
+            // $("#introduction").editor();
+            //获取用户信息设置
+            $.ajax({
+                cache : true,
+                type : "GET",
+                url : apiRoot + "/view?id=" + id,
+                success : function(data) {
+                    if (data.status == 1) {
+                        var model = data.data;
+                        $("#portrait").attr("src",model.log);
+                        $("#cinemaSn").html(model.cinemaSn);
+                        $("#_cinemaSn").html(model.cinemaSn);
+                        $("#name").html(model.name);
+                        $("#address").html(model.address);
+                        $("#username").html(model.member.name);
+                        $("#introduction").html(model.introduce);
+                    } else {
+                        alert("错误");
+                    }
+                }
+            });
+        });
+    </script>
+
+    <style>
+        #portrait{
+            width: 200px;
+            height: 200px;
+        }
+    </style>
+</head>
+<body>
+<div class="psd">
+    <div class="container">
+        <div id="header">
+        </div>
+        <script>
+            $("#header").load("/admin/common/header.html");
+            setTimeout(function () {
+                $("#nav").children().eq(4).addClass("cap");
+            },100);
+        </script>
+        <div class="contact">
+            <h3>影院信息查看</h3>
+            <div class="blog">
+                <div class="blog-left">
+                    <form id="inputForm" method="post" enctype="multipart/form-data">
+                        <table class="input tab-content" style="display: table;width: 100%">
+                            <tr>
+                                <th>
+                                    <span class="glyphicon-class">缩略图</span>
+                                </th>
+                                <td>
+                                    <img id="portrait" src="/images/cinema/default.jpg"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <span class="glyphicon-class">影院编号</span>
+                                </th>
+                                <td>
+                                    <span id="cinemaSn"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <span class="glyphicon-class">影院名称</span>
+                                </th>
+                                <td>
+                                    <span id="name"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <span class="glyphicon-class">地点</span>
+                                </th>
+                                <td>
+                                    <span id="address"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <span class="glyphicon-class">介绍</span>
+                                </th>
+                                <td>
+
+                                    <!--<textarea id="introduction" name="introduce" class="editor" style="width: 100%;"></textarea>-->
+                                    <span id="introduction">
+
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <span class="glyphicon-class">老板</span>
+                                </th>
+                                <td>
+                                    <span id="username"></span>
+                                </td>
+                            </tr>
+                        </table>
+                        <table class="input">
+                            <tr>
+                                <th>
+                                    &nbsp;
+                                </th>
+                                <td>
+                                    <input type="button" class="button" value="返回" onclick="history.back(); return false;" />
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+
+                <div class="clearfix"> </div>
+            </div>
+        </div>
+        <iframe src="/admin/common/footer.html" width='100%' height='100%' frameborder='0' name="_blank" id="_blank" />
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $().UItoTop({ easingType: 'easeOutQuart' });
+
+    });
+</script>
+
+
+</body>
+
+</html>

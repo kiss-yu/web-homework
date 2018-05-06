@@ -25,17 +25,33 @@
         var apiRoot = "/admin/cinema";
         jQuery(document).ready(function($) {
             $("#introduction").editor();
+            //获取用户信息设置
+            $.ajax({
+                cache : true,
+                type : "GET",
+                url : apiRoot + "/view?id=" + id,
+                success : function(data) {
+                    if (data.status == 1) {
+                        var model = data.data;
+                        $("#id").val(model.id);
+                        $("#portrait").attr("src",model.log);
+                        $("#cinemaSn").val(model.cinemaSn);
+                        $("#_cinemaSn").val(model.cinemaSn);
+                        $("#name").val(model.name);
+                        $("#address").val(model.address);
+                        $("#username").val(model.member.username);
+                        $("#introduction").html(model.introduce);
+                    } else {
+                        alert("错误");
+                    }
+                }
+            });
+
             function validateForm(){
                 return $("#inputForm").validate({
                     rules: {
                         "name" : {
                             required : true
-                        },
-                        "cinemaSn" : {
-                            remote: {
-                                url: "checkCinemaSn",
-                                cache: false
-                            }
                         },
                         "username": {
                             remote: {
@@ -50,9 +66,6 @@
                         },
                         "username" : {
                             remote: "用户不存在"
-                        },
-                        "cinemaSn" : {
-                            remote: "编号已存在"
                         }
                     }
                 });
@@ -64,14 +77,14 @@
                     $.ajax({
                         cache : true,
                         type : "POST",
-                        url : apiRoot + "/add",
+                        url : apiRoot + "/update",
                         data: new FormData($('#inputForm')[0]),
                         processData: false,
                         contentType: false,
                         async : false,
                         success : function(data) {
                             if (data.status == 1) {
-                                location.href = apiRoot + "/list.html"
+                                // location.href = apiRoot + "/list.html"
                             }
                         }
                     });
@@ -154,7 +167,7 @@
             },100);
         </script>
         <div class="contact">
-            <h3>添加影院</h3>
+            <h3>影院信息修改</h3>
             <div class="blog">
                 <div class="blog-left">
                     <form id="inputForm" method="post" enctype="multipart/form-data">
@@ -164,8 +177,8 @@
                                     <span class="glyphicon-class">缩略图</span>
                                 </th>
                                 <td>
-                                    <input class="hidden" id="file" type="file" name="logImg" onchange="clickImage(this)">
-                                    <img id="portrait" src="/images/cinema/default.jpg" onclick="{document.getElementById('file').click();}">
+                                    <input class="hidden" id="file" type="file" name="logImg" onchange="clickImage(this)"/>
+                                    <img id="portrait" src="/images/cinema/default.jpg" onclick="{document.getElementById('file').click();}"/>
                                 </td>
                             </tr>
                             <tr>
@@ -173,7 +186,9 @@
                                     <span class="glyphicon-class">影院编号</span>
                                 </th>
                                 <td>
-                                    <input type="text" class="text" id="cinemaSn"  name="cinemaSn"/>
+                                    <input type="text" class="text" id="cinemaSn" disabled/>
+                                    <input type="text" class="text" id="_cinemaSn"  name="cinemaSn" hidden />
+                                    <input type="text" class="text" id="id"  name="id" hidden/>
                                 </td>
                             </tr>
                             <tr>

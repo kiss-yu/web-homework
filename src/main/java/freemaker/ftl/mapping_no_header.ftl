@@ -38,7 +38,7 @@
         delete  from `${model_name}` where id = ${r"#{"}id,jdbcType=INTEGER${r"}"}
     </delete>
     <update id="update" parameterType="${oneself.type}">
-        updata `${model_name}`
+        update `${model_name}`
         set
         <trim prefix="" suffix="" suffixOverrides=",">
         <#list oneself.params as param>
@@ -60,7 +60,7 @@
          select count(`id`) from `${model_name}`;
      </select>
     <select id="findByOneField" resultMap="BaseResultMap">
-        select * from `${model_name}` where `#{field,jdbcType=VARCHAR}` = #{value,jdbcType=VARCHAR}
+        select * from `${model_name}` where `@{field}` = ${r"#{"}value,jdbcType=INTEGER${r"}"}
     </select>
     <select id="list" resultMap="BaseResultMap">
         select * from `${model_name}`

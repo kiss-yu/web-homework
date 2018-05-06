@@ -470,3 +470,14 @@ function abbreviate(str, width, ellipsis) {
     }
     return ellipsis != null && i < str.length - 1 ? str.substring(0, i) + ellipsis : str.substring(0, i);
 }
+
+function clickImage(file) {
+    if (file.files && file.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function(evt) {
+            console.log(evt)
+            document.getElementById("portrait").src = evt.target.result;
+        }
+        reader.readAsDataURL(file.files[0]);
+    }
+}

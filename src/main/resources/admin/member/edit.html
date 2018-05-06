@@ -44,6 +44,7 @@
                                     var model = data.data;
                                     $("#id").val(model.id);
                                     $("#username").val(model.username);
+                                    $("#_username").val(model.username);
                                     $("#name").val(model.name);
                                     $("#phone").val(model.phone);
                                     $("#age").val(model.age);
@@ -70,7 +71,6 @@
                             max : 200
                         },
                         "password" : {
-                            required: true,
                             minlength : 6,
                             maxlength : 20
                         },
@@ -103,7 +103,6 @@
                             remote : "用户名已存在"
                         },
                         "password" : {
-                            required: "不能为空",
                             minlength: "不能低于6位",
                             maxlength:"不能高于20位"
                         },
@@ -133,7 +132,7 @@
                     $.ajax({
                         cache : true,
                         type : "POST",
-                        url : apiRoot + "/add",
+                        url : apiRoot + "/update",
                         data: new FormData($('#inputForm')[0]),
                         processData: false,
                         contentType: false,
@@ -150,17 +149,6 @@
                 return `<option value='${value}'>${text}</option>`;
             };
         });
-
-        function clickImage(file) {
-            if (file.files && file.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function(evt) {
-                    console.log(evt)
-                    document.getElementById("portrait").src = evt.target.result;
-                }
-                reader.readAsDataURL(file.files[0]);
-            }
-        }
 	</script>
 
 	<style>
@@ -192,7 +180,8 @@
 									<span class="glyphicon-class">用户名</span>
 								</th>
 								<td>
-									<input type="text" class="text" id="username" value="" name="username" disabled/>
+									<input type="text" class="text" id="username" value="" disabled/>
+									<input type="text" class="text" id="_username" value="" name="username" hidden/>
 									<input type="text" class="text" id="id" value="" name="id" hidden/>
 								</td>
 							</tr>

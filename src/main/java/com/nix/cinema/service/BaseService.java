@@ -138,6 +138,16 @@ public class BaseService <M extends BaseModel<M>>{
         }
     }
 
+    public List<M> findByOneField(String field,String content) {
+        try {
+            Object find = invokeMapperMethod("findByOneField",new Class[]{String.class,String.class},field,content);
+            return (List<M>) find;
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public Long count() throws Exception {
         return (Long) invokeMapperMethod("count",null,null);
     }

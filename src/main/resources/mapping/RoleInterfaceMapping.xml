@@ -112,7 +112,7 @@
     </select>
 
     <select id="findByOneField" resultMap="BaseResultMap">
-        select * from `roleinterface` where `#{field,jdbcType=VARCHAR}` = #{value,jdbcType=VARCHAR}
+        select * from `roleinterface` where `${field}` = #{value,jdbcType=VARCHAR}
     </select>
     <select id="list" resultMap="BaseResultMap">
         select * from `roleinterface`
