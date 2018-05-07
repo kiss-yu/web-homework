@@ -1,6 +1,8 @@
 package com.nix.cinema.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.nix.cinema.model.base.BaseModel;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -14,7 +16,10 @@ import java.util.List;
 public class MovieModel extends BaseModel<MovieModel> {
     private String movieSn;
     //上映时间
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date releaseTime;
+    //电影名
+    private String name;
     //上映的电影院
     private List<CinemaModel> cinemas;
     //出售价格
@@ -46,6 +51,14 @@ public class MovieModel extends BaseModel<MovieModel> {
 
     public MemberModel getMember() {
         return member;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setMember(MemberModel member) {

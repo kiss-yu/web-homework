@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>personalInfo</title>
+    <link href="/css/myTable.css" rel="stylesheet" type="text/css"/>
+    <link href="/css/style.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="/resource/bootstrap-3.3.7-dist/css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="/resource/skin/jedate.css" rel="stylesheet" type="text/css" media="all" />
+    <!-- js -->
+    <!--<script src="/resource/js/jquery.min.js"></script>-->
+    <script src="/resource/ueditor/ueditor.js"></script>
+    <!-- //js -->
+    <!-- for-mobile-apps -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <!-- //for-mobile-apps -->
+    <!-- start-smoth-scrolling -->
+    <script type="text/javascript" src="/js/jquery.js"></script>
+    <script type="text/javascript" src="/js/move-top.js"></script>
+    <script type="text/javascript" src="/js/easing.js"></script>
+    <script type="text/javascript" src="/js/jquery.validate.js"></script>
+    <script type="text/javascript" src="/js/jquery.tools.js"></script>
+    <script type="text/javascript" src="/js/jquery.autocomplete.js"></script>
+    <script type="text/javascript" src="/js/common.js"></script>
+    <script type="text/javascript" src="/resource/skin/jedate.min.js"></script>
+    <script type="text/javascript">
+        var apiRoot = "/admin/movie";
+        jQuery(document).ready(function($) {
+            $.ajax({
+                cache : true,
+                type : "GET",
+                url : apiRoot + "/view?id=" + id,
+                success : function(data) {
+                    if (data.status == 1) {
+                        var model = data.data;
+                        $("#id").val(model.id);
+                        $("#portrait").attr("src",model.img);
+                        $("#movieSn").html(model.movieSn);
+                        $("#name").html(model.name);
+                        $("#releaseTime").html(model.releaseTime);
+                        $("#price").html(model.price);
+                        $("#username").html(model.member.name);
+                        $("#introduction").html(model.introduction);
+                    } else {
+                        alert("错误");
+                    }
+                }
+            });
+        });
+    </script>
+    <style>
+        #portrait{
+            width: 200px;
+            height: 200px;
+        }
+    </style>
+</head>
+<body>
+<div class="psd">
+    <div class="container">
+        <div id="header">
+        </div>
+        <script>
+            $("#header").load("/admin/common/header.html");
+            setTimeout(function () {
+                $("#nav").children().eq(5).addClass("cap");
+            },100);
+        </script>
+        <div class="contact">
+            <h3>电影详情</h3>
+            <div class="blog">
+                <div class="blog-left">
+                    <form id="inputForm" method="post" enctype="multipart/form-data">
+                        <table class="input tab-content" style="display: table;width: 100%">
+                            <tr>
+                                <th>
+                                    <span class="glyphicon-class">缩略图</span>
+                                </th>
+                                <td>
+                                    <img id="portrait" src="/images/movie/default.jpg" >
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <span class="glyphicon-class">电影编号</span>
+                                </th>
+                                <td>
+                                    <span type="text" class="text" id="movieSn" disabled></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <span class="glyphicon-class">电影名</span>
+                                </th>
+                                <td>
+                                    <span type="text" class="text" id="name"  name="name"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <span class="glyphicon-class">上映时间</span>
+                                </th>
+                                <td>
+                                    <span type="text" class="jeinput" id="releaseTime"  name="releaseTime"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <span class="glyphicon-class">价格</span>
+                                </th>
+                                <td>
+                                    <span type="text" class="text" id="price"  name="price"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <span class="glyphicon-class">介绍</span>
+                                </th>
+                                <td>
+
+                                    <span id="introduction" name="introduction" class="editor" style="width: 100%;"></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <span class="glyphicon-class">版权用户</span>
+                                </th>
+                                <td>
+                                    <span type="text" class="text ac_results" id="username" name="username" title="请输入用户名"></span>
+                                </td>
+                            </tr>
+                        </table>
+                        <table class="input">
+                            <tr>
+                                <th>
+                                    &nbsp;
+                                </th>
+                                <td>
+                                    <input type="button" class="button" value="返回" onclick="history.back(); return false;" />
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+
+                <div class="clearfix"> </div>
+            </div>
+        </div>
+        <iframe src="/admin/common/footer.html" width='100%' height='100%' frameborder='0' name="_blank" id="_blank" />
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $().UItoTop({ easingType: 'easeOutQuart' });
+
+    });
+</script>
+
+
+</body>
+
+</html>

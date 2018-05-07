@@ -5,6 +5,7 @@
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="createDate" property="createDate" jdbcType="TIMESTAMP"/>
         <result column="updateDate" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
         <result column="movieSn" property="movieSn" jdbcType="VARCHAR"/>
         <result column="releaseTime" property="releaseTime" jdbcType="TIMESTAMP"/>
         <result column="price" property="price" jdbcType="DECIMAL"/>
@@ -25,6 +26,9 @@
             <if test="updateDate != null">
                 `updateDate`,
             </if>
+            <if test="name != null">
+                `name`,
+            </if>
             <if test="movieSn != null">
                 `movieSn`,
             </if>
@@ -43,19 +47,22 @@
             <if test="img != null">
                 `img`,
             </if>
-            <if test="user != null">
-                `user`,
+            <if test="member != null">
+                `member`,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">
-                #{id,jdbcType=java.lang.Integer},
+                #{id,jdbcType=INTEGER},
             </if>
             <if test="createDate != null">
                 #{createDate,jdbcType=TIMESTAMP},
             </if>
             <if test="updateDate != null">
                 #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
             </if>
             <if test="movieSn != null">
                 #{movieSn,jdbcType=VARCHAR},
@@ -75,8 +82,8 @@
             <if test="img != null">
                 #{img,jdbcType=VARCHAR},
             </if>
-            <if test="user != null">
-                #{user.id,jdbcType=VARCHAR},
+            <if test="member != null">
+                #{member.id,jdbcType=VARCHAR},
             </if>
         </trim>
     </insert>
@@ -96,6 +103,10 @@
             <if test="updateDate != null">
                 `updateDate` = #{updateDate,jdbcType=TIMESTAMP},
             </if>
+
+            <if test="name != null">
+                `name` = #{name,jdbcType=VARCHAR},
+            </if>
             <if test="movieSn != null">
                 `movieSn` = #{movieSn,jdbcType=VARCHAR},
             </if>
@@ -114,8 +125,8 @@
             <if test="img != null">
                 `img` = #{img,jdbcType=VARCHAR},
             </if>
-            <if test="user != null">
-                `user` = #{user.id,jdbcType=VARCHAR},
+            <if test="member != null">
+                `member` = #{member.id,jdbcType=VARCHAR},
             </if>
         </trim>
         where id = #{id,jdbcType=INTEGER}
@@ -146,38 +157,4 @@
             limit #{offset,jdbcType=INTEGER},#{limit,jdbcType=INTEGER}
         </if>
     </select>
-    <update id="updateCurrentUser"  parameterType="com.nix.cinema.model.MovieModel">
-        update `movie`
-        set
-        <trim prefix="" suffix="" suffixOverrides=",">
-            <if test="true">
-                `id` = #{id,jdbcType=INTEGER},
-            </if>
-            <if test="true">
-                `createDate` = #{createDate,jdbcType=TIMESTAMP},
-            </if>
-            <if test="true">
-                `updateDate` = #{updateDate,jdbcType=TIMESTAMP},
-            </if>
-            <if test="true">
-                `movieSn` = #{movieSn,jdbcType=VARCHAR},
-            </if>
-            <if test="true">
-                `releaseTime` = #{releaseTime,jdbcType=TIMESTAMP},
-            </if>
-            <if test="true">
-                `price` = #{price,jdbcType=DECIMAL},
-            </if>
-            <if test="true">
-                `hitCount` = #{hitCount,jdbcType=INTEGER},
-            </if>
-            <if test="true">
-                `introduction` = #{introduction,jdbcType=VARCHAR},
-            </if>
-            <if test="true">
-                `img` = #{img,jdbcType=VARCHAR},
-            </if>
-        </trim>
-        where id = #{id,jdbcType=INTEGER} and user = #{user.id,jdbcType=INTEGER}
-    </update>
 </mapper>

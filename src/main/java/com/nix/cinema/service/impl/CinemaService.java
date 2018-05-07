@@ -30,7 +30,7 @@ public class CinemaService extends BaseService<CinemaModel> {
 
     public CinemaModel update(CinemaModel model, MultipartFile log) throws Exception {
         if (log != null && !log.isEmpty()) {
-            CinemaModel before = findByOneField("cinemaSn",model.getCinemaSn()).get(0);
+            CinemaModel before = findById(model.getId());
             if (!(CINEMA_IMG_PATH + log.getOriginalFilename()).equals(before.getLog())) {
                 if (!(CINEMA_IMG_PATH + CINEMA_DEFAULT_IMG).equals(before.getLog())) {
                     File ago = new File(this.getClass().getResource("/").getFile() + before.getLog());

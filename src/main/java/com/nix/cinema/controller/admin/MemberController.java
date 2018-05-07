@@ -3,6 +3,7 @@ package com.nix.cinema.controller.admin;
 import com.nix.cinema.common.Pageable;
 import com.nix.cinema.common.ReturnObject;
 import com.nix.cinema.common.annotation.AdminController;
+import com.nix.cinema.common.cache.UserCache;
 import com.nix.cinema.model.MemberModel;
 import com.nix.cinema.model.RoleModel;
 import com.nix.cinema.service.impl.MemberService;
@@ -79,5 +80,9 @@ public class MemberController {
         Map additionalData = new HashMap();
         additionalData.put("total",memberService.count());
         return ReturnUtil.success(null,pageable.getList(memberService),additionalData);
+    }
+    @GetMapping("/current")
+    public ReturnObject current() {
+        return ReturnUtil.success(UserCache.currentUser());
     }
 }

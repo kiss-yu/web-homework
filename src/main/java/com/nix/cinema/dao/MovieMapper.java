@@ -10,8 +10,4 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface MovieMapper extends BaseMapper<MovieModel> {
-    /**
-     *
-     * */
-    MovieModel updateCurrentUser(MovieModel model);
 }
