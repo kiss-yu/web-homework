@@ -119,14 +119,11 @@ padding:0;
 /*-- //header --*/
 /*-- banner --*/
 .banner1{
-	background: url(../images/ban.jpg) no-repeat 0px -142px #f5f5f5;
+	display: none;
+	background-repeat:no-repeat;
 	background-size: cover;
 	min-height: 600px;
-	}
-.banner2{
-	background:url(../images/bann.jpg) no-repeat 0px 0px #f5f5f5;
-	background-size:cover;
-	min-height: 600px;
+
 	}
 .banner-info{
 	text-align: center;
@@ -140,11 +137,11 @@ padding:0;
 	padding: 1em 0;
 	font-weight:300;
 	margin:0;
-	border-top:10px solid #F8F8F8;
 	font-family: 'Titillium Web', sans-serif;
 	font-style:normal;
-	background:#fff;
+	background:#ffffff99;
 	letter-spacing:-3px;
+	border-radius: 50px;
 	}
 .banner-info h3 span{
 	color:#FFAE00;
@@ -2027,11 +2024,7 @@ ul.social-slide li i.mac{
 	}
 	.banner1 {
 	  height: 580px;
-	  background: url(../images/ban.jpg) no-repeat 0px -13px #f5f5f5;
 	  background-size:cover;
-	}
-	.banner2 {
-	  height: 580px;
 	}
 	.banner-info h3 {
 		font-size: 2.5em;
@@ -2243,14 +2236,8 @@ ul.social-slide li i.mac{
 	a.act5:hover {
 		color: #FFAE00;
 	}
-	.banner2 {
-	  min-height: 470px;
-	  background: url(../images/bann.jpg) no-repeat -110px 0px #f5f5f5;
-	  background-size: cover;
-	}
 	.banner1 {
 	  min-height: 470px;
-	  background: url(../images/ban.jpg) no-repeat 0px 0px #f5f5f5;
 		background-size: cover;
 	}
 	.banner-info h3 {
@@ -2490,9 +2477,6 @@ ul.social-slide li i.mac{
 	.header {
 	  margin-bottom: 0.5em;
 	}
-	.banner2 {
-	  min-height: 400px;
-	}
 	.banner1 {
 	  min-height: 400px;
 	}
@@ -2720,9 +2704,6 @@ ul.social-slide li i.mac{
 	}
 	.logo {
 	  margin: 1.5em 0px 1.5em 1em;
-	}
-	.banner2 {
-	  height: 290px;
 	}
 	.banner1 {
 	  height: 290px;
@@ -3023,9 +3004,6 @@ ul.social-slide li i.mac{
 	  background-size: 227%;
 	  right: -2px;
 	}
-	.banner2 {
-	  height: 170px;
-	}
 	.banner1 {
 	  height: 170px;
 	}
@@ -3280,7 +3258,7 @@ ul.social-slide li i.mac{
 	  padding: 7px 58px;
 	}
 	.banner1 {
-	  background: url(../images/ban.jpg) no-repeat -53px 0px #f5f5f5;
+	  background: no-repeat -53px 0px #f5f5f5;
 		background-size: cover;
 	}
 }
@@ -3300,9 +3278,6 @@ ul.social-slide li i.mac{
 	}
 	.logo-right {
 		margin-top: 1.3em;
-	}
-	.banner2 {
-	  height: 210px;
 	}
 	.banner1 {
 	  height: 210px;
@@ -3383,11 +3358,6 @@ ul.social-slide li i.mac{
 	.logo-right {
 	  margin-top: 1.2em;
 	}
-	.banner2 {
-	  min-height: 390px;
-	  background: url(../images/bann.jpg) no-repeat -6px 0px #f5f5f5;
-	  background-size: cover;
-	}
 	.banner1 {
 	  min-height: 390px;
 	}
@@ -3440,9 +3410,6 @@ ul.social-slide li i.mac{
 	.banner1 {
 	  height: 225px;
 	}
-	.banner2 {
-	  height: 225px;
-	}
 }
 @media (max-width: 568px)
 {
@@ -3451,9 +3418,6 @@ ul.social-slide li i.mac{
 	}
 	.logo-right {
 	  margin-left: 22em;
-	}
-	.banner2 {
-	  min-height: 160px;
 	}
 	.banner1 {
 	  min-height: 160px;
@@ -3469,9 +3433,6 @@ ul.social-slide li i.mac{
 	}
 	.banner-info {
 	  padding-top: 6.1em;
-	}
-	.banner2 {
-	  min-height: 260px;
 	}
 	.banner1 {
 	  min-height: 260px;
@@ -3667,10 +3628,6 @@ ul.social-slide li i.mac{
 	.mes-fig span {
 	  background: url(../images/18.png) no-repeat 7.8em 0em;
 	}
-	.banner2 {
-	  background: url(../images/bann.jpg) no-repeat -117px 0px #f5f5f5;
-	  background-size: cover;
-	}
 }
 @media (max-width: 240px)
 {
@@ -3686,9 +3643,6 @@ ul.social-slide li i.mac{
 	}
 	.logo-right ul.nav1 li {
 	  padding-left: 3.6em;
-	}
-	.banner2 {
-	  height: 100px;
 	}
 	.banner1 {
 	  height: 100px;
