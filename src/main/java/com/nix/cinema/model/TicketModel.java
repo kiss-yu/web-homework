@@ -1,6 +1,7 @@
 package com.nix.cinema.model;
 
 import com.nix.cinema.model.base.BaseModel;
+import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
 
@@ -11,8 +12,6 @@ import java.math.BigDecimal;
  */
 public class TicketModel extends BaseModel<TicketModel> {
     private String ticketSn;
-    //介绍
-    private String introduce;
     private BigDecimal price;
     //所属电影院
     private CinemaModel cinema;
@@ -20,9 +19,13 @@ public class TicketModel extends BaseModel<TicketModel> {
     private MovieModel movie;
     //模拟房间
     private String room;
+    //一共多少张
+    private Integer ticketSum;
+    //已经卖出的编号列表[1,2,3]
+    private String sellSn;
 
-    //编号
-    private Integer sn;
+    //剩余票数
+    private Integer remain;
 
     public String getTicketSn() {
         return ticketSn;
@@ -30,14 +33,6 @@ public class TicketModel extends BaseModel<TicketModel> {
 
     public void setTicketSn(String ticketSn) {
         this.ticketSn = ticketSn;
-    }
-
-    public String getIntroduce() {
-        return introduce;
-    }
-
-    public void setIntroduce(String introduce) {
-        this.introduce = introduce;
     }
 
     public BigDecimal getPrice() {
@@ -64,12 +59,12 @@ public class TicketModel extends BaseModel<TicketModel> {
         this.movie = movie;
     }
 
-    public Integer getSn() {
-        return sn;
+    public Integer getTicketSum() {
+        return ticketSum;
     }
 
-    public void setSn(Integer sn) {
-        this.sn = sn;
+    public void setTicketSum(Integer ticketSum) {
+        this.ticketSum = ticketSum;
     }
 
     public String getRoom() {
@@ -78,5 +73,36 @@ public class TicketModel extends BaseModel<TicketModel> {
 
     public void setRoom(String room) {
         this.room = room;
+    }
+
+    public String getSellSn() {
+        return sellSn;
+    }
+
+    public void setSellSn(String sellSn) {
+        this.sellSn = sellSn;
+//        this.sellSn = StringUtils.arrayToCommaDelimitedString(sellSn);
+    }
+
+    public Integer getRemain() {
+        return ticketSum - StringUtils.commaDelimitedListToStringArray(sellSn).length;
+    }
+
+    public void setRemain(Integer remain) {
+        this.remain = remain;
+    }
+
+    public Integer[] getSellTicketIndex() {
+        Integer[] index = new Integer[getRemain()];
+        String[] sells = StringUtils.commaDelimitedListToStringArray(getSellSn());
+        all: for (int i = 0,k = 0;i < ticketSum;i ++,k ++) {
+            for (int j = 0;j < sells.length;j ++) {
+                if (Integer.parseInt(sells[j]) == i) {
+                    continue all;
+                }
+                index[k] = i;
+            }
+        }
+        return index;
     }
 }

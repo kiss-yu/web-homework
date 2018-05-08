@@ -1,6 +1,7 @@
 package com.nix.cinema.controller.common;
 
 import com.nix.cinema.common.ReturnObject;
+import com.nix.cinema.common.annotation.Clear;
 import com.nix.cinema.common.cache.UserCache;
 import com.nix.cinema.service.impl.SystemService;
 import com.nix.cinema.service.impl.MemberService;
@@ -21,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
  * 公共核心controller
  */
 @Controller
+@Clear
 public class CommonController {
     @Autowired
     private MemberService userService;

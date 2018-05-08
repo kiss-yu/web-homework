@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -73,5 +74,9 @@ public class AdminMovieController{
         additionalData.put("total",movieService.count());
         return ReturnUtil.success(null,pageable.getList(movieService),additionalData);
     }
-
+    @GetMapping("/autoMovie")
+    public List autoCinema(@ModelAttribute Pageable pageable, @RequestParam("q") String movieSn) {
+        pageable.setConditionsSql("movieSn like '%" + movieSn + "%'");
+        return pageable.getList(movieService);
+    }
 }

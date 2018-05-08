@@ -15,6 +15,7 @@ public class RouterController {
     /**
      * 用户主页
      * */
+    @Clear
     @GetMapping("/")
     public String userIndex() {
         return "/member/index.html";
@@ -24,6 +25,7 @@ public class RouterController {
     /**
      * 用户登录界面
      * */
+    @Clear
     @GetMapping("/member/login")
     public String userLogin() {
         return "/member/login.html";

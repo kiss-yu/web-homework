@@ -1,6 +1,7 @@
 package com.nix.cinema.controller.admin;
 
 import com.nix.cinema.common.ReturnObject;
+import com.nix.cinema.common.annotation.AdminController;
 import com.nix.cinema.util.ReturnUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +20,7 @@ import java.util.Map;
  * @date 2018/05/05 20:02
  */
 @RestController
+@AdminController
 @RequestMapping("/system")
 public class SystemController {
     private final static String UPLOAD_IMAGE_PATH = "/file/images/";

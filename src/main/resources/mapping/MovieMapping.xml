@@ -157,4 +157,7 @@
             limit #{offset,jdbcType=INTEGER},#{limit,jdbcType=INTEGER}
         </if>
     </select>
+    <select id="selectLazy" resultMap="BaseResultMap">
+        select * from `movie` where id = #{movie}
+    </select>
 </mapper>

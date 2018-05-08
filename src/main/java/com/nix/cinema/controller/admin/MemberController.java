@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -80,6 +81,12 @@ public class MemberController {
         Map additionalData = new HashMap();
         additionalData.put("total",memberService.count());
         return ReturnUtil.success(null,pageable.getList(memberService),additionalData);
+    }
+
+    @GetMapping("/autoMember")
+    public List autoMember(@ModelAttribute Pageable pageable, @RequestParam("q") String username) {
+        pageable.setConditionsSql("username like '%" + username + "%'");
+        return pageable.getList(memberService);
     }
     @GetMapping("/current")
     public ReturnObject current() {

@@ -81,9 +81,9 @@ public class AdminCinemaController {
         additionalData.put("total",cinemaService.count());
         return ReturnUtil.success(null,pageable.getList(cinemaService),additionalData);
     }
-    @GetMapping("/autoMember")
-    public List autoMember(@ModelAttribute Pageable pageable, @RequestParam("q") String username) {
-        pageable.setConditionsSql("username like '%" + username + "%'");
-        return pageable.getList(memberService);
+    @GetMapping("/autoCinema")
+    public List autoCinema(@ModelAttribute Pageable pageable, @RequestParam("q") String cinemaSn) {
+        pageable.setConditionsSql("cinemaSn like '%" + cinemaSn + "%'");
+        return pageable.getList(cinemaService);
     }
 }

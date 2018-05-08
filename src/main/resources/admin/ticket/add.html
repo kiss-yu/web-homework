@@ -24,66 +24,36 @@
     <script type="text/javascript" src="/js/common.js"></script>
     <script type="text/javascript" src="/resource/skin/jedate.min.js"></script>
     <script type="text/javascript">
-        var apiRoot = "/admin/movie";
+        var apiRoot = "/admin/ticket";
         jQuery(document).ready(function($) {
-            $.ajax({
-                cache : true,
-                type : "GET",
-                url : apiRoot + "/view?id=" + id,
-                success : function(data) {
-                    if (data.status == 1) {
-                        var model = data.data;
-                        $("#id").val(model.id);
-                        $("#portrait").attr("src",model.img);
-                        $("#movieSn").val(model.movieSn);
-                        $("#_movieSn").val(model.movieSn);
-                        $("#name").val(model.name);
-                        $("#releaseTime").val(model.releaseTime);
-                        $("#price").val(model.price);
-                        $("#username").val(model.member.username);
-                        $("#introduction").html(model.introduction);
-                    } else {
-                        alert("错误");
-                    }
-                }
-            });
             $("#introduction").editor();
             function validateForm(){
                 return $("#inputForm").validate({
                     rules: {
-                        "name" : {
+                        "price" : {
                             required : true
                         },
                         "movieSn" : {
-                            remote: {
-                                url: "checkMovieSn",
-                                cache: false
-                            }
                         },
-                        "username": {
-                            remote: {
-                                url: "/admin/cinema/checkUsername",
-                                cache: false
-                            }
+                        "cinemaSn": {
+
                         },
-                        "releaseTime": {
-                            required: true,
-                            pattern:/\d{4}-\d{1,2}-\d{1,2} \d{1,2}:\d{1,2}:\d{1,2}/,
+                        "room": {
+                            required: true
                         }
                     },
                     messages: {
                         "name" : {
                             required: "不能为空"
                         },
-                        "username" : {
-                            remote: "用户不存在"
+                        "movieSn" : {
+                            required: "不能为空"
                         },
                         "cinemaSn" : {
-                            remote: "编号已存在"
+                            required: "不能为空"
                         },
-                        "releaseTime" : {
+                        "room" : {
                             required: "不能为空",
-                            pattern:"日期格式必须是2018-08-08 08:08:08格式"
                         }
                     }
                 });
@@ -95,7 +65,7 @@
                     $.ajax({
                         cache : true,
                         type : "POST",
-                        url : apiRoot + "/update",
+                        url : apiRoot + "/add",
                         data: new FormData($('#inputForm')[0]),
                         processData: false,
                         contentType: false,
@@ -108,7 +78,7 @@
                     });
                 }
             });
-            $('#username').autocomplete("/admin/member/autoMember", {
+            $('#cinemaSn').autocomplete("/admin/cinema/autoCinema", {
                 dataType: "json",
                 max: 20,
                 width: 218,
@@ -122,17 +92,34 @@
                     });
                 },
                 formatItem: function(item) {
-                    return '<span title="' + escapeHtml(item.name) + '">' + escapeHtml(abbreviate(item.name, 50, "...")) + '<\/span>' + (true ? ' <span class="silver">[' + escapeHtml(item.username) + ']<\/span>' : '');
+                    return '<span title="' + escapeHtml(item.name) + '">' + escapeHtml(abbreviate(item.name, 50, "...")) + '<\/span>' + (true ? ' <span class="silver">[' + escapeHtml(item.cinemaSn) + ']<\/span>' : '');
                 }
             }).result(function(event, item) {
-                $("#username").val(item.username);
+                $("#cinemaSn").val(item.cinemaSn);
             });
-            jeDate("#releaseTime",{
-                theme:{bgcolor:"#00A1CB",pnColor:"#00CCFF"},
-                format: "YYYY-MM-DD hh:mm:ss"
+
+            $('#movieSn').autocomplete("/admin/movie/autoMovie", {
+                dataType: "json",
+                max: 20,
+                width: 218,
+                scrollHeight: 300,
+                parse: function(data) {
+                    return $.map(data, function(item) {
+                        return {
+                            data: item,
+                            value: item.name
+                        }
+                    });
+                },
+                formatItem: function(item) {
+                    return '<span title="' + escapeHtml(item.name) + '">' + escapeHtml(abbreviate(item.name, 50, "...")) + '<\/span>' + (true ? ' <span class="silver">[' + escapeHtml(item.movieSn) + ']<\/span>' : '');
+                }
+            }).result(function(event, item) {
+                $("#movieSn").val(item.movieSn);
             });
         });
     </script>
+
     <style>
         #portrait{
             width: 200px;
@@ -183,50 +170,15 @@
         <script>
             $("#header").load("/admin/common/header.html");
             setTimeout(function () {
-                $("#nav").children().eq(5).addClass("cap");
+                $("#nav").children().eq(6).addClass("cap");
             },100);
         </script>
         <div class="contact">
-            <h3>电影信息修改</h3>
+            <h3>添加电影票</h3>
             <div class="blog">
                 <div class="blog-left">
                     <form id="inputForm" method="post" enctype="multipart/form-data">
                         <table class="input tab-content" style="display: table;width: 100%">
-                            <tr>
-                                <th>
-                                    <span class="glyphicon-class">缩略图</span>
-                                </th>
-                                <td>
-                                    <input class="hidden" id="file" type="file" name="logImg" onchange="clickImage(this)">
-                                    <img id="portrait" src="/images/movie/default.jpg" onclick="{document.getElementById('file').click();}">
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>
-                                    <span class="glyphicon-class">电影编号</span>
-                                </th>
-                                <td>
-                                    <input type="text" class="text" id="movieSn" disabled/>
-                                    <input type="text" class="text" id="_movieSn"  name="movieSn" hidden/>
-                                    <input type="text" class="text" id="id"  name="id" hidden/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>
-                                    <span class="glyphicon-class">电影名</span>
-                                </th>
-                                <td>
-                                    <input type="text" class="text" id="name"  name="name"/>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>
-                                    <span class="glyphicon-class">上映时间</span>
-                                </th>
-                                <td>
-                                    <input type="text" class="jeinput" id="releaseTime"  name="releaseTime"/>
-                                </td>
-                            </tr>
                             <tr>
                                 <th>
                                     <span class="glyphicon-class">价格</span>
@@ -237,19 +189,34 @@
                             </tr>
                             <tr>
                                 <th>
-                                    <span class="glyphicon-class">介绍</span>
+                                    <span class="glyphicon-class">影院</span>
                                 </th>
                                 <td>
-
-                                    <textarea id="introduction" name="introduction" class="editor" style="width: 100%;"></textarea>
+                                    <input type="text" class="text" id="cinemaSn"  name="cinemaSn"/>
                                 </td>
                             </tr>
                             <tr>
                                 <th>
-                                    <span class="glyphicon-class">版权用户</span>
+                                    <span class="glyphicon-class">电影名</span>
                                 </th>
                                 <td>
-                                    <input type="text" class="text ac_results" id="username" name="username" title="请输入用户名"/>
+                                    <input type="text" class="text" id="movieSn"  name="movieSn"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <span class="glyphicon-class">房间</span>
+                                </th>
+                                <td>
+                                    <input type="text" class="text" id="room"  name="room"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
+                                    <span class="glyphicon-class">票数</span>
+                                </th>
+                                <td>
+                                    <input type="text" class="text" id="ticketSum"  name="ticketSum"/>
                                 </td>
                             </tr>
                         </table>

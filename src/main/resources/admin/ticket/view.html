@@ -5,6 +5,7 @@
     <link href="/css/myTable.css" rel="stylesheet" type="text/css"/>
     <link href="/css/style.css" rel="stylesheet" type="text/css" media="all" />
     <link href="/resource/bootstrap-3.3.7-dist/css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="/resource/skin/jedate.css" rel="stylesheet" type="text/css" media="all" />
     <!-- js -->
     <!--<script src="/resource/js/jquery.min.js"></script>-->
     <script src="/resource/ueditor/ueditor.js"></script>
@@ -21,11 +22,11 @@
     <script type="text/javascript" src="/js/jquery.tools.js"></script>
     <script type="text/javascript" src="/js/jquery.autocomplete.js"></script>
     <script type="text/javascript" src="/js/common.js"></script>
+    <script type="text/javascript" src="/resource/skin/jedate.min.js"></script>
     <script type="text/javascript">
-        var apiRoot = "/admin/cinema";
+        var apiRoot = "/admin/ticket";
         jQuery(document).ready(function($) {
-            $("#introduction").editor();
-            //获取用户信息设置
+            //根据界面传参获取role详情
             $.ajax({
                 cache : true,
                 type : "GET",
@@ -33,83 +34,16 @@
                 success : function(data) {
                     if (data.status == 1) {
                         var model = data.data;
-                        $("#id").val(model.id);
-                        $("#portrait").attr("src",model.log);
-                        $("#cinemaSn").val(model.cinemaSn);
-                        $("#_cinemaSn").val(model.cinemaSn);
-                        $("#name").val(model.name);
-                        $("#address").val(model.address);
-                        $("#username").val(model.member.username);
-                        $("#introduction").html(model.introduce);
+                        $("#price").html(model.price);
+                        $("#cinemaSn").html(model.cinema.name);
+                        $("#movieSn").html(model.movie.name);
+                        $("#room").html(model.room);
+                        $("#ticketSum").html(model.ticketSum);
                     } else {
                         alert("错误");
                     }
                 }
             });
-
-            function validateForm(){
-                return $("#inputForm").validate({
-                    rules: {
-                        "name" : {
-                            required : true
-                        },
-                        "username": {
-                            remote: {
-                                url: "checkUsername",
-                                cache: false
-                            }
-                        }
-                    },
-                    messages: {
-                        "name" : {
-                            required: "不能为空"
-                        },
-                        "username" : {
-                            remote: "用户不存在"
-                        }
-                    }
-                });
-            }
-            $(validateForm());
-            // 表单验证
-            $("#submit").click(function () {
-                if(validateForm().form()) {
-                    $.ajax({
-                        cache : true,
-                        type : "POST",
-                        url : apiRoot + "/update",
-                        data: new FormData($('#inputForm')[0]),
-                        processData: false,
-                        contentType: false,
-                        async : false,
-                        success : function(data) {
-                            if (data.status == 1) {
-                                // location.href = apiRoot + "/list.html"
-                            }
-                        }
-                    });
-                }
-            });
-            $('#username').autocomplete("/admin/member/autoMember", {
-                dataType: "json",
-                max: 20,
-                width: 218,
-                scrollHeight: 300,
-                parse: function(data) {
-                    return $.map(data, function(item) {
-                        return {
-                            data: item,
-                            value: item.name
-                        }
-                    });
-                },
-                formatItem: function(item) {
-                    return '<span title="' + escapeHtml(item.name) + '">' + escapeHtml(abbreviate(item.name, 50, "...")) + '<\/span>' + (true ? ' <span class="silver">[' + escapeHtml(item.username) + ']<\/span>' : '');
-                }
-            }).result(function(event, item) {
-                $("#username").val(item.username);
-            });
-
         });
     </script>
 
@@ -163,65 +97,53 @@
         <script>
             $("#header").load("/admin/common/header.html");
             setTimeout(function () {
-                $("#nav").children().eq(4).addClass("cap");
+                $("#nav").children().eq(6).addClass("cap");
             },100);
         </script>
         <div class="contact">
-            <h3>影院信息修改</h3>
+            <h3>电影票信息修改</h3>
             <div class="blog">
                 <div class="blog-left">
                     <form id="inputForm" method="post" enctype="multipart/form-data">
                         <table class="input tab-content" style="display: table;width: 100%">
                             <tr>
                                 <th>
-                                    <span class="glyphicon-class">缩略图</span>
+                                    <span class="glyphicon-class">价格</span>
                                 </th>
                                 <td>
-                                    <input class="hidden" id="file" type="file" name="logImg" onchange="clickImage(this)"/>
-                                    <img id="portrait" src="/images/cinema/default.jpg" onclick="{document.getElementById('file').click();}"/>
+                                    <span type="text" class="text" id="price"  name="price"></span>
                                 </td>
                             </tr>
                             <tr>
                                 <th>
-                                    <span class="glyphicon-class">影院编号</span>
+                                    <span class="glyphicon-class">影院</span>
                                 </th>
                                 <td>
-                                    <input type="text" class="text" id="cinemaSn" disabled/>
-                                    <input type="text" class="text" id="_cinemaSn"  name="cinemaSn" hidden />
-                                    <input type="text" class="text" id="id"  name="id" hidden/>
+                                    <span type="text" class="text" id="cinemaSn"  name="cinemaSn"></span>
                                 </td>
                             </tr>
                             <tr>
                                 <th>
-                                    <span class="glyphicon-class">影院名称</span>
+                                    <span class="glyphicon-class">电影名</span>
                                 </th>
                                 <td>
-                                    <input type="text" class="text" id="name"  name="name"/>
+                                    <span type="text" class="text" id="movieSn"  name="movieSn"></span>
                                 </td>
                             </tr>
                             <tr>
                                 <th>
-                                    <span class="glyphicon-class">地点</span>
+                                    <span class="glyphicon-class">房间</span>
                                 </th>
                                 <td>
-                                    <input type="text" class="text" id="address"  name="address"/>
+                                    <span type="text" class="text" id="room"  name="room"></span>
                                 </td>
                             </tr>
                             <tr>
                                 <th>
-                                    <span class="glyphicon-class">介绍</span>
+                                    <span class="glyphicon-class">票数</span>
                                 </th>
                                 <td>
-
-                                    <textarea id="introduction" name="introduce" class="editor" style="width: 100%;"></textarea>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>
-                                    <span class="glyphicon-class">老板</span>
-                                </th>
-                                <td>
-                                    <input type="text" class="text ac_results" id="username" name="username" title="请输入用户名"/>
+                                    <span type="text" class="text" id="ticketSum"  name="ticketSum"></span>
                                 </td>
                             </tr>
                         </table>
@@ -231,7 +153,6 @@
                                     &nbsp;
                                 </th>
                                 <td>
-                                    <input type="button" class="button" value="提交" id="submit"/>
                                     <input type="button" class="button" value="返回" onclick="history.back(); return false;" />
                                 </td>
                             </tr>

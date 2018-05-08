@@ -11,4 +11,9 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class TicketService extends BaseService<TicketModel> {
+    @Override
+    public TicketModel add(TicketModel model) throws Exception {
+        model.setTicketSn(model.getTicketSn() == null || model.getTicketSn().isEmpty() ? model.generateSn():model.getTicketSn());
+        return super.add(model);
+    }
 }
