@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -47,7 +48,9 @@ public class AdminRoleInterfaceController {
     @PostMapping("/list")
     public ReturnObject list(@ModelAttribute Pageable<RoleInterfaceModel> pageable) throws Exception {
         Map additionalData = new HashMap();
-        additionalData.put("total",roleInterfaceService.count());
-        return ReturnUtil.success(null,pageable.getList(roleInterfaceService),additionalData);
+
+        List list = pageable.getList(roleInterfaceService);
+        additionalData.put("total",list.size());
+        return ReturnUtil.success(null,list,additionalData);
     }
 }

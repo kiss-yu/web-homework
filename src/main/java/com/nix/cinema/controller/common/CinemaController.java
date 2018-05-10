@@ -12,6 +12,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * @author Kiss
  * @date 2018/05/10 16:40
@@ -23,6 +27,9 @@ public class CinemaController {
     private CinemaService cinemaService;
     @PostMapping("/list")
     public ReturnObject list(@ModelAttribute Pageable<CinemaModel> pageable) {
-        return ReturnUtil.success(pageable.getList(cinemaService));
+        Map additionalData = new HashMap();
+        List list = pageable.getList(cinemaService);
+        additionalData.put("total",list.size());
+        return ReturnUtil.success(null,list,additionalData);
     }
 }

@@ -8,6 +8,10 @@ import com.nix.cinema.util.ReturnUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * @author Kiss
  * @date 2018/05/02 1:16
@@ -31,6 +35,9 @@ public class MovieController {
      * */
     @PostMapping("/list")
     public ReturnObject list(@ModelAttribute Pageable<MovieModel> pageable) {
-        return ReturnUtil.success(pageable.getList(movieService));
+        Map additionalData = new HashMap();
+        List list = pageable.getList(movieService);
+        additionalData.put("total",list.size());
+        return ReturnUtil.success(null,list,additionalData);
     }
 }

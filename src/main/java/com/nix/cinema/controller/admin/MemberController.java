@@ -79,8 +79,9 @@ public class MemberController {
     @PostMapping("/list")
     public ReturnObject list(@ModelAttribute Pageable<MemberModel> pageable) throws Exception {
         Map additionalData = new HashMap();
-        additionalData.put("total",memberService.count());
-        return ReturnUtil.success(null,pageable.getList(memberService),additionalData);
+        List list = pageable.getList(memberService);
+        additionalData.put("total",list.size());
+        return ReturnUtil.success(null,list,additionalData);
     }
 
     @GetMapping("/autoMember")

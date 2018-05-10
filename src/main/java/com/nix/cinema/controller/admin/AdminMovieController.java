@@ -71,8 +71,9 @@ public class AdminMovieController{
     @PostMapping("/list")
     public ReturnObject list(@ModelAttribute Pageable<MovieModel> pageable) throws Exception {
         Map additionalData = new HashMap();
-        additionalData.put("total",movieService.count());
-        return ReturnUtil.success(null,pageable.getList(movieService),additionalData);
+        List list = pageable.getList(movieService);
+        additionalData.put("total",list.size());
+        return ReturnUtil.success(null,list,additionalData);
     }
     @GetMapping("/autoMovie")
     public List autoCinema(@ModelAttribute Pageable pageable, @RequestParam("q") String movieSn) {

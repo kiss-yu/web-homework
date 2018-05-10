@@ -83,7 +83,9 @@ public class AdminTicketController {
     @PostMapping("/list")
     public ReturnObject list(@ModelAttribute Pageable<TicketModel> pageable) throws Exception {
         Map additionalData = new HashMap();
-        additionalData.put("total",ticketService.count());
-        return ReturnUtil.success(null,pageable.getList(ticketService),additionalData);
+
+        List list = pageable.getList(ticketService);
+        additionalData.put("total",list.size());
+        return ReturnUtil.success(null,list,additionalData);
     }
 }
