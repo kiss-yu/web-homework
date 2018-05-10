@@ -26,7 +26,7 @@
     <script type="text/javascript">
         var apiRoot = "/admin/movie";
         jQuery(document).ready(function($) {
-            $("#introduction").editor();
+            $("#introduce").editor();
             function validateForm(){
                 return $("#inputForm").validate({
                     rules: {
@@ -214,11 +214,19 @@
                             </tr>
                             <tr>
                                 <th>
+                                    <span class="glyphicon-class">简介</span>
+                                </th>
+                                <td>
+                                    <textarea id="introduction" name="introduction" class="text" style="width: 100%;"></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
                                     <span class="glyphicon-class">介绍</span>
                                 </th>
                                 <td>
 
-                                    <textarea id="introduction" name="introduction" class="editor" style="width: 100%;"></textarea>
+                                    <textarea id="introduce" name="introduce" class="editor" style="width: 100%;"></textarea>
                                 </td>
                             </tr>
                             <tr>

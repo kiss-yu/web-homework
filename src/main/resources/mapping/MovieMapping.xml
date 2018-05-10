@@ -11,6 +11,7 @@
         <result column="price" property="price" jdbcType="DECIMAL"/>
         <result column="hitCount" property="hitCount" jdbcType="INTEGER"/>
         <result column="introduction" property="introduction" jdbcType="VARCHAR"/>
+        <result column="introduce" property="introduce" jdbcType="VARCHAR"/>
         <result column="img" property="img" jdbcType="VARCHAR"/>
         <association property="member" column="member" select="com.nix.cinema.dao.MemberMapper.selectLazy"/>
     </resultMap>
@@ -43,6 +44,9 @@
             </if>
             <if test="introduction != null">
                 `introduction`,
+            </if>
+            <if test="introduce != null">
+                `introduce`,
             </if>
             <if test="img != null">
                 `img`,
@@ -78,6 +82,9 @@
             </if>
             <if test="introduction != null">
                 #{introduction,jdbcType=VARCHAR},
+            </if>
+            <if test="introduce != null">
+                #{introduce,jdbcType=VARCHAR},
             </if>
             <if test="img != null">
                 #{img,jdbcType=VARCHAR},
@@ -121,6 +128,9 @@
             </if>
             <if test="introduction != null">
                 `introduction` = #{introduction,jdbcType=VARCHAR},
+            </if>
+            <if test="introduce != null">
+                `introduce` = #{introduce,jdbcType=VARCHAR},
             </if>
             <if test="img != null">
                 `img` = #{img,jdbcType=VARCHAR},

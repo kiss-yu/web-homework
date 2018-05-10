@@ -9,6 +9,7 @@
         <result column="name" property="name" jdbcType="VARCHAR"/>
         <result column="address" property="address" jdbcType="VARCHAR"/>
         <result column="introduce" property="introduce" jdbcType="VARCHAR"/>
+        <result column="introduction" property="introduction" jdbcType="VARCHAR"/>
         <result column="hotNumber" property="hotNumber" jdbcType="INTEGER"/>
         <result column="log" property="log" jdbcType="VARCHAR"/>
         <collection column="member" property="member" select="com.nix.cinema.dao.MemberMapper.selectLazy"/>
@@ -36,6 +37,9 @@
             </if>
             <if test="introduce != null">
                 `introduce`,
+            </if>
+            <if test="introduction != null">
+                `introduction`,
             </if>
             <if test="hotNumber != null">
                 `hotNumber`,
@@ -68,6 +72,9 @@
              </if>
              <if test="introduce != null">
                 #{introduce,jdbcType=VARCHAR},
+             </if>
+             <if test="introduction != null">
+                #{introduction,jdbcType=VARCHAR},
              </if>
              <if test="hotNumber != null">
                 #{hotNumber,jdbcType=INTEGER},
@@ -107,6 +114,9 @@
             </if>
             <if test="introduce != null">
                 `introduce` = #{introduce,jdbcType=VARCHAR},
+            </if>
+             <if test="introduction != null">
+                `introduction` = #{introduction,jdbcType=VARCHAR},
             </if>
             <if test="hotNumber != null">
                 `hotNumber` = #{hotNumber,jdbcType=INTEGER},

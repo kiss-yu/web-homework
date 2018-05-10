@@ -30,8 +30,18 @@ public class MovieModel extends BaseModel<MovieModel> {
     private String introduction;
     //缩略图路径
     private String img;
+    //文字介绍
+    private String introduce;
     //电影版权所属用户
     private MemberModel member;
+
+    public String getIntroduce() {
+        return introduce;
+    }
+
+    public void setIntroduce(String introduce) {
+        this.introduce = introduce;
+    }
 
     public String getIntroduction() {
         return introduction;

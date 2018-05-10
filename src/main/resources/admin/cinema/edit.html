@@ -24,7 +24,7 @@
     <script type="text/javascript">
         var apiRoot = "/admin/cinema";
         jQuery(document).ready(function($) {
-            $("#introduction").editor();
+            $("#introduce").editor();
             //获取用户信息设置
             $.ajax({
                 cache : true,
@@ -40,7 +40,8 @@
                         $("#name").val(model.name);
                         $("#address").val(model.address);
                         $("#username").val(model.member.username);
-                        $("#introduction").html(model.introduce);
+                        $("#introduction").html(model.introduction);
+                        $("#introduce").html(model.introduce);
                     } else {
                         alert("错误");
                     }
@@ -209,11 +210,19 @@
                             </tr>
                             <tr>
                                 <th>
+                                    <span class="glyphicon-class">简介</span>
+                                </th>
+                                <td>
+                                    <textarea id="introduction" name="introduction" class="text" style="width: 100%;"></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>
                                     <span class="glyphicon-class">介绍</span>
                                 </th>
                                 <td>
 
-                                    <textarea id="introduction" name="introduce" class="editor" style="width: 100%;"></textarea>
+                                    <textarea id="introduce" name="introduce" class="editor" style="width: 100%;"></textarea>
                                 </td>
                             </tr>
                             <tr>

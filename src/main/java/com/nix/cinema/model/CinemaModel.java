@@ -13,14 +13,24 @@ public class CinemaModel extends BaseModel<CinemaModel> {
     private String name;
     //影院所在地址（模拟）
     private String address;
-    //影院介绍（html文本）
+    //文字介绍
     private String introduce;
+    //简介(html文本)
+    private String introduction;
     //热度
     private Integer hotNumber;
     //所属用户
     private MemberModel member;
     //log
     private String log;
+
+    public String getIntroduction() {
+        return introduction;
+    }
+
+    public void setIntroduction(String introduction) {
+        this.introduction = introduction;
+    }
 
     public MemberModel getMember() {
         return member;
