@@ -105,12 +105,12 @@
                         if (data.data != null) {
                             var array = data.data;
                             for (var i = 0; i < array.length; i++) {
-                                $("#newMovie1").append($(temp1(array[i])));
-                                $("#newMovie2").append($(temp1(array[i])));
-                                $("#newMovie3").append($(temp1(array[i])));
-                                $("#newMovie4").append($(temp1(array[i])));
-                                $("#newMovie5").append($(temp1(array[i])));
                             }
+                            $("#newMovie1").append($(temp1(array[0])));
+                            $("#newMovie2").append($(temp1(array[0])));
+                            $("#newMovie3").append($(temp1(array[0])));
+                            $("#newMovie4").append($(temp1(array[0])));
+                            $("#newMovie5").append($(temp1(array[0])));
                             $("#owl-demo").owlCarousel({
                                 autoPlay: 3000,
                                 items : 5,
