@@ -1,5 +1,6 @@
 package com.nix.cinema.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.nix.cinema.model.base.BaseModel;
 import org.springframework.util.StringUtils;
 
@@ -91,13 +92,13 @@ public class TicketModel extends BaseModel<TicketModel> {
     public void setRemain(Integer remain) {
         this.remain = remain;
     }
-
     public Integer[] getSellTicketIndex() {
         Integer[] index = new Integer[getRemain()];
         String[] sells = StringUtils.commaDelimitedListToStringArray(getSellSn());
-        all: for (int i = 0,k = 0;i < ticketSum;i ++,k ++) {
+        all: for (int i = 0,k = 0;i < ticketSum && k < index.length ;i ++,k ++) {
             for (int j = 0;j < sells.length;j ++) {
                 if (Integer.parseInt(sells[j]) == i) {
+                    k--;
                     continue all;
                 }
                 index[k] = i;
