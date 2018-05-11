@@ -80,7 +80,7 @@ public class MemberController {
     public ReturnObject list(@ModelAttribute Pageable<MemberModel> pageable) throws Exception {
         Map additionalData = new HashMap();
         List list = pageable.getList(memberService);
-        additionalData.put("total",list.size());
+        additionalData.put("total",pageable.getCount());
         return ReturnUtil.success(null,list,additionalData);
     }
 

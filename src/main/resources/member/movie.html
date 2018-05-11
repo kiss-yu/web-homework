@@ -65,7 +65,7 @@
                         <div class="zoom-container">
                             <div class="zoom-caption">
                                 <span>上映时间:${movie.releaseTime}</span>
-                                <a href="/member/cinemaView.html?id=${movie.id}">
+                                <a href="/member/movieView.html?id=${movie.id}">
                                     <i class="fa fa-play-circle-o fa-5x" style="color: #fff"></i>
                                 </a>
                                 <p>${movie.name}</p>
@@ -134,7 +134,7 @@
                             </a>
                         </li>`);
             } else {
-                for (var i = 1;i <= total/limit + 1;i ++) {
+                for (var i = 1;i < Math.ceil((total-1)/limit + 1);i ++) {
                     page.append(`<li><a href="#" ${i == nowPage ? 'style="background-color: #ff5044"' : ''} class="a-page" onclick="setMainMovie(${i})">${i}</a></li>`)
                 }
             }

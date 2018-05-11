@@ -91,7 +91,7 @@ public class AdminTicketController {
         Map additionalData = new HashMap();
 
         List list = pageable.getList(ticketService);
-        additionalData.put("total",list.size());
+        additionalData.put("total",pageable.getCount());
         return ReturnUtil.success(null,list,additionalData);
     }
 }

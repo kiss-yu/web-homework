@@ -46,7 +46,7 @@ public class MemberMovieController {
         pageable.setConditionsSql("movie = " + id);
         List<TicketModel> list = pageable.getList(ticketService);
         Map additionalData = new HashMap();
-        additionalData.put("total",list.size());
+        additionalData.put("total",pageable.getCount());
         return ReturnUtil.success(null,list,additionalData);
     }
 }

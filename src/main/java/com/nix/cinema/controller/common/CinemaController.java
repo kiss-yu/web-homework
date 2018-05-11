@@ -29,7 +29,7 @@ public class CinemaController {
     public ReturnObject list(@ModelAttribute Pageable<CinemaModel> pageable) {
         Map additionalData = new HashMap();
         List list = pageable.getList(cinemaService);
-        additionalData.put("total",list.size());
+        additionalData.put("total",pageable.getCount());
         return ReturnUtil.success(null,list,additionalData);
     }
 }

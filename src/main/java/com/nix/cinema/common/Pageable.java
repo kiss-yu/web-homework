@@ -16,6 +16,7 @@ public class Pageable<M extends BaseModel<M>> {
     private String order;
     private String sort;
     private String conditionsSql;
+    private BaseService<M> baseService;
 
     public Integer getPage() {
         return page;
@@ -56,8 +57,12 @@ public class Pageable<M extends BaseModel<M>> {
     public void setConditionsSql(String conditionsSql) {
         this.conditionsSql = conditionsSql;
     }
+    public Integer getCount() {
+        return baseService.list(null,null,null,null,conditionsSql).size();
+    }
 
     public List<M> getList(BaseService<M> service) {
+        baseService = service;
         return service.list(page,limit,order,sort,conditionsSql);
     }
 }

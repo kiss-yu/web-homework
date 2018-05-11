@@ -45,17 +45,26 @@ public class MemberPaymentController {
 //        MemberModel current = UserCache.currentUser();
         MemberModel current = memberService.findByUsername("admin");
         Assert.notNull(current,"非法订单");
-        Assert.isTrue(ticketIds.length == indexes.length,"无效订单");
-        Assert.isTrue(ticketIds.length > 1,"没有添加电影票，无效订单");
+        Assert.isTrue(ticketIds.length == indexes.length || ticketIds.length == 1,"无效订单");
+        Assert.isTrue(ticketIds.length > 0,"没有添加电影票，无效订单");
         float price = 0;
         StringBuilder content = new StringBuilder("{");
-        for (int i = 0;i < ticketIds.length;i ++) {
-            price += (ticketService.findById(ticketIds[i]).getPrice().floatValue() * ticketIds.length);
-            content.append(ticketIds[i] + ":[");
-            for (Integer index:indexes[i]) {
-                content.append(index + ",");
+        if (ticketIds.length == 1) {
+            price += (ticketService.findById(ticketIds[0]).getPrice().floatValue() * indexes.length);
+            content.append(ticketIds[0] + ":[");
+            for (Integer[] index : indexes) {
+                content.append(index[0] + ",");
             }
-            content.replace(content.length() - 1,content.length(),"],");
+            content.replace(content.length() - 1, content.length(), "],");
+        } else {
+            for (int i = 0; i < ticketIds.length; i++) {
+                price += (ticketService.findById(ticketIds[i]).getPrice().floatValue() * indexes[i].length);
+                content.append(ticketIds[i] + ":[");
+                for (Integer index : indexes[i]) {
+                    content.append(index + ",");
+                }
+                content.replace(content.length() - 1, content.length(), "],");
+            }
         }
         BigDecimal balance = current.getBalance().subtract(new BigDecimal(price));
         if (balance.floatValue() < 0) {
@@ -86,7 +95,7 @@ public class MemberPaymentController {
                     paymentModel.setTicket(ticketService.findById(ticketId));
                 }
             }
-            additionalData.put("total", list.size());
+            additionalData.put("total", pageable.getCount());
             return ReturnUtil.success(null, list, additionalData);
         }
         return ReturnUtil.success();

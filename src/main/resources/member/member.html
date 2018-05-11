@@ -31,7 +31,7 @@
     <script src="/member/js/bootstrap.min.js"></script>
     <script src="/js/common.js"></script>
     <script>
-        var limit = 10;
+        var limit = 3;
         var nowPage = 1;
 
         jQuery.validator.addMethod("passwordIsEq", function(value, element) {
@@ -272,7 +272,8 @@
                             </a>
                         </li>`);
             } else {
-                for (var i = 1;i <= total/limit + 1;i ++) {
+                console.log(Math.ceil((total-1)/limit + 1))
+                for (var i = 1;i <= Math.ceil((total-1)/limit + 1);i ++) {
                     page.append(`<li><a href="#" ${i == nowPage ? 'style="background-color: #ff5044"' : ''} class="a-page" onclick="setMainMovie(${i})">${i}</a></li>`)
                 }
             }
@@ -323,7 +324,7 @@
                             div.append($(temp1(data.data)))
                         }
                     } else {
-                        alert("错误");
+                        location.href = "./login.html";
                     }
                 }
             });
@@ -345,7 +346,8 @@
                     async : false,
                     success : function(data) {
                         if (data.status == 1) {
-                            setMemberMessage();
+                            localStorage.setItem("member",JSON.stringify(data.data));
+                            window.location.reload();
                         }
                     }
                 });
