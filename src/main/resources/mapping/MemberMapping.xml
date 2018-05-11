@@ -135,7 +135,7 @@
                 `img` = #{img,jdbcType=VARCHAR},
             </if>
             <if test="role != null">
-                `img` = #{role.id,jdbcType=VARCHAR},
+                `role` = #{role.id,jdbcType=VARCHAR},
             </if>
         </trim>
         where id = #{id,jdbcType=INTEGER}

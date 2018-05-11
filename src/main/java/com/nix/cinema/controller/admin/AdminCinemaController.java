@@ -3,6 +3,7 @@ package com.nix.cinema.controller.admin;
 import com.nix.cinema.common.Pageable;
 import com.nix.cinema.common.ReturnObject;
 import com.nix.cinema.common.annotation.AdminController;
+import com.nix.cinema.common.cache.UserCache;
 import com.nix.cinema.model.CinemaModel;
 import com.nix.cinema.model.MemberModel;
 import com.nix.cinema.model.RoleModel;
@@ -34,8 +35,13 @@ public class AdminCinemaController {
     public ReturnObject create(@ModelAttribute CinemaModel cinema,
                                @RequestParam(value = "logImg",required = false) MultipartFile log,
                                @RequestParam(value = "username",required = false) String username) throws Exception {
-        MemberModel boss = memberService.findByUsername(username);
-        cinema.setMember(boss);
+        MemberModel current = UserCache.currentUser();
+        if (RoleModel.CINEMA_VALUE.equals(current.getRoleValue())) {
+            cinema.setMember(current);
+        } else {
+            MemberModel boss = memberService.findByUsername(username);
+            cinema.setMember(boss);
+        }
         return ReturnUtil.success(cinemaService.add(cinema,log));
     }
     @GetMapping("/checkUsername")
@@ -61,8 +67,13 @@ public class AdminCinemaController {
     public ReturnObject update(@ModelAttribute CinemaModel cinema,
                                @RequestParam(value = "logImg",required = false) MultipartFile log,
                                @RequestParam(value = "username",required = false) String username) throws Exception {
-        MemberModel boss = memberService.findByUsername(username);
-        cinema.setMember(boss);
+        MemberModel current = UserCache.currentUser();
+        if (RoleModel.CINEMA_VALUE.equals(current.getRoleValue())) {
+            cinema.setMember(current);
+        } else {
+            MemberModel boss = memberService.findByUsername(username);
+            cinema.setMember(boss);
+        }
         if (log != null) {
             return ReturnUtil.success(cinemaService.update(cinema, log));
         } else {
@@ -77,6 +88,10 @@ public class AdminCinemaController {
 
     @PostMapping("/list")
     public ReturnObject list(@ModelAttribute Pageable<CinemaModel> pageable) throws Exception {
+        MemberModel current = UserCache.currentUser();
+        if (RoleModel.CINEMA_VALUE.equals(current.getRoleValue())) {
+            pageable.setConditionsSql("member = " + current.getId());
+        }
         Map additionalData = new HashMap();
         List list = pageable.getList(cinemaService);
         additionalData.put("total",pageable.getCount());

@@ -26,6 +26,10 @@
     <script type="text/javascript">
         var apiRoot = "/admin/movie";
         jQuery(document).ready(function($) {
+
+            if (getMemberRoleName() == "movie") {
+                $("#username").parent().parent().hide();
+            }
             $.ajax({
                 cache : true,
                 type : "GET",

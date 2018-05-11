@@ -115,4 +115,9 @@ public class MemberModel extends BaseModel<MemberModel> {
                 ", role=" + role +
                 '}';
     }
+
+    @JsonIgnore
+    public String getRoleValue() {
+        return getRole().getValue();
+    }
 }

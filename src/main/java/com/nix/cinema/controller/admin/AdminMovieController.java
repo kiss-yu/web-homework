@@ -4,8 +4,11 @@ import com.nix.cinema.Exception.WebException;
 import com.nix.cinema.common.Pageable;
 import com.nix.cinema.common.ReturnObject;
 import com.nix.cinema.common.annotation.AdminController;
+import com.nix.cinema.common.cache.UserCache;
 import com.nix.cinema.model.CinemaModel;
+import com.nix.cinema.model.MemberModel;
 import com.nix.cinema.model.MovieModel;
+import com.nix.cinema.model.RoleModel;
 import com.nix.cinema.service.impl.MemberService;
 import com.nix.cinema.service.impl.MovieService;
 import com.nix.cinema.service.impl.SystemService;
@@ -38,9 +41,13 @@ public class AdminMovieController{
     public ReturnObject createMovie(@ModelAttribute MovieModel movieModel,
                                @RequestParam(value = "logImg",required = false) MultipartFile log,
                                     @RequestParam(value = "username",required = false) String username) throws Exception {
-//        if (!systemService.doCaptcha(VCode)) {
-//            throw new WebException(100,"验证码错误");
-//        }
+        MemberModel current = UserCache.currentUser();
+        if (RoleModel.MOVIE_VALUE.equals(current.getRoleValue())) {
+            movieModel.setMember(current);
+        } else {
+            MemberModel boss = memberService.findByUsername(username);
+            movieModel.setMember(boss);
+        }
         movieModel.setMember(memberService.findByUsername(username));
         return ReturnUtil.success(movieService.add(movieModel,log));
     }
@@ -64,13 +71,23 @@ public class AdminMovieController{
     public ReturnObject update(@ModelAttribute MovieModel movieModel,
                                     @RequestParam(value = "logImg",required = false) MultipartFile log,
                                     @RequestParam(value = "username",required = false) String username) throws Exception {
-        movieModel.setMember(memberService.findByUsername(username));
+        MemberModel current = UserCache.currentUser();
+        if (RoleModel.MOVIE_VALUE.equals(current.getRoleValue())) {
+            movieModel.setMember(current);
+        } else {
+            MemberModel boss = memberService.findByUsername(username);
+            movieModel.setMember(boss);
+        }
         return ReturnUtil.success(movieService.update(movieModel,log));
     }
 
     @PostMapping("/list")
     public ReturnObject list(@ModelAttribute Pageable<MovieModel> pageable) throws Exception {
         Map additionalData = new HashMap();
+        MemberModel current = UserCache.currentUser();
+        if (RoleModel.MOVIE_VALUE.equals(current.getRoleValue())) {
+            pageable.setConditionsSql("member = " + current.getId());
+        }
         List list = pageable.getList(movieService);
         additionalData.put("total",pageable.getCount());
         return ReturnUtil.success(null,list,additionalData);

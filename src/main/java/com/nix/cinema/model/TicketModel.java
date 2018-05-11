@@ -25,8 +25,19 @@ public class TicketModel extends BaseModel<TicketModel> {
     //已经卖出的编号列表[1,2,3]
     private String sellSn;
 
+    //老板
+    private MemberModel member;
+
     //剩余票数
     private Integer remain;
+
+    public MemberModel getMember() {
+        return member;
+    }
+
+    public void setMember(MemberModel member) {
+        this.member = member;
+    }
 
     public String getTicketSn() {
         return ticketSn;

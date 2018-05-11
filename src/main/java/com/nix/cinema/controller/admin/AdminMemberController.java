@@ -25,7 +25,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/admin/member")
 @AdminController
-public class MemberController {
+public class AdminMemberController {
     @Autowired
     private MemberService memberService;
     @Autowired
@@ -39,7 +39,6 @@ public class MemberController {
                                    @RequestParam(value = "portraitImg",required = false) MultipartFile portraitImg) throws Exception {
         Assert.notNull(user.getUsername(),"用户名不能为空");
         Assert.notNull(user.getPassword(),"密码不能为空");
-        System.out.println(portraitImg == null);
         RoleModel roleModel = roleService.findById(roleId);
         if (roleModel == null) {
             return ReturnUtil.fail(404,"错误的角色信息",null);
@@ -54,17 +53,24 @@ public class MemberController {
         return ReturnUtil.success();
     }
     @PostMapping("/update")
-    public ReturnObject update(@ModelAttribute("/") MemberModel user) throws Exception {
+    public ReturnObject update(@ModelAttribute("/") MemberModel user,
+                               @RequestParam("roleId") Integer roleId,
+                               @RequestParam(value = "portraitImg",required = false) MultipartFile portraitImg) throws Exception {
         Assert.notNull(user.getId(),"id不能为空");
         //如果密码未修改
         if (user.getPassword() != null && user.getPassword().isEmpty()) {
             user.setPassword(null);
         }
+        RoleModel roleModel = roleService.findById(roleId);
+        if (roleModel == null) {
+            return ReturnUtil.fail(404,"错误的角色信息",null);
+        }
+        user.setRole(roleModel);
         //任何情况下将余额设置为空不进行修改
         user.setBalance(null);
         //usernmae不进行修改
         user.setUsername(null);
-        memberService.update(user);
+        memberService.update(user,portraitImg);
         return ReturnUtil.success(user);
     }
     @GetMapping("/checkUsername")

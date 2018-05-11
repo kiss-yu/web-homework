@@ -12,6 +12,7 @@
         <result column="sellSn" property="sellSn" jdbcType="VARCHAR"/>
         <association property="cinema" column="cinema" select="com.nix.cinema.dao.CinemaMapper.selectLazy"/>
         <association property="movie" column="movie" select="com.nix.cinema.dao.MovieMapper.selectLazy"/>
+        <association property="member" column="member" select="com.nix.cinema.dao.MemberMapper.selectLazy"/>
     </resultMap>
     <insert id="insert" parameterType="com.nix.cinema.model.TicketModel">
         insert into `ticket`
@@ -46,6 +47,9 @@
             <if test="movie != null">
                 `movie`,
             </if>
+            <if test="member != null">
+            `member`,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
              <if test="id != null">
@@ -77,6 +81,9 @@
             </if>
             <if test="movie != null">
                 #{movie.id,jdbcType=INTEGER},
+            </if>
+            <if test="member != null">
+                #{member.id,jdbcType=INTEGER},
             </if>
         </trim>
     </insert>
@@ -116,6 +123,9 @@
             </if>
             <if test="movie != null">
                 `movie` = #{movie.id,jdbcType=INTEGER},
+            </if>
+            <if test="member != null">
+                `member` = #{member.id,jdbcType=INTEGER},
             </if>
         </trim>
         where id = #{id,jdbcType=INTEGER}

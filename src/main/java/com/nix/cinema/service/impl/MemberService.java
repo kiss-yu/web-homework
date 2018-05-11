@@ -5,6 +5,7 @@ import com.nix.cinema.common.cache.UserCache;
 import com.nix.cinema.dao.MemberMapper;
 import com.nix.cinema.dao.RoleMapper;
 import com.nix.cinema.model.MemberModel;
+import com.nix.cinema.model.MovieModel;
 import com.nix.cinema.service.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -68,5 +69,21 @@ public class MemberService extends BaseService<MemberModel> {
             portraitImg.transferTo(file);
         }
         return model;
+    }
+
+    public MemberModel update(MemberModel model,MultipartFile log) throws Exception {
+        if (log != null && !log.isEmpty()) {
+            MemberModel before = findById(model.getId());
+            if (!(MEMBER_IMG_PATH + log.getOriginalFilename()).equals(before.getImg())) {
+                if (!(MEMBER_IMG_PATH + MEMBER_DEFAULT_IMG).equals(before.getImg())) {
+                    File ago = new File(this.getClass().getResource("/").getFile() + before.getImg());
+                    ago.delete();
+                }
+                File img = new File(this.getClass().getResource("/").getFile() + MEMBER_IMG_PATH + log.getOriginalFilename());
+                log.transferTo(img);
+                model.setImg(MEMBER_IMG_PATH + log.getOriginalFilename());
+            }
+        }
+        return super.update(model);
     }
 }

@@ -41,22 +41,6 @@ public class MovieService extends BaseService<MovieModel> {
         }
         return add(model);
     }
-    /**
-     * 更新数据库中某个对象
-     *
-     * @param model 需要更新的对象
-     * @return
-     * @throws Exception 修改失败抛出异常
-     */
-    @Override
-    public MovieModel update(MovieModel model) throws Exception {
-        MemberModel currentUser = UserCache.currentUser();
-        if (currentUser.isSuperAdmin()) {
-            return super.update(model);
-        }
-        model.setMember(currentUser);
-        return super.update(model);
-    }
 
     public MovieModel update(MovieModel model, MultipartFile log) throws Exception {
         if (log != null && !log.isEmpty()) {
@@ -71,6 +55,6 @@ public class MovieService extends BaseService<MovieModel> {
                 model.setImg(MOVIE_IMG_PATH + log.getOriginalFilename());
             }
         }
-        return update(model);
+        return super.update(model);
     }
 }

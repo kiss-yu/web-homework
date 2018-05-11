@@ -15,6 +15,9 @@ function getQueryString() {
     }
     return args;
 }
+function getMemberRoleName() {
+    return JSON.parse(localStorage.getItem("member")).role.value;
+}
 var id = getQueryString()["id"];
 
 var listTable;

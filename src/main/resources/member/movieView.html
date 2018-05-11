@@ -319,7 +319,7 @@
                             var movie = data.data[0];
                             $("#movie-img").attr("src",movie.img);
                             $("#movie-msg").append($(temp3(movie)));
-                            if (new Date(movie.releaseTime) > new Date()) {
+                            if (new Date(movie.releaseTime) > new Date() && localStorage.getItem("member") != null) {
                                 $("#sell-button").html("<li><button onclick='setMainMovie(nowPage,1)' class=\"btn btn-facebook\"><i></i> 购票</button></li>");
                             }
                             $(document).attr('title',`${movie.name}`);

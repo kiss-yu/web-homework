@@ -110,6 +110,10 @@
                 theme:{bgcolor:"#00A1CB",pnColor:"#00CCFF"},
                 format: "YYYY-MM-DD hh:mm:ss"
             });
+
+            if (getMemberRoleName() === "movie") {
+                $("#username").parent().parent().hide();
+            }
         });
     </script>
     <style>

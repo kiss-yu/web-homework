@@ -24,6 +24,10 @@
     <script type="text/javascript">
         var apiRoot = "/admin/cinema";
         jQuery(document).ready(function($) {
+
+            if (getMemberRoleName() == "cinema") {
+                $("#username").parent().parent().hide();
+            }
             $("#introduce").editor();
             //获取用户信息设置
             $.ajax({

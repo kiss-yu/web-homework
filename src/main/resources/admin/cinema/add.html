@@ -24,6 +24,9 @@
     <script type="text/javascript">
         var apiRoot = "/admin/cinema";
         jQuery(document).ready(function($) {
+            if (getMemberRoleName() == "cinema") {
+                $("#username").parent().parent().hide();
+            }
             $("#introduce").editor();
             function validateForm(){
                 return $("#inputForm").validate({
@@ -96,7 +99,6 @@
             }).result(function(event, item) {
                 $("#username").val(item.username);
             });
-
         });
     </script>
 

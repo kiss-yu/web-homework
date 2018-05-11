@@ -11,9 +11,12 @@ import java.util.List;
  * 角色
  */
 public class RoleModel extends BaseModel<RoleModel> {
-
+    public final static String ADMIN_VALUE = "admin";
+    public final static String CINEMA_VALUE = "cinema";
+    public final static String MOVIE_VALUE = "movie";
     private String name;
     private String value;
+
     //角色允许的接口列表
     private List<RoleInterfaceModel> roleInterfaces;
 

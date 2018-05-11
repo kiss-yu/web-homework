@@ -4,10 +4,8 @@ import com.nix.cinema.Exception.WebException;
 import com.nix.cinema.common.Pageable;
 import com.nix.cinema.common.ReturnObject;
 import com.nix.cinema.common.annotation.AdminController;
-import com.nix.cinema.model.CinemaModel;
-import com.nix.cinema.model.MovieModel;
-import com.nix.cinema.model.RoleInterfaceModel;
-import com.nix.cinema.model.TicketModel;
+import com.nix.cinema.common.cache.UserCache;
+import com.nix.cinema.model.*;
 import com.nix.cinema.service.impl.CinemaService;
 import com.nix.cinema.service.impl.MovieService;
 import com.nix.cinema.service.impl.TicketService;
@@ -39,10 +37,17 @@ public class AdminTicketController {
     public ReturnObject add(@ModelAttribute TicketModel ticketModel,
                             @RequestParam(value = "cinemaSn",required = false) String cinemaSn,
                             @RequestParam(value = "movieSn",required = false) String movieSn) throws Exception {
+        MemberModel current = UserCache.currentUser();
         if (cinemaSn != null && !cinemaSn.isEmpty()) {
             List<CinemaModel> cinemaModels = cinemaService.findByOneField("cinemaSn",cinemaSn);
             if (cinemaModels.size() < 1) {
                 throw new WebException(100,"影院编号错误");
+            }
+            CinemaModel cinemaModel = cinemaModels.get(0);
+            if (RoleModel.CINEMA_VALUE.equals(current.getRole().getValue())) {
+                if (!cinemaModel.getMember().getId().equals(current.getId())) {
+                    throw new WebException(401,"权限不足");
+                }
             }
             ticketModel.setCinema(cinemaModels.get(0));
         }
@@ -65,12 +70,19 @@ public class AdminTicketController {
     public ReturnObject update(@ModelAttribute TicketModel ticketModel,
                             @RequestParam(value = "cinemaSn",defaultValue = "") String cinemaSn,
                             @RequestParam(value = "movieSn",defaultValue = "") String movieSn) throws Exception {
+        MemberModel current = UserCache.currentUser();
         if (cinemaSn.isEmpty()) {
             List<CinemaModel> cinemaModels = cinemaService.findByOneField("cinemaSn",cinemaSn);
             if (cinemaModels.size() < 1) {
                 throw new WebException(100,"影院编号错误");
             }
-            ticketModel.setCinema(cinemaModels.get(0));
+            CinemaModel cinemaModel = cinemaModels.get(0);
+            if (RoleModel.CINEMA_VALUE.equals(current.getRole().getValue())) {
+                if (!cinemaModel.getMember().getId().equals(current.getId())) {
+                    throw new WebException(401,"权限不足");
+                }
+            }
+            ticketModel.setCinema(cinemaModel);
         }
         if (movieSn.isEmpty()) {
             List<MovieModel> movieModels = movieService.findByOneField("movieSn",movieSn);
@@ -89,7 +101,10 @@ public class AdminTicketController {
     @PostMapping("/list")
     public ReturnObject list(@ModelAttribute Pageable<TicketModel> pageable) throws Exception {
         Map additionalData = new HashMap();
-
+        MemberModel current = UserCache.currentUser();
+        if (RoleModel.CINEMA_VALUE.equals(current.getRoleValue())) {
+            pageable.setConditionsSql("member = " + current.getId());
+        }
         List list = pageable.getList(ticketService);
         additionalData.put("total",pageable.getCount());
         return ReturnUtil.success(null,list,additionalData);
