@@ -122,6 +122,7 @@
             }
             return `<li  class="list-group-item">
                       <h4>${ticket.cinema.name}<span>  ${ticket.room}房间</span></h4>
+                      <p class="price">票价：<span>${ticket.price}</span>元</p>
                       <div class="tickets">
                           <p>选择座位号</p>
                           ${inputs}
@@ -170,6 +171,7 @@
         }
         function setMainMovie(page,a) {
             nowPage = page;
+            $("#sell-nav").show();
             $.ajax({
                 cache: true,
                 type: "POST",
@@ -203,9 +205,11 @@
                 }
             });
         }
+        var priceSum = 0;
         function clickTicketBtn(ticketBtn) {
             var classes = ticketBtn.attr('class');
             var ticketId = ticketBtn.attr("ticketId");
+            var price = parseFloat(ticketBtn.attr("price"));
             var map = ticketIds[ticketId];
             if (map == null) {
                 map = {};
@@ -219,37 +223,70 @@
                 input.attr("id",ticketId + "_" + ticketBtn.val());
                 ticketBtn.attr("id","_" + ticketId + "_" + ticketBtn.val());
                 addSellTicketBtn(input);
+                priceSum += price;
             } else if (classes === "btn ticket-btn-clicked ticket-btn") {
                 var b = ticketBtn.attr("sell");
-                console.log("bb=" + b);
-                if (b == false) {
+                priceSum -= price;
+                if (b != "false") {
                     ticketBtn.attr('class',"btn btn-success ticket-btn");
                     $("#" + ticketId + "_" + ticketBtn.val()).remove();
                 } else {
                     $("#_" + ticketId + "_" + ticketBtn.val()).attr('class',"btn btn-success ticket-btn");
-                    console.log($("#_" + ticketId + "_" + ticketBtn.val()).attr("class"))
                     ticketBtn.remove();
                 }
                 delete map[ticketBtn.val()];
+                if (Object.keys(map).length == 0) {
+                    $("#" + ticketBtn.attr("cinema") + "_" + ticketBtn.attr("room")).remove();
+                }
             }
-            console.log(ticketIds);
+            $("#price-sum").html(priceSum);
         }
         function addSellTicketBtn(btn) {
             var cinema = btn.attr("cinema");
             var room = btn.attr("room");
-            var price = btn.attr("price");
             var boxId = cinema + "_" + room;
             var box = $("#" + boxId);
-            console.log(box.length>0)
+            var ticketId = btn.attr("ticketId");
             if (box.length <= 0) {
                 var test = `<div id="${boxId}" class="tickets-box"><p>${cinema}<span>${room}</span></p></div>`;
-                console.log(test);
                 box = $(test);
                 box.append(btn);
                 $("#sell-tickets").append(box);
             } else {
                 box.append(btn);
             }
+        }
+        function payment() {
+            var data = {};
+            var ids = new Array();
+            var indexes = new Array();
+            for(key in ticketIds){
+                map = ticketIds[key];
+                if (Object.keys(map).length != 0) {
+                    ids.push(key);
+                    var indexes1 = new Array();
+                    for (key1 in map) {
+                        indexes1.push(map[key1]);
+                    }
+                    indexes.push(indexes1);
+                }
+            }
+            //支付订单
+            $.ajax({
+                cache: true,
+                type: "POST",
+                url: "/member/payment/payment",
+                traditional:true,
+                data:{ticketIds:ids,indexes:indexes},
+                success: function (data) {
+                    if (data.status == 1) {
+                        alert("购票成功");
+                        window.location.reload();
+                    } else {
+                        alert(data.msg);
+                    }
+                }
+            });
         }
         jQuery(document).ready(function($) {
             $.ajax({
@@ -390,6 +427,7 @@
         .sell-nav{
             background-color: #bfbfbc;
             width: 100%;
+            min-height: 100px;
         }
         #btn_sell{
             position: absolute;
@@ -413,6 +451,18 @@
         #price-msg{
             float: left;
             width: 30%;
+        }
+        .price{
+            font-size: 22px;
+            color: #bf8606;
+        }
+        .price span{
+            color: #bf0400;
+        }
+        .close-sell{
+            position: absolute;
+            right: 5px;
+            top: 5px;
         }
     </style>
 </head>
@@ -446,8 +496,8 @@
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav">
                     <li><a href="index.html"><i class="fa fa-home"></i> 主页</a></li>
-                    <li class="dropdown"><a href="/member/movie.html" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-play-circle-o"></i> 电影</a>
-                    <li class="dropdown"><a href="/member/cinema.html" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-list"></i> 影院</a>
+                    <li><a href="/member/movie.html" class="" ><i class="fa fa-play-circle-o"></i> 电影</a>
+                    <li><a href="/member/member.html" class=""><i class="fa fa-list"></i> 个人中心</a>
                     </li>
                 </ul>
             </div>
@@ -609,21 +659,19 @@
 
 <!-- JS -->
 <script src="owl-carousel/owl.carousel.js"></script>
-<div class="navbar-fixed-bottom sell-nav">
-    <p id="balance">目前余额：200.50</p>
+<div id="sell-nav" class="navbar-fixed-bottom sell-nav" hidden>
+    <p id="balance">金额：<span id="price-sum">0</span>元</p>
     <div id="center">
         <div id="sell-tickets">
 
         </div>
-        <div id="price-msg">
-            <p>杭州大剧院 504房间<span>价格：1000￥</span></p>
-            <p>杭州大剧院 504房间<span>价格：1000￥</span></p>
-            <p>杭州大剧院 504房间<span>价格：1000￥</span></p>
-            <span>总价格：3000￥</span>
-            <span>支付后余额：-2800￥</span>
-        </div>
     </div>
-    <button id="btn_sell" type="button" class="btn btn-warning" disabled>
+    <button type="button" class="close-sell btn btn-danger" onclick="{
+        window.location.reload();
+    }">
+        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭
+    </button>
+    <button id="btn_sell" type="button" class="btn btn-warning" onclick="payment()">
         <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>支付购买
     </button>
 </div>

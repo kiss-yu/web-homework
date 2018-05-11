@@ -25,7 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 @Clear
 public class CommonController {
     @Autowired
-    private MemberService userService;
+    private MemberService memberService;
     @Autowired
     private SystemService systemService;
 
@@ -36,7 +36,7 @@ public class CommonController {
     @PostMapping(value = "/login")
     public ReturnObject login(@RequestParam(value = "username",defaultValue = "") String username,
                               @RequestParam(value = "password",defaultValue = "") String password, HttpServletRequest request) {
-        return ReturnUtil.success(userService.login(username,password,request));
+        return ReturnUtil.success(memberService.login(username,password,request));
     }
 
     /**
@@ -45,7 +45,8 @@ public class CommonController {
     @ResponseBody
     @GetMapping("/currentUser")
     public ReturnObject currentUser() {
-        return ReturnUtil.success(UserCache.currentUser());
+//        return ReturnUtil.success(UserCache.currentUser());
+        return ReturnUtil.success(memberService.findByUsername("admin"));
     }
 
     @ResponseBody

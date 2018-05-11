@@ -69,6 +69,4 @@ public class MemberService extends BaseService<MemberModel> {
         }
         return model;
     }
-
-
 }

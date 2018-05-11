@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  * @author Kiss
@@ -36,9 +37,10 @@ public class IndexController {
      * 用户修改自己的资料
      * */
     @PostMapping("/update")
-    public ReturnObject updateUser(@ModelAttribute MemberModel user) throws Exception {
-        Assert.isTrue(UserCache.currentUser().getUsername().equals(user.getUsername()),"非法修改");
-        userService.update(user);
-        return ReturnUtil.success(user);
+    public ReturnObject updateUser(@ModelAttribute MemberModel member,HttpServletRequest request) throws Exception {
+        Assert.isTrue(UserCache.currentUser().getUsername().equals(member.getUsername()),"非法修改");
+        member = userService.update(member);
+        request.getSession().setAttribute(UserCache.USER_SESSION_KEY,member);
+        return ReturnUtil.success(member);
     }
 }

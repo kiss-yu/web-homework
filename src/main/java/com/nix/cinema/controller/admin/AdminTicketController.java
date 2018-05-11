@@ -6,6 +6,7 @@ import com.nix.cinema.common.ReturnObject;
 import com.nix.cinema.common.annotation.AdminController;
 import com.nix.cinema.model.CinemaModel;
 import com.nix.cinema.model.MovieModel;
+import com.nix.cinema.model.RoleInterfaceModel;
 import com.nix.cinema.model.TicketModel;
 import com.nix.cinema.service.impl.CinemaService;
 import com.nix.cinema.service.impl.MovieService;
@@ -79,6 +80,11 @@ public class AdminTicketController {
             ticketModel.setMovie(movieModels.get(0));
         }
         return ReturnUtil.success(ticketService.update(ticketModel));
+    }
+    @PostMapping("/delete")
+    public ReturnObject delete(@RequestParam("ids") Integer[] ids) throws Exception {
+        ticketService.delete(ids);
+        return ReturnUtil.success();
     }
     @PostMapping("/list")
     public ReturnObject list(@ModelAttribute Pageable<TicketModel> pageable) throws Exception {
