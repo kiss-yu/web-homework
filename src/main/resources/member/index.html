@@ -7,7 +7,7 @@
 	<meta name="description" content="">
 	<meta name="author" content="">
 
-	<title>KoolTube</title>
+	<title>首页</title>
 
 	<!-- Bootstrap Core CSS -->
 	<link rel="stylesheet" href="/resource/bootstrap-3.3.7-dist/css/bootstrap.min.css"  type="text/css">
@@ -146,6 +146,16 @@
                 }
             });
         });
+
+        function loginOut() {
+            console.log("out")
+            localStorage.removeItem("member");
+            $.ajax({
+                cache: true,
+                type: "GET",
+                url: "/logout"
+            });
+        }
 	</script>
 </head>
 
@@ -175,7 +185,7 @@
                         if (member == null) {
                             $("#header2").append($(`<li><a href="/member/register.html"><i class="fa"></i> 注册</a></li>`));
                         } else {
-                            $("#header2").append($(`<li><a href="/member/index.html"><i class="fa fa-comments"></i> 退出</a></li>`))
+                            $("#header2").append($(`<li><a onclick="loginOut()" href="/member/index.html"><i class="fa fa-comments"></i> 退出</a></li>`))
                         }
 					</script>
 				</div>

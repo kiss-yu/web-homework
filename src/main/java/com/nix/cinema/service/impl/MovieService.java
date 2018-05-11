@@ -50,11 +50,11 @@ public class MovieService extends BaseService<MovieModel> {
      */
     @Override
     public MovieModel update(MovieModel model) throws Exception {
-//        MemberModel currentUser = UserCache.currentUser();
-//        if (currentUser.isSuperAdmin()) {
-//            return super.update(model);
-//        }
-//        model.setMember(currentUser);
+        MemberModel currentUser = UserCache.currentUser();
+        if (currentUser.isSuperAdmin()) {
+            return super.update(model);
+        }
+        model.setMember(currentUser);
         return super.update(model);
     }
 

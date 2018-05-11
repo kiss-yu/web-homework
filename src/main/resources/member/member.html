@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>KoolTube</title>
+    <title>用户中心</title>
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/member/css/bootstrap.min.css"  type="text/css">
@@ -305,8 +305,6 @@
                             }
 
                         }
-                    } else {
-                        alert("错误");
                     }
                 }
             });
@@ -322,6 +320,9 @@
                             var div = $("#now-content");
                             div.html("");
                             div.append($(temp1(data.data)))
+                        } else {
+                            alert("请登录");
+                            location.href = "./login.html";
                         }
                     } else {
                         location.href = "./login.html";

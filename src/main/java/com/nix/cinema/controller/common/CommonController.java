@@ -55,8 +55,16 @@ public class CommonController {
     @ResponseBody
     @GetMapping("/currentUser")
     public ReturnObject currentUser() {
-//        return ReturnUtil.success(UserCache.currentUser());
-        return ReturnUtil.success(memberService.findByUsername("admin"));
+        return ReturnUtil.success(UserCache.currentUser());
+    }
+
+    /**
+     * 注销
+     * */
+    @ResponseBody
+    @GetMapping("/logout")
+    public void logout(HttpServletRequest request) {
+        request.getSession(true).removeAttribute(UserCache.USER_SESSION_KEY);
     }
 
     @ResponseBody

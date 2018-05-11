@@ -78,6 +78,15 @@
                 }
             });
         });
+        function loginOut() {
+            console.log("out")
+            localStorage.removeItem("member");
+            $.ajax({
+                cache: true,
+                type: "GET",
+                url: "/logout"
+            });
+        }
     </script>
 </head>
 <body>
@@ -105,7 +114,7 @@
                         if (member == null) {
                             $("#header2").append($(`<li><a href="/member/register.html"><i class="fa"></i> 注册</a></li>`));
                         } else {
-                            $("#header2").append($(`<li><a href="/member/index.html"><i class="fa fa-comments"></i> 退出</a></li>`))
+                            $("#header2").append($(`<li><a href="/member/index.html" onclick="loginOut()"><i class="fa fa-comments"></i> 退出</a href="/member/index.html"></li>`))
                         }
                     </script>
                 </div>

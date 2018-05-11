@@ -5,9 +5,11 @@ import com.nix.cinema.common.Pageable;
 import com.nix.cinema.common.ReturnObject;
 import com.nix.cinema.common.annotation.MemberController;
 import com.nix.cinema.common.cache.UserCache;
+import com.nix.cinema.model.CinemaModel;
 import com.nix.cinema.model.MemberModel;
 import com.nix.cinema.model.PaymentModel;
 import com.nix.cinema.model.TicketModel;
+import com.nix.cinema.service.impl.CinemaService;
 import com.nix.cinema.service.impl.MemberService;
 import com.nix.cinema.service.impl.PaymentService;
 import com.nix.cinema.service.impl.TicketService;
@@ -36,21 +38,26 @@ public class MemberPaymentController {
     private PaymentService paymentService;
     @Autowired
     private MemberService memberService;
+    @Autowired
+    private CinemaService cinemaService;
     /**
      * 支付并创建订单
      * */
     @PostMapping("/payment")
     public ReturnObject createPayment(@RequestParam(value = "ticketIds") Integer[] ticketIds,
                                       @RequestParam(value = "indexes") Integer[][] indexes) throws Exception {
-//        MemberModel current = UserCache.currentUser();
-        MemberModel current = memberService.findByUsername("admin");
+        MemberModel current = UserCache.currentUser();
         Assert.notNull(current,"非法订单");
         Assert.isTrue(ticketIds.length == indexes.length || ticketIds.length == 1,"无效订单");
         Assert.isTrue(ticketIds.length > 0,"没有添加电影票，无效订单");
         float price = 0;
         StringBuilder content = new StringBuilder("{");
         if (ticketIds.length == 1) {
-            price += (ticketService.findById(ticketIds[0]).getPrice().floatValue() * indexes.length);
+            TicketModel ticketModel = ticketService.findById(ticketIds[0]);
+            CinemaModel cinemaModel = ticketModel.getCinema();
+            cinemaModel.setHotNumber(cinemaModel.getHotNumber() + 1);
+            cinemaService.update(cinemaModel);
+            price += (ticketModel.getPrice().floatValue() * indexes[0].length);
             content.append(ticketIds[0] + ":[");
             for (Integer[] index : indexes) {
                 content.append(index[0] + ",");
@@ -58,7 +65,11 @@ public class MemberPaymentController {
             content.replace(content.length() - 1, content.length(), "],");
         } else {
             for (int i = 0; i < ticketIds.length; i++) {
-                price += (ticketService.findById(ticketIds[i]).getPrice().floatValue() * indexes[i].length);
+                TicketModel ticketModel = ticketService.findById(ticketIds[i]);
+                CinemaModel cinemaModel = ticketModel.getCinema();
+                cinemaModel.setHotNumber(cinemaModel.getHotNumber() + 1);
+                cinemaService.update(cinemaModel);
+                price += (ticketModel.getPrice().floatValue() * indexes[i].length);
                 content.append(ticketIds[i] + ":[");
                 for (Integer index : indexes[i]) {
                     content.append(index + ",");
@@ -84,7 +95,7 @@ public class MemberPaymentController {
     @PostMapping("/list")
     public ReturnObject list(@ModelAttribute Pageable<PaymentModel> pageable) throws Exception {
         Map additionalData = new HashMap();
-        MemberModel current = memberService.findByUsername("admin");
+        MemberModel current = UserCache.currentUser();
         pageable.setConditionsSql("member = " + current.getId());
         List<PaymentModel> list = pageable.getList(paymentService);
         if (list != null) {

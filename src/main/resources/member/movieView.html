@@ -322,6 +322,7 @@
                             if (new Date(movie.releaseTime) > new Date()) {
                                 $("#sell-button").html("<li><button onclick='setMainMovie(nowPage,1)' class=\"btn btn-facebook\"><i></i> 购票</button></li>");
                             }
+                            $(document).attr('title',`${movie.name}`);
                         }
                     } else {
                         alert("错误");
