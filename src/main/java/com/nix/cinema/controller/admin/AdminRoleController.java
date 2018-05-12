@@ -54,7 +54,7 @@ public class AdminRoleController {
      * */
     @GetMapping("/interfaces")
     public ReturnObject getRoleInterfacesInAll(@RequestParam("id") Integer id) {
-        List<RoleInterfaceModel> roleInterfaceModels = roleInterfaceService.list(null,null,null,null,null);
+        List<RoleInterfaceModel> roleInterfaceModels = roleInterfaceService.list(null,null,"`group`","asc",null);
         RoleModel roleModel = roleService.findById(id);
         List<RoleRoleInterfaceDto> list = new ArrayList<>();
         for (RoleInterfaceModel roleInterfaceModel:roleInterfaceModels) {

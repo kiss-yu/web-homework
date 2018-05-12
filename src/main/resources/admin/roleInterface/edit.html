@@ -74,14 +74,13 @@
                         async : false,
                         success : function(data) {
                             if (data.status == 1) {
-                                // location.href = apiRoot + "/list.html";
+                                location.href = apiRoot + "/list.html";
                             }
                         }
                     });
                 }
             });
             $("#enabled").click(function() {
-                console.log("xxx");
                 if (this.checked) {
                     $("#_enabled").val(true);
                 } else {
@@ -142,8 +141,7 @@
                                 </th>
                                 <td>
                                     <label>
-                                        <input type="checkbox" id="enabled"/>是否启用
-                                        <input type="checkbox" id="_enabled" name="enabled" hidden checked/>
+                                        <input type="checkbox" id="enabled" name="enabled" value="1"/>是否启用
                                     </label>
                                 </td>
                             </tr>

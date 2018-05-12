@@ -94,7 +94,13 @@ public class AdminMovieController{
     }
     @GetMapping("/autoMovie")
     public List autoCinema(@ModelAttribute Pageable pageable, @RequestParam("q") String movieSn) {
-        pageable.setConditionsSql("movieSn like '%" + movieSn + "%'");
+        MemberModel current = UserCache.currentUser();
+        if (RoleModel.MOVIE_VALUE.equals(current.getRoleValue())) {
+            pageable.setConditionsSql("(movieSn like '%" + movieSn + "%' or name like '%"  + movieSn + "%') and member = " +
+            current.getId());
+        } else {
+            pageable.setConditionsSql("movieSn like '%" + movieSn + "%' or name like '%"  + movieSn + "%'");
+        }
         return pageable.getList(movieService);
     }
 }

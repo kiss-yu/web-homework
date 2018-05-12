@@ -81,6 +81,7 @@
                             if (group === array[i].group) {
                                 tr += "<input type='checkbox' name='roleInterfaceId' value='" + array[i].id + " '>" + array[i].name;
                             } else {
+                                group = array[i].group;
                                 tr += "</td></tr>";
                                 table.append($(tr));
                                 tr = "<tr>" +

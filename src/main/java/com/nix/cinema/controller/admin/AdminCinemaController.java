@@ -99,7 +99,13 @@ public class AdminCinemaController {
     }
     @GetMapping("/autoCinema")
     public List autoCinema(@ModelAttribute Pageable pageable, @RequestParam("q") String cinemaSn) {
-        pageable.setConditionsSql("cinemaSn like '%" + cinemaSn + "%'");
+        MemberModel current = UserCache.currentUser();
+        if (RoleModel.CINEMA_VALUE.equals(current.getRoleValue())) {
+            pageable.setConditionsSql("(cinemaSn like '%" + cinemaSn + "%' or name like '%" + cinemaSn + "%') and" +
+                    " member = " + current.getId());
+        } else {
+            pageable.setConditionsSql("cinemaSn like '%" + cinemaSn + "%' or name like '%" + cinemaSn + "%'");
+        }
         return pageable.getList(cinemaService);
     }
 }

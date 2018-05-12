@@ -33,15 +33,20 @@ public class AdminRoleInterfaceController {
 
     @GetMapping("/all")
     public ReturnObject all() {
-        return ReturnUtil.success(roleInterfaceService.list(null,null,null,null,null));
+        return ReturnUtil.success(roleInterfaceService.list(null,null,"`group`","asc",null));
     }
-
+    @PostMapping("/delete")
+    public ReturnObject delete(@RequestParam("ids") Integer[] ids) throws Exception {
+        roleInterfaceService.delete(ids);
+        return ReturnUtil.success();
+    }
     @GetMapping("/view")
     public ReturnObject select(@RequestParam("id") Integer id) {
         return ReturnUtil.success(roleInterfaceService.findById(id));
     }
     @PostMapping("/update")
     public ReturnObject update(@ModelAttribute RoleInterfaceModel roleInterfaceModel) throws Exception {
+        roleInterfaceModel.setEnabled(roleInterfaceModel.getEnabled() == null ? false : true);
         return ReturnUtil.success(roleInterfaceService.update(roleInterfaceModel));
     }
 
