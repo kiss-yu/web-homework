@@ -20,6 +20,7 @@
     <script type="text/javascript" src="/js/jquery.tools.js"></script>
     <script type="text/javascript" src="/js/jquery.lSelect.js"></script>
     <script type="text/javascript" src="/js/common.js"></script>
+    <script src="/resource/js/md5.js"></script>
     <script type="text/javascript">
         var apiRoot = "/admin/member";
         jQuery(document).ready(function($) {
@@ -34,7 +35,7 @@
                             min: 0,
                             max : 200
                         },
-                        "password" : {
+                        "_password" : {
                             required: true,
                             minlength : 6,
                             maxlength : 20
@@ -67,7 +68,7 @@
                             maxlength:"不能高于20位",
                             remote : "用户名已存在"
                         },
-                        "password" : {
+                        "_password" : {
                             required: "不能为空",
                             minlength: "不能低于6位",
                             maxlength:"不能高于20位"
@@ -94,6 +95,7 @@
             $(validateForm());
             // 表单验证
             $("#submit").click(function () {
+                $("#password").val(hex_md5($("#_password").val()));
                 if(validateForm().form()) {
                     $.ajax({
                         cache : true,
@@ -178,7 +180,8 @@
                                     <span class="glyphicon-class">密码</span>
                                 </th>
                                 <td>
-                                    <input type="text" class="text" id="password" value="" name="password"/>
+                                    <input type="text" class="text" id="_password" value="" name="_password"/>
+                                    <input type="text" class="text" id="password" value="" name="password" hidden/>
                                 </td>
                             </tr>
 

@@ -40,7 +40,7 @@ public class AdminMovieController{
     @PostMapping("/add")
     public ReturnObject createMovie(@ModelAttribute MovieModel movieModel,
                                @RequestParam(value = "logImg",required = false) MultipartFile log,
-                                    @RequestParam(value = "username",required = false) String username) throws Exception {
+                               @RequestParam(value = "username",required = false) String username) throws Exception {
         MemberModel current = UserCache.currentUser();
         if (RoleModel.MOVIE_VALUE.equals(current.getRoleValue())) {
             movieModel.setMember(current);
@@ -48,7 +48,6 @@ public class AdminMovieController{
             MemberModel boss = memberService.findByUsername(username);
             movieModel.setMember(boss);
         }
-        movieModel.setMember(memberService.findByUsername(username));
         return ReturnUtil.success(movieService.add(movieModel,log));
     }
     @GetMapping("/checkMovieSn")

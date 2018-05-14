@@ -13,6 +13,8 @@ import com.nix.cinema.model.RoleInterfaceModel;
 import com.nix.cinema.model.RoleModel;
 import com.nix.cinema.service.impl.MemberService;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -103,10 +105,11 @@ public class PermissionInterceptor implements HandlerInterceptor,PermissionHandl
         if (!roleInterface.getEnabled()) {
             return false;
         }
-        RequestMapping methodRequestMapping = method.getAnnotation(RequestMapping.class);
+        PostMapping postMapping = method.getAnnotation(PostMapping.class);
+        GetMapping getMapping = method.getAnnotation(GetMapping.class);
         RequestMapping controllerRequestMapping = method.getDeclaringClass().getAnnotation(RequestMapping.class);
         String[] controllerUrls = controllerRequestMapping != null ? controllerRequestMapping.value() : null;
-        String[] methodUrls = methodRequestMapping != null ? methodRequestMapping.value() : null;
+        String[] methodUrls = postMapping != null ? postMapping.value() : getMapping.value();
         for (int i = 0;methodUrls != null && i < methodUrls.length;i ++) {
             String url = "";
             if (controllerUrls != null) {

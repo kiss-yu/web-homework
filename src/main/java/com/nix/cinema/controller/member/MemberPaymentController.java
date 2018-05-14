@@ -54,6 +54,8 @@ public class MemberPaymentController {
         StringBuilder content = new StringBuilder("{");
         if (ticketIds.length == 1) {
             TicketModel ticketModel = ticketService.findById(ticketIds[0]);
+            StringBuilder ticketSell = new StringBuilder(ticketModel.getSellSn() == null || ticketModel.getSellSn().isEmpty() ?
+            "" : ticketModel.getSellSn() + ",");
             CinemaModel cinemaModel = ticketModel.getCinema();
             cinemaModel.setHotNumber(cinemaModel.getHotNumber() + 1);
             cinemaService.update(cinemaModel);
@@ -61,11 +63,17 @@ public class MemberPaymentController {
             content.append(ticketIds[0] + ":[");
             for (Integer[] index : indexes) {
                 content.append(index[0] + ",");
+                ticketSell.append(index[0] + ",");
             }
             content.replace(content.length() - 1, content.length(), "],");
+            ticketModel.setSellSn(ticketSell.toString().substring(0,ticketSell.length() - 1));
+            ticketService.update(ticketModel);
+
         } else {
             for (int i = 0; i < ticketIds.length; i++) {
                 TicketModel ticketModel = ticketService.findById(ticketIds[i]);
+                StringBuilder ticketSell = new StringBuilder(ticketModel.getSellSn() == null || ticketModel.getSellSn().isEmpty() ?
+                        "" : ticketModel.getSellSn() + ",");
                 CinemaModel cinemaModel = ticketModel.getCinema();
                 cinemaModel.setHotNumber(cinemaModel.getHotNumber() + 1);
                 cinemaService.update(cinemaModel);
@@ -73,8 +81,11 @@ public class MemberPaymentController {
                 content.append(ticketIds[i] + ":[");
                 for (Integer index : indexes[i]) {
                     content.append(index + ",");
+                    ticketSell.append(index + ",");
                 }
                 content.replace(content.length() - 1, content.length(), "],");
+                ticketModel.setSellSn(ticketSell.toString().substring(0,ticketSell.length() - 1));
+                ticketService.update(ticketModel);
             }
         }
         BigDecimal balance = current.getBalance().subtract(new BigDecimal(price));

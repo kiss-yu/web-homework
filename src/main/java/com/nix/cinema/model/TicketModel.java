@@ -107,6 +107,9 @@ public class TicketModel extends BaseModel<TicketModel> {
         Integer[] index = new Integer[getRemain()];
         String[] sells = StringUtils.commaDelimitedListToStringArray(getSellSn());
         all: for (int i = 0,k = 0;i < ticketSum && k < index.length ;i ++,k ++) {
+            if (sells.length == 0) {
+                index[k] = i;
+            }
             for (int j = 0;j < sells.length;j ++) {
                 if (Integer.parseInt(sells[j]) == i) {
                     k--;

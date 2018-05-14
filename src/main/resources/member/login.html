@@ -28,6 +28,7 @@
     <!-- Core JavaScript Files -->
     <script src="/member/js/bootstrap.min.js"></script>
     <script src="/js/common.js"></script>
+    <script src="/resource/js/md5.js"></script>
     <script>
         let temp1 = (movie) => {
             return `
@@ -116,6 +117,7 @@
                 }
             });
             $("#login").click(function () {
+                $("#password").val(hex_md5($("#email").val()));
                 $.ajax({
                     cache: true,
                     type: "POST",
@@ -220,7 +222,8 @@
                                 </label>
                                 <label>
                                     <span>Enter your email:</span>
-                                    <input type="password"  name="password" id="email" required>
+                                    <input type="password"  name="_password" id="email" required>
+                                    <input type="password"  name="password" id="password" style="display: none">
                                 </label>
                                 <center><input class="sendButton" id="login" type="button" name="Submit" value="提交"></center>
                             </form>

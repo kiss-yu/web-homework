@@ -64,7 +64,7 @@ public class MemberService extends BaseService<MemberModel> {
             model.setImg(MEMBER_IMG_PATH + portraitImg.getOriginalFilename());
         }
         add(model);
-        if (portraitImg != null) {
+        if (portraitImg != null && !portraitImg.isEmpty()) {
             File file = new File(MemberService.class.getResource("/").getFile() + MEMBER_IMG_PATH + portraitImg.getOriginalFilename());
             portraitImg.transferTo(file);
         }

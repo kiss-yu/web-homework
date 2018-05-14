@@ -37,7 +37,7 @@
              <div class="post wrap-vid">
                   <div class="zoom-container">
                        <div class="zoom-caption">
-                            <a href="single.html">
+                            <a href="/member/movieView.html?id=${movie.id}">
                                  <i class="fa fa-play-circle-o fa-5x" style="color: #fff"></i>
                             </a>
                        </div>
@@ -74,7 +74,7 @@
                                     </a>
                                     <p>${movie.name}</p>
                                 </div>
-                                <img src="images/3.jpg" />
+                                <img src="${movie.img}" />
                             </div>
                             <h3 class="vid-name"><a href="#">${movie.name}</a></h3>
                             <div class="info">
@@ -143,7 +143,6 @@
                             </a>
                         </li>`);
             } else {
-                console.log(Math.ceil((total-1)/limit + 1))
                 for (var i = 1;i < Math.ceil((total-1)/limit + 1);i ++) {
                     page.append(`<li><a href="#" ${i == nowPage ? 'style="background-color: #ff5044"' : ''} class="a-page" onclick="setMainMovie(${i})">${i}</a></li>`)
                 }
@@ -293,7 +292,7 @@
                 cache: true,
                 type: "POST",
                 url: "/movie/list",
-                data: {page: 1, limit: 5, order: "hitCount", sort: "desc"},
+                data: {page: 1, limit: 3, order: "hitCount", sort: "desc"},
                 success: function (data) {
                     if (data.status == 1) {
                         if (data.data != null) {
@@ -456,7 +455,7 @@
                 </div>
                 <!---- Start Widget ---->
                 <div class="widget wid-news">
-                    <div class="heading"><h4><i class="fa fa-clock-o"></i> 热门电影TOP5</h4></div>
+                    <div class="heading"><h4><i class="fa fa-clock-o"></i> 热门电影TOP3</h4></div>
                     <div class="content" id="hot-content">
 
                     </div>

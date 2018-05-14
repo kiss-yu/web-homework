@@ -28,14 +28,14 @@
     <!-- Core JavaScript Files -->
     <script src="/member/js/bootstrap.min.js"></script>
     <script>
-        var limit = 10;
+        var limit = 5;
         var nowPage = 1;
         let temp1 = (movie) => {
             return `
              <div class="post wrap-vid">
                   <div class="zoom-container">
                        <div class="zoom-caption">
-                            <a href="single.html">
+                            <a href="/member/movieView.html?id=${movie.id}">
                                  <i class="fa fa-play-circle-o fa-5x" style="color: #fff"></i>
                             </a>
                        </div>
@@ -89,7 +89,7 @@
                                     </a>
                                     <p>${movie.name}</p>
                                 </div>
-                                <img src="images/3.jpg" />
+                                <img src="${movie.img}" />
                             </div>
                             <h3 class="vid-name"><a href="#">${movie.name}</a></h3>
                             <div class="info">

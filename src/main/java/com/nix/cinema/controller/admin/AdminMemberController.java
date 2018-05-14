@@ -91,8 +91,8 @@ public class AdminMemberController {
     }
 
     @GetMapping("/autoMember")
-    public List autoMember(@ModelAttribute Pageable pageable, @RequestParam("q") String username) {
-        pageable.setConditionsSql("username like '%" + username + "%'");
+    public List autoMember(@ModelAttribute Pageable pageable, @RequestParam("q") String username,@RequestParam("sql")String sql) {
+        pageable.setConditionsSql("(username like '%" + username + "%' or name like '%" + username + "') and " + sql );
         return pageable.getList(memberService);
     }
     @GetMapping("/current")

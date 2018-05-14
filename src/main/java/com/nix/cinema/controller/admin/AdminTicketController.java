@@ -50,6 +50,7 @@ public class AdminTicketController {
                 }
             }
             ticketModel.setCinema(cinemaModels.get(0));
+            ticketModel.setMember(cinemaModels.get(0).getMember());
         }
         if (movieSn != null && !movieSn.isEmpty()) {
             List<MovieModel> movieModels = movieService.findByOneField("movieSn",movieSn);
