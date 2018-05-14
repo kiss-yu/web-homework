@@ -5,6 +5,6 @@
 public class Test {
     @org.junit.Test
     public void test() {
-        System.out.println(this.getClass().getResource("/").getFile());
+        System.out.println(Byte.parseByte("11111111",2));
     }
 }

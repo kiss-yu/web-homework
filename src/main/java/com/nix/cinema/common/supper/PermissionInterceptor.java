@@ -79,7 +79,7 @@ public class PermissionInterceptor implements HandlerInterceptor,PermissionHandl
         MemberController memberController = method.getDeclaringClass().getAnnotation(MemberController.class);
         AdminController adminController = method.getDeclaringClass().getAnnotation(AdminController.class);
         if (memberController != null || adminController != null) {
-            return false;
+            return true;
         }
         return false;
     }
